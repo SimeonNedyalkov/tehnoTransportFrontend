@@ -11,3 +11,8 @@
   align-items: center;
   justify-content: center;
 }
+.adminIcon {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+}

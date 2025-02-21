@@ -10,7 +10,7 @@ function App() {
       <div className="flex flex-row">
         <Sidebar />
         <Dashboard />
-        <Navigation />
+        {/* <Navigation /> */}
       </div>
       {/* <Navigation /> */}
     </>
