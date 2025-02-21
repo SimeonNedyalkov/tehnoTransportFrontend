@@ -1,18 +1,22 @@
 .app-container {
   display: flex;
   height: 100vh;
-  width: 15vw;
+  width: 20vw;
   padding-left: 1rem;
   padding-right: 1rem;
   padding-top: 10%;
   padding-bottom: 10%;
   margin-left: 0;
   border-right: 2px solid rgb(247, 247, 247);
+  justify-content: center;
+  align-items: center;
 }
 
 .sidebar {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .sidebar-title {

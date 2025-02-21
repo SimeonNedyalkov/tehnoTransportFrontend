@@ -1,3 +1,4 @@
+import Dashboard from "./tehnoApp/Dashboard";
 import Sidebar from "./tehnoApp/Sidebar";
 import Login from "./user/Login";
 
@@ -5,7 +6,10 @@ function App() {
   return (
     <>
       {/* <Login /> */}
-      <Sidebar />
+      <div className="flex flex-row">
+        <Sidebar />
+        <Dashboard />
+      </div>
     </>
   );
 }
