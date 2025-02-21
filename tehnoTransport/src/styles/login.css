@@ -1,0 +1,72 @@
+/* .loginForm {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  background-color: #f0f0f0;
+} */
+/* * {
+  padding: 0;
+  margin: 0;
+} */
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.divider .line {
+  flex: 1;
+  border: none;
+  border-top: 2px solid #bababa;
+  margin: 0 10px;
+}
+
+.divider .lineText {
+  color: #888;
+  font-size: 1rem;
+  display: flex;
+  margin-bottom: 0.3rem;
+}
+.form-control {
+  background-color: transparent;
+}
+.styledInput {
+  border: 1px solid #9c9c9c;
+  border-radius: 5px;
+  padding: 12px 16px;
+  font-size: 1rem;
+  outline: none;
+  background: transparent;
+  box-shadow: 0 0 0 2px transparent;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.styledEmail {
+  position: relative;
+  top: 0.7rem;
+  left: 1rem;
+  background: #ffffff;
+  width: 3.8rem;
+  padding-left: 0.5rem;
+  padding-right: 0.3;
+  color: #0a7fec;
+}
+.styledInput:focus {
+  border: 1px solid #0a7fec;
+}
+.styledPassword {
+  position: relative;
+  top: 0.7rem;
+  left: 1rem;
+  background: #ffffff;
+  width: 5.2rem;
+  padding-left: 0.5rem;
+  padding-right: 1rem;
+  color: #0a7fec;
+}
