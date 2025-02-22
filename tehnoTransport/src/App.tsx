@@ -3,12 +3,16 @@ import Dashboard from "./tehnoApp/Dashboard";
 import Sidebar from "./tehnoApp/Sidebar";
 import Login from "./user/Login";
 import Customers from "./tehnoApp/Customers";
+import Navigation from "./tehnoApp/Navigation";
 
 function Layout() {
   return (
     <div className="flex flex-row">
       <Sidebar />
       <div className="flex-1">
+        <div className="adminIcon">
+          <Navigation />
+        </div>
         <Routes>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="customers" element={<Customers />} />
