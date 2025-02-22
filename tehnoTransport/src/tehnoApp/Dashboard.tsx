@@ -6,7 +6,7 @@ export default function Dashboard() {
       <div className="adminIcon">
         <Navigation />
       </div>
-      Hello
+      Dashboard
     </div>
   );
 }
