@@ -1,20 +1,19 @@
-import * as firebaseAdmin from "firebase-admin";
-import * as fs from "fs";
-import * as dotenv from "dotenv";
+import { initializeApp } from "firebase/app";
+import { getAnalytics } from "firebase/analytics";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
-dotenv.config();
+const firebaseConfig = {
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
+};
 
-const firebaseKeyFilePath =
-  "./tehnotransport-7630b-firebase-adminsdk-fbsvc-dc961e67c4.json";
-
-if (firebaseAdmin.apps.length === 0) {
-  console.log("Initializing Firebase Application");
-  const firebaseServiceAccount = JSON.parse(
-    fs.readFileSync(firebaseKeyFilePath, "utf8")
-  );
-  firebaseAdmin.initializeApp({
-    credential: firebaseAdmin.credential.cert(firebaseServiceAccount),
-  });
-}
-
-export const db = firebaseAdmin.firestore();
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
