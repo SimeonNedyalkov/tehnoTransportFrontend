@@ -29,3 +29,7 @@ dist-ssr
 .env.test.local
 .env.production.local
 .env.local
+
+#firebase
+tehnotransport-7630b-firebase-adminsdk-fbsvc-dc961e67c4.json
+firebase.json
