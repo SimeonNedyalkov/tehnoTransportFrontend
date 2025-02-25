@@ -11,6 +11,7 @@ export default function Dashboard() {
 
   useEffect(() => {
     const getShard = async () => {
+      setLoading(true);
       try {
         const data = await getDocs(customersCollectionRef);
         const filteredData: any[] = data.docs.map((doc) => {
@@ -21,6 +22,7 @@ export default function Dashboard() {
           };
         });
         console.log(filteredData);
+        setLoading(false);
         setCustomers(filteredData);
       } catch (error) {
         console.error(error);
