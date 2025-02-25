@@ -1,51 +1,37 @@
 import { Checkbox, Field, Label } from "@headlessui/react";
 import { useState } from "react";
-import googleIco from "../../assets/signupwith/google-logo-search-new-svgrepo-com.svg";
-import facebookIco from "../../assets/signupwith/facebook-1-svgrepo-com.svg";
-import instagramIco from "../../assets/signupwith/instagram-svgrepo-com.svg";
-// import useForm from "../hooks/useForm";
-// import usersAPI from "../../services/usersAPI";
-// import { useNavigate } from "react-router-dom";
-// import { useAuthContext } from "../../contexts/UserContext";
-const initialValues = { email: "", password: "" };
+import { auth } from "../firebaseConfig/firebase";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+
 export default function Login() {
   const [enabled, setEnabled] = useState(false);
   const [error, setError] = useState("");
-  //   const { changeAuthState } = useAuthContext();
-  //   const navigation = useNavigate();
-  //   const { values, submitHandler, changeHandler } = useForm(
-  //     initialValues,
-  //     async () => {
-  //       const { email, password } = values;
-  //       try {
-  //         const accessToken = await usersAPI.login(email, password);
-  //         if (!accessToken) {
-  //           throw new Error("Login failed: Invalid credentials.");
-  //         }
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const navigation = useNavigate();
 
-  //         const userStatus = await usersAPI.getStatus(accessToken);
-  //         const userData = await userStatus.json();
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    setError("");
+    console.log(email);
+    console.log(password);
 
-  //         const updatedAuthState = {
-  //           user: {
-  //             email: userData.email,
-  //             _id: userData._id,
-  //             accessToken,
-  //           },
-  //         };
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
 
-  //         changeAuthState(updatedAuthState);
-  //         navigation("/");
-  //       } catch (err: any) {
-  //         setError(err.message || "Something went wrong. Please try again.");
-  //       }
-  //     }
-  //   );
+      console.log("User logged in successfully!");
+      navigation("/app");
+    } catch (err) {
+      setError("Invalid email or password. Please try again.");
+    }
+  };
+
   return (
     <>
       <div className="loginForm">
         <div className="formWrapper">
-          <form className="flex flex-col">
+          <form className="flex flex-col" onSubmit={handleSubmit}>
             <h1 className="text-4xl text-sky-950 pb-5">
               Tehno Transport Admin Login.
             </h1>
@@ -61,6 +47,7 @@ export default function Login() {
                 className="form-control styledInput"
                 placeholder="example@email.com"
                 name="email"
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
 
@@ -73,6 +60,7 @@ export default function Login() {
                 className="form-control styledInput"
                 placeholder="Your Password"
                 name="password"
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
 
