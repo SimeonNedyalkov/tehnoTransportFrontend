@@ -10,7 +10,7 @@ export default function Dashboard() {
   const customersCollectionRef = collection(db, "customers");
 
   useEffect(() => {
-    const getShard = async () => {
+    const getCustomer = async () => {
       setLoading(true);
       try {
         const data = await getDocs(customersCollectionRef);
@@ -28,7 +28,7 @@ export default function Dashboard() {
         console.error(error);
       }
     };
-    getShard();
+    getCustomer();
   }, []);
 
   if (loading) {
@@ -44,7 +44,7 @@ export default function Dashboard() {
       <h1>Customer List</h1>
       <ul>
         {customers.map((customer) => (
-          <li key={customer.firstName}>
+          <li key={customer.id}>
             {customer.firstName} - {customer.phone}
           </li>
         ))}

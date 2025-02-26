@@ -1,0 +1,28 @@
+.settings {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  padding-left: 1rem;
+  padding-right: 10rem;
+  padding-top: 10%;
+  padding-bottom: 10%;
+  margin: 0;
+  border-right: 2px solid rgb(247, 247, 247);
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+body {
+  transition: background 0.3s, color 0.3s;
+}
+
+body.light {
+  background: white;
+  color: black;
+}
+
+body.dark {
+  background: #121212;
+  color: white;
+}
