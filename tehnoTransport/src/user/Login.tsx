@@ -21,7 +21,7 @@ export default function Login() {
       await signInWithEmailAndPassword(auth, email, password);
 
       console.log("User logged in successfully!");
-      navigation("/app");
+      navigation("/app/dashboard");
     } catch (err) {
       setError("Invalid email or password. Please try again.");
     }

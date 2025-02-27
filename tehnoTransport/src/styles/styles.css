@@ -3,4 +3,5 @@
 @import url("./sidebar.css");
 @import url("./dashboard.css");
 @import url("./settings.css");
+@import url("./table.css");
 @import "tailwindcss";
