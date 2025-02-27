@@ -35,7 +35,9 @@ export default function Customers() {
     //     </tbody>
     //   </table>
     // </div>
-
-    <Table />
+    <Box maxW={1000} mx="auto" px={6} pt="24" fontSize="sm">
+      <Heading mb={10}>Tehno Transport</Heading>
+      <Table />
+    </Box>
   );
 }

@@ -4,13 +4,15 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import useGetCustomer from "../hooks/useGetCustomer";
+import { Box } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
+import EditableCell from "./tableCells/EditableCell";
 const columns = [
   {
     accessorKey: "brand",
     header: "Brand",
-    cell: (props: any) => <p>{props.getValue()}</p>,
+    cell: EditableCell,
   },
   {
     accessorKey: "model",
@@ -32,6 +34,16 @@ const columns = [
     header: "Phone Number",
     cell: (props: any) => <p>{props.getValue()}</p>,
   },
+  {
+    accessorKey: "status",
+    header: "Status",
+    cell: (props: any) => <p>{props.getValue()}</p>,
+  },
+  {
+    accessorKey: "dateOfTehnoTest",
+    header: "Last tehno test",
+    cell: (props: any) => <p>{props.getValue()}</p>,
+  },
 ];
 export default function Table() {
   const DATA = useGetCustomer();
@@ -44,29 +56,51 @@ export default function Table() {
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
+    columnResizeMode: "onChange",
+    meta: {
+      updateData: (rowIndex: number, columnId: string, value: string) =>
+        setData((prev) =>
+          prev.map((row, index) =>
+            index === rowIndex
+              ? {
+                  ...prev[rowIndex],
+                  [columnId]: value,
+                }
+              : row
+          )
+        ),
+    },
   });
   console.log(data);
   return (
-    <div className="table">
-      {table.getHeaderGroups().map((headerGroup) => (
-        <div className="headers" key={headerGroup.id}>
-          {headerGroup.headers.map((header) => (
-            <div className="cell" key={header.id}>
-              {header.column.columnDef.header}
-            </div>
-          ))}
-        </div>
-      ))}
-
+    <Box>
+      <Box className="table" w={table.getTotalSize()}>
+        {table.getHeaderGroups().map((headerGroup) => (
+          <Box className="tr" key={headerGroup.id}>
+            {headerGroup.headers.map((header) => (
+              <Box className="th" w={header.getSize()} key={header.id}>
+                {header.column.columnDef.header}
+                <Box
+                  onMouseDown={header.getResizeHandler()}
+                  onTouchStart={header.getResizeHandler()}
+                  className={`resizer = ${
+                    header.column.getIsResizing() ? "isResizing" : ""
+                  }`}
+                />
+              </Box>
+            ))}
+          </Box>
+        ))}
+      </Box>
       {table.getRowModel().rows.map((row) => (
-        <div className="row" key={row.id}>
+        <Box className="tr" key={row.id}>
           {row.getVisibleCells().map((cell) => (
-            <div className="cell" key={cell.id}>
+            <Box className="td" w={cell.column.getSize()} key={cell.id}>
               {flexRender(cell.column.columnDef.cell, cell.getContext())}
-            </div>
+            </Box>
           ))}
-        </div>
+        </Box>
       ))}
-    </div>
+    </Box>
   );
 }
