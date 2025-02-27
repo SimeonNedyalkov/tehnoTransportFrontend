@@ -8,6 +8,7 @@ import { Box } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
 import EditableCell from "./tableCells/EditableCell";
+import StatusCell from "./tableCells/StatusCell";
 const columns = [
   {
     accessorKey: "brand",
@@ -37,7 +38,7 @@ const columns = [
   {
     accessorKey: "status",
     header: "Status",
-    cell: (props: any) => <p>{props.getValue()}</p>,
+    cell: StatusCell,
   },
   {
     accessorKey: "dateOfTehnoTest",
