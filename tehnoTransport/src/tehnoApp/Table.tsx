@@ -92,7 +92,7 @@ export default function Table() {
           <Box className="tr" key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
               <Box className="th" w={header.getSize()} key={header.id}>
-                {header.column.columnDef.header}
+                <>{header.column.columnDef.header}</>
                 <Box
                   onMouseDown={header.getResizeHandler()}
                   onTouchStart={header.getResizeHandler()}
