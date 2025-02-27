@@ -1,5 +1,6 @@
 import useGetCustomer from "../hooks/useGetCustomer";
 import Table from "./Table";
+import { Box, Heading } from "@chakra-ui/react";
 
 export default function Customers() {
   const customers = useGetCustomer();
@@ -34,7 +35,7 @@ export default function Customers() {
     //     </tbody>
     //   </table>
     // </div>
-    <Box></Box>
+
     <Table />
   );
 }
