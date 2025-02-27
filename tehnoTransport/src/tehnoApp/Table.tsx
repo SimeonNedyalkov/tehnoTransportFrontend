@@ -1,6 +1,7 @@
 import {
   flexRender,
   getCoreRowModel,
+  getFilteredRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import useGetCustomer from "../hooks/useGetCustomer";
@@ -10,6 +11,7 @@ import Customer from "../interfaces/CustomerInterface";
 import EditableCell from "./tableCells/EditableCell";
 import StatusCell from "./tableCells/StatusCell";
 import DateCell from "./tableCells/DateCell";
+import Filters from "./tableCells/Filters";
 const columns = [
   {
     accessorKey: "brand",
@@ -50,6 +52,7 @@ const columns = [
 export default function Table() {
   const DATA = useGetCustomer();
   const [data, setData] = useState<Customer[]>(DATA);
+  const [columnFilters, setColumnFilters] = useState([]);
   useEffect(() => {
     setData(DATA);
   }, [DATA]);
@@ -57,7 +60,11 @@ export default function Table() {
   const table = useReactTable({
     data,
     columns,
+    state: {
+      columnFilters,
+    },
     getCoreRowModel: getCoreRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
     columnResizeMode: "onChange",
     meta: {
       updateData: (rowIndex: number, columnId: string, value: any) =>
@@ -76,6 +83,10 @@ export default function Table() {
   console.log(data);
   return (
     <Box>
+      <Filters
+        columnFilters={columnFilters}
+        setColumnFilters={setColumnFilters}
+      />
       <Box className="table" w={table.getTotalSize()}>
         {table.getHeaderGroups().map((headerGroup) => (
           <Box className="tr" key={headerGroup.id}>
