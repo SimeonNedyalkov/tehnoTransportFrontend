@@ -1,19 +1,13 @@
 import { Input } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-
-interface EditableCellProps {
-  getValue: () => string;
-  row: any;
-  column: any;
-  table: any;
-}
+import CellPropsInterface from "../../interfaces/CellPropsInterface";
 
 export default function EditableCell({
   getValue,
   row,
   column,
   table,
-}: EditableCellProps) {
+}: CellPropsInterface) {
   const initialValue = getValue();
   const [value, setValue] = useState(initialValue);
 

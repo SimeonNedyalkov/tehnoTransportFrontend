@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
 import EditableCell from "./tableCells/EditableCell";
 import StatusCell from "./tableCells/StatusCell";
+import DateCell from "./tableCells/DateCell";
 const columns = [
   {
     accessorKey: "brand",
@@ -43,7 +44,7 @@ const columns = [
   {
     accessorKey: "dateOfTehnoTest",
     header: "Last tehno test",
-    cell: (props: any) => <p>{props.getValue()}</p>,
+    cell: DateCell,
   },
 ];
 export default function Table() {
@@ -59,7 +60,7 @@ export default function Table() {
     getCoreRowModel: getCoreRowModel(),
     columnResizeMode: "onChange",
     meta: {
-      updateData: (rowIndex: number, columnId: string, value: string) =>
+      updateData: (rowIndex: number, columnId: string, value: any) =>
         setData((prev) =>
           prev.map((row, index) =>
             index === rowIndex

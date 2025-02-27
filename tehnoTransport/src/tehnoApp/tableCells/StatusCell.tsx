@@ -5,19 +5,14 @@ import {
   MenuTrigger,
 } from "../../components/ui/menu.tsx";
 import { Button } from "@chakra-ui/react";
+import CellPropsInterface from "../../interfaces/CellPropsInterface.ts";
 
-interface StatusCellProps {
-  getValue: () => string;
-  row: any;
-  column: any;
-  table: any;
-}
 export default function StatusCell({
   getValue,
   row,
   column,
   table,
-}: StatusCellProps) {
+}: CellPropsInterface) {
   const value = getValue() || "";
   const statuses = ["Upcoming", "Overdue", "Due Soon"];
   const { updateData } = table.options.meta;
