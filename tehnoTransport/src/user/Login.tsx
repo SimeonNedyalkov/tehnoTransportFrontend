@@ -32,13 +32,16 @@ export default function Login() {
       <div className="loginForm">
         <div className="formWrapper">
           <form className="flex flex-col" onSubmit={handleSubmit}>
-            <h1 className="text-4xl text-sky-950 pb-5">
-              Tehno Transport Admin Login.
-            </h1>
-            <h5 className="text-sm text-gray-600 pb-5">
-              This portal is for Tehno Transport staff only. Unauthorized access
-              is prohibited.
-            </h5>
+            <div className="intro">
+              <h1 className="introh1 text-4xl text-sky-950 pb-5">
+                Tehno Transport Admin Login.
+              </h1>
+              <h5 className="text-sm text-gray-600 pb-5">
+                This portal is for Tehno Transport staff only. Unauthorized
+                access is prohibited.
+              </h5>
+            </div>
+
             {error && <div className="text-lg pb-5">{error}</div>}
             <div className="mb-3 flex flex-col">
               <label className="flex justify-start styledEmail">E-mail</label>

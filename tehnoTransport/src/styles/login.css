@@ -9,10 +9,15 @@
   padding: 0;
   background-color: #f0f0f0;
 }
-/* * {
-  padding: 0;
-  margin: 0;
-} */
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 2rem;
+}
+.introh1 {
+  font-size: 1.5rem;
+}
 .divider {
   display: flex;
   align-items: center;
