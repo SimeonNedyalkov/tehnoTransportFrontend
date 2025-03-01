@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
-import { db } from "../firebaseConfig/firebase";
-import { getDocs, collection } from "firebase/firestore";
 import Customer from "../interfaces/CustomerInterface";
 import Spinner from "../loaders/Spinner";
+import useGetCustomer from "../hooks/useGetCustomer";
 
 export default function Dashboard() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const customersCollectionRef = collection(db, "customers");
   const [statusCounts, setStatusCounts] = useState({
     upcoming: 0,
     dueSoon: 0,
@@ -19,12 +17,11 @@ export default function Dashboard() {
     const getCustomer = async () => {
       setLoading(true);
       try {
-        const data = await getDocs(customersCollectionRef);
+        const customers = useGetCustomer();
         let upcoming = 0;
         let dueSoon = 0;
         let overdue = 0;
-        const filteredData: Customer[] = data.docs.map((doc) => {
-          const customer = doc.data();
+        const filteredData: Customer[] = customers.map((customer) => {
           if (customer.status === "Upcoming") {
             upcoming += 1;
           } else if (customer.status === "Due Soon") {
@@ -33,7 +30,7 @@ export default function Dashboard() {
             overdue += 1;
           }
           return {
-            id: doc.id,
+            id: customer.id,
             brand: customer.brand,
             createdAt: customer.createdAt,
             dateOfTehnoTest: customer.dateOfTehnoTest,
@@ -68,7 +65,9 @@ export default function Dashboard() {
 
   if (error) {
     return (
-      <div>An error occurred while fetching data. Please try again later.</div>
+      <div className="dashboard">
+        An error occurred while fetching data. Please login or try again later.
+      </div>
     );
   }
 

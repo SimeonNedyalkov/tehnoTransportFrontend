@@ -1,7 +1,5 @@
 import { Checkbox, Field, Label } from "@headlessui/react";
 import { useState } from "react";
-import { auth } from "../firebaseConfig/firebase";
-import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
@@ -12,21 +10,6 @@ export default function Login() {
   const navigation = useNavigate();
   const LOGINURL = "http://localhost:3000/user/login";
 
-  // const handleSubmit = async (e: any) => {
-  //   e.preventDefault();
-  //   setError("");
-  //   console.log(email);
-  //   console.log(password);
-
-  //   try {
-  //     await signInWithEmailAndPassword(auth, email, password);
-
-  //     console.log("User logged in successfully!");
-  //     navigation("/app/dashboard");
-  //   } catch (err) {
-  //     setError("Invalid email or password. Please try again.");
-  //   }
-  // };
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setError("");
@@ -45,14 +28,13 @@ export default function Login() {
       }
 
       const data = await response.json();
-      if (!data.token) {
-        throw new Error("Token is missing from response");
-      }
+
       console.log("User logged in successfully!", data);
 
-      // Store token in localStorage or Context
       localStorage.setItem("token", data.idToken);
-
+      if (!data.idToken) {
+        throw new Error("Token is missing from response");
+      }
       // Navigate to dashboard
       navigation("/app/dashboard");
     } catch (err) {

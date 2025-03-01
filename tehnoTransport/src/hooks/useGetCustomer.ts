@@ -1,21 +1,33 @@
 import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
-import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebaseConfig/firebase";
+import { useNavigate } from "react-router-dom";
 
 export default function useGetCustomer() {
   const [customers, setCustomers] = useState<Customer[]>([]);
-  const customersCollectionRef = collection(db, "customers");
+  const DBURL = "http://localhost:3000/customers";
+  const navigation = useNavigate();
+
   useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No token found, redirecting to login...");
+      navigation("/login");
+      return;
+    }
+
     const getCustomer = async () => {
       try {
-        const data = await getDocs(customersCollectionRef);
+        const response = await fetch(DBURL, {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const data = await response.json();
 
-        const filteredData: Customer[] = data.docs.map((doc) => {
-          const customer = doc.data();
-
+        const filteredData: Customer[] = data.map((customer: any) => {
           return {
-            id: doc.id,
+            id: customer.id,
             brand: customer.brand,
             createdAt: customer.createdAt,
             dateOfTehnoTest: customer.dateOfTehnoTest,
@@ -29,7 +41,7 @@ export default function useGetCustomer() {
 
         setCustomers(filteredData);
       } catch (error) {
-        console.error(error);
+        console.error("Error fetching customer data:", error);
       }
     };
     getCustomer();

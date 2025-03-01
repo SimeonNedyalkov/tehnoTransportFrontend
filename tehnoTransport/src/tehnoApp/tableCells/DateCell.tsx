@@ -4,7 +4,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { forwardRef } from "react";
 import { Center, Box, Icon } from "@chakra-ui/react";
-import { X } from "lucide-react";
 import CalendarIcon from "../../components/ui/Icons/CalendarIcon";
 
 const DateCustomInput = forwardRef<
@@ -45,7 +44,9 @@ export default function DateCell({
 }: CellPropsInterface) {
   let date = getValue();
 
-  if (date instanceof Timestamp) {
+  if (date && typeof date === "object" && "_seconds" in date) {
+    date = new Date(date._seconds * 1000);
+  } else if (date instanceof Timestamp) {
     date = date.toDate();
   }
 
@@ -55,7 +56,7 @@ export default function DateCell({
     <DatePicker
       wrapperClassName="date-wrapper"
       dateFormat="yyyy MMM d"
-      selected={date || null} // Ensure `null` is allowed
+      selected={date || null}
       onChange={(newDate) => updateData(row.index, column.id, newDate)}
       isClearable
       customInput={
