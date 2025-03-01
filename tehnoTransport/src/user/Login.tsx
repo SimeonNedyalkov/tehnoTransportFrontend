@@ -10,19 +10,53 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigate();
+  const LOGINURL = "http://localhost:3000/user/login";
 
+  // const handleSubmit = async (e: any) => {
+  //   e.preventDefault();
+  //   setError("");
+  //   console.log(email);
+  //   console.log(password);
+
+  //   try {
+  //     await signInWithEmailAndPassword(auth, email, password);
+
+  //     console.log("User logged in successfully!");
+  //     navigation("/app/dashboard");
+  //   } catch (err) {
+  //     setError("Invalid email or password. Please try again.");
+  //   }
+  // };
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setError("");
-    console.log(email);
-    console.log(password);
 
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const response = await fetch(LOGINURL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-      console.log("User logged in successfully!");
+      if (!response.ok) {
+        throw new Error("Invalid email or password");
+      }
+
+      const data = await response.json();
+      if (!data.token) {
+        throw new Error("Token is missing from response");
+      }
+      console.log("User logged in successfully!", data);
+
+      // Store token in localStorage or Context
+      localStorage.setItem("token", data.idToken);
+
+      // Navigate to dashboard
       navigation("/app/dashboard");
     } catch (err) {
+      console.error("Login error:", err);
       setError("Invalid email or password. Please try again.");
     }
   };
