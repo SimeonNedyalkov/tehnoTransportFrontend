@@ -11,7 +11,7 @@ export default function useGetCustomer() {
     const token = localStorage.getItem("token");
     if (!token) {
       console.error("No token found, redirecting to login...");
-      navigation("/login");
+      navigation("/");
       return;
     }
 

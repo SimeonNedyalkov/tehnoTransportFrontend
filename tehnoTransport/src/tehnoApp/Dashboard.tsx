@@ -4,7 +4,8 @@ import Spinner from "../loaders/Spinner";
 import useGetCustomer from "../hooks/useGetCustomer";
 
 export default function Dashboard() {
-  const [customers, setCustomers] = useState<Customer[]>([]);
+  const customers = useGetCustomer();
+  const [customersState, setCustomersState] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [statusCounts, setStatusCounts] = useState({
@@ -17,7 +18,6 @@ export default function Dashboard() {
     const getCustomer = async () => {
       setLoading(true);
       try {
-        const customers = useGetCustomer();
         let upcoming = 0;
         let dueSoon = 0;
         let overdue = 0;
@@ -42,7 +42,7 @@ export default function Dashboard() {
           };
         });
         setStatusCounts({ upcoming, dueSoon, overdue });
-        setCustomers(filteredData);
+        setCustomersState(filteredData);
         setLoading(false);
       } catch (error) {
         console.error(error);
