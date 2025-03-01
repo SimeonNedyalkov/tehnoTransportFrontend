@@ -1,25 +1,16 @@
-import {
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
-} from "@headlessui/react";
-
-const navigation = [
-  { name: "Dashboard", href: "#", current: true },
-  { name: "Team", href: "#", current: false },
-  { name: "Projects", href: "#", current: false },
-  { name: "Calendar", href: "#", current: false },
-];
+import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+import { useNavigate } from "react-router-dom";
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Navigation() {
+  const navigation = useNavigate();
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigation("/");
+  };
   return (
     <Menu as="div" className="relative ml-3">
       <div>
@@ -57,6 +48,7 @@ export default function Navigation() {
           <a
             href="#"
             className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+            onClick={handleLogout}
           >
             Sign out
           </a>

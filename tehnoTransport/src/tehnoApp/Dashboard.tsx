@@ -30,15 +30,7 @@ export default function Dashboard() {
             overdue += 1;
           }
           return {
-            id: customer.id,
-            brand: customer.brand,
-            createdAt: customer.createdAt,
-            dateOfTehnoTest: customer.dateOfTehnoTest,
-            firstName: customer.firstName,
-            model: customer.model,
-            phone: customer.phone,
-            regNumber: customer.regNumber,
-            status: customer.status,
+            ...customer,
           };
         });
         setStatusCounts({ upcoming, dueSoon, overdue });
@@ -51,7 +43,7 @@ export default function Dashboard() {
       }
     };
     getCustomer();
-  }, []);
+  }, [customers]);
 
   if (loading) {
     return (
