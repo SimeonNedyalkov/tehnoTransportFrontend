@@ -20,11 +20,12 @@ export default function StatusCell({
     <MenuRoot>
       <MenuTrigger asChild>
         <Button
-          variant="outline"
+          variant="ghost"
           size="sm"
           w="100%"
           height="100%"
           overflow="hidden"
+          whiteSpace="nowrap"
         >
           {value}
         </Button>

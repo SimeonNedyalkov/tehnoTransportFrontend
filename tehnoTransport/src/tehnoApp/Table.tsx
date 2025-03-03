@@ -26,22 +26,22 @@ const columns = [
   {
     accessorKey: "model",
     header: "Model",
-    cell: (props: any) => <p>{props.getValue()}</p>,
+    cell: EditableCell,
   },
   {
     accessorKey: "regNumber",
     header: "Registration Number",
-    cell: (props: any) => <p>{props.getValue()}</p>,
+    cell: EditableCell,
   },
   {
     accessorKey: "firstName",
     header: "First Name",
-    cell: (props: any) => <p>{props.getValue()}</p>,
+    cell: EditableCell,
   },
   {
     accessorKey: "phone",
     header: "Phone Number",
-    cell: (props: any) => <p>{props.getValue()}</p>,
+    cell: EditableCell,
   },
   {
     accessorKey: "status",
