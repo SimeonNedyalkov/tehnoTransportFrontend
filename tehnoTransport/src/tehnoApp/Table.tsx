@@ -2,10 +2,12 @@ import {
   flexRender,
   getCoreRowModel,
   getFilteredRowModel,
+  getPaginationRowModel,
+  getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
 import useGetCustomer from "../hooks/useGetCustomer";
-import { Box, HStack } from "@chakra-ui/react";
+import { Box, ButtonGroup, HStack, Icon, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
 import EditableCell from "./tableCells/EditableCell";
@@ -13,6 +15,8 @@ import StatusCell from "./tableCells/StatusCell";
 import DateCell from "./tableCells/DateCell";
 import Filters from "./tableCells/Filters";
 import FilterPopover from "./tableCells/FilterPopover";
+import SortIcon from "../components/ui/Icons/SortIcon";
+import { Button } from "@chakra-ui/react";
 const columns = [
   {
     accessorKey: "brand",
@@ -65,6 +69,8 @@ export default function Table() {
     },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getPaginationRowModel: getPaginationRowModel(),
     columnResizeMode: "onChange",
     meta: {
       updateData: (rowIndex: number, columnId: string, value: any) =>
@@ -99,7 +105,25 @@ export default function Table() {
           <Box className="tr" key={headerGroup.id}>
             {headerGroup.headers.map((header) => (
               <Box className="th" w={header.getSize()} key={header.id}>
-                <>{header.column.columnDef.header}</>
+                <>
+                  {header.column.columnDef.header}
+                  {header.column.getCanSort() && (
+                    <Icon
+                      size="sm"
+                      mx={3}
+                      fontSize={14}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      <SortIcon />
+                    </Icon>
+                  )}
+                  {
+                    {
+                      asc: "⇧",
+                      desc: "⇩",
+                    }[header.column.getIsSorted() as "asc" | "desc"]
+                  }
+                </>
                 <Box
                   onMouseDown={header.getResizeHandler()}
                   onTouchStart={header.getResizeHandler()}
@@ -111,16 +135,35 @@ export default function Table() {
             ))}
           </Box>
         ))}
+        {table.getRowModel().rows.map((row) => (
+          <Box className="tr" key={row.id}>
+            {row.getVisibleCells().map((cell) => (
+              <Box className="td" w={cell.column.getSize()} key={cell.id}>
+                {flexRender(cell.column.columnDef.cell, cell.getContext())}
+              </Box>
+            ))}
+          </Box>
+        ))}
       </Box>
-      {table.getRowModel().rows.map((row) => (
-        <Box className="tr" key={row.id}>
-          {row.getVisibleCells().map((cell) => (
-            <Box className="td" w={cell.column.getSize()} key={cell.id}>
-              {flexRender(cell.column.columnDef.cell, cell.getContext())}
-            </Box>
-          ))}
-        </Box>
-      ))}
+      <br />
+      <Text mb={2}>
+        Page {table.getState().pagination.pageIndex + 1} of{" "}
+        {table.getPageCount()}
+      </Text>
+      <ButtonGroup size="sm" variant="outline">
+        <Button
+          onClick={() => table.previousPage()}
+          disabled={!table.getCanPreviousPage()}
+        >
+          {"<"}
+        </Button>
+        <Button
+          onClick={() => table.nextPage()}
+          disabled={!table.getCanNextPage()}
+        >
+          {">"}
+        </Button>
+      </ButtonGroup>
     </Box>
   );
 }

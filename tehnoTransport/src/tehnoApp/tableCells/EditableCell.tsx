@@ -23,7 +23,7 @@ export default function EditableCell({
       variant="outline"
       size="sm"
       w="99%"
-      height="97%"
+      height="95%"
       overflow="hidden"
       textOverflow="ellipsis"
       whiteSpace="nowrap"
