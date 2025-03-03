@@ -5,13 +5,14 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import useGetCustomer from "../hooks/useGetCustomer";
-import { Box } from "@chakra-ui/react";
+import { Box, HStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
 import EditableCell from "./tableCells/EditableCell";
 import StatusCell from "./tableCells/StatusCell";
 import DateCell from "./tableCells/DateCell";
 import Filters from "./tableCells/Filters";
+import FilterPopover from "./tableCells/FilterPopover";
 const columns = [
   {
     accessorKey: "brand",
@@ -56,7 +57,6 @@ export default function Table() {
   useEffect(() => {
     setData(DATA);
   }, [DATA]);
-
   const table = useReactTable({
     data,
     columns,
@@ -83,10 +83,17 @@ export default function Table() {
   console.log(data);
   return (
     <Box>
-      <Filters
-        columnFilters={columnFilters}
-        setColumnFilters={setColumnFilters}
-      />
+      <HStack mb={6}>
+        <Filters
+          columnFilters={columnFilters}
+          setColumnFilters={setColumnFilters}
+        />
+        <FilterPopover
+          columnFilters={columnFilters}
+          setColumnFilters={setColumnFilters}
+        />
+      </HStack>
+
       <Box className="table" w={table.getTotalSize()}>
         {table.getHeaderGroups().map((headerGroup) => (
           <Box className="tr" key={headerGroup.id}>

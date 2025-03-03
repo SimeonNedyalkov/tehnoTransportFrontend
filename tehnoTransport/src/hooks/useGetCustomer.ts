@@ -26,14 +26,21 @@ export default function useGetCustomer() {
         const data = await response.json();
 
         const filteredData: Customer[] = data.map((customer: any) => {
+          const seconds = customer.dateOfTehnoTest._seconds;
+          const nanoseconds = customer.dateOfTehnoTest._nanoseconds;
+
+          const date = new Date(seconds * 1000);
+          const adjustedDate = new Date(date.getTime() + nanoseconds / 1000000);
+
+          console.log(adjustedDate.toISOString());
           return {
             id: customer.id,
             brand: customer.brand,
             createdAt: customer.createdAt,
-            dateOfTehnoTest: customer.dateOfTehnoTest,
+            dateOfTehnoTest: adjustedDate.toISOString(),
             firstName: customer.firstName,
             model: customer.model,
-            phone: customer.phone,
+            phone: String(customer.phone),
             regNumber: customer.regNumber,
             status: customer.status,
           };

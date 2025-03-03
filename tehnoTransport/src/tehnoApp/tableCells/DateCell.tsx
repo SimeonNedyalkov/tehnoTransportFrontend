@@ -51,7 +51,7 @@ export default function DateCell({
   }
 
   const { updateData } = table.options.meta;
-
+  console.log(date);
   return (
     <DatePicker
       wrapperClassName="date-wrapper"
@@ -61,7 +61,7 @@ export default function DateCell({
       isClearable
       customInput={
         <DateCustomInput
-          value={date ? date.toDateString() : ""}
+          value={date ? date : ""}
           clearDate={() => updateData(row.index, column.id, null)}
         />
       }
