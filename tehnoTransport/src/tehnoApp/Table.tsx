@@ -7,7 +7,7 @@ import {
   useReactTable,
 } from "@tanstack/react-table";
 import useGetCustomer from "../hooks/useGetCustomer";
-import { Box, ButtonGroup, HStack, Icon, Text } from "@chakra-ui/react";
+import { Box, ButtonGroup, HStack, Icon, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
 import EditableCell from "./tableCells/EditableCell";
@@ -17,6 +17,7 @@ import Filters from "./tableCells/Filters";
 import FilterPopover from "./tableCells/FilterPopover";
 import SortIcon from "../components/ui/Icons/SortIcon";
 import { Button } from "@chakra-ui/react";
+import NewCustomer from "../interfaces/newCustomer";
 const columns = [
   {
     accessorKey: "brand",
@@ -56,7 +57,7 @@ const columns = [
 ];
 export default function Table() {
   const DATA = useGetCustomer();
-  const [data, setData] = useState<Customer[]>(DATA);
+  const [data, setData] = useState<NewCustomer[]>(DATA);
   const [columnFilters, setColumnFilters] = useState([]);
   useEffect(() => {
     setData(DATA);
@@ -87,6 +88,18 @@ export default function Table() {
     },
   });
   console.log(data);
+  const addNewRow = () => {
+    const newRow: NewCustomer = {
+      brand: "",
+      model: "",
+      regNumber: "",
+      firstName: "",
+      phone: 359,
+      status: "",
+      dateOfTehnoTest: new Date(),
+    };
+    setData((prev) => [...prev, newRow]);
+  };
   return (
     <Box>
       <HStack mb={6}>
@@ -146,24 +159,29 @@ export default function Table() {
         ))}
       </Box>
       <br />
-      <Text mb={2}>
-        Page {table.getState().pagination.pageIndex + 1} of{" "}
-        {table.getPageCount()}
-      </Text>
-      <ButtonGroup size="sm" variant="outline">
-        <Button
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-        >
-          {"<"}
-        </Button>
-        <Button
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-        >
-          {">"}
-        </Button>
-      </ButtonGroup>
+      <HStack justifyContent="space-between" w="100%" mt={4}>
+        <VStack>
+          <Text mb={2}>
+            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            {table.getPageCount()}
+          </Text>
+          <ButtonGroup size="sm" variant="outline">
+            <Button
+              onClick={() => table.previousPage()}
+              disabled={!table.getCanPreviousPage()}
+            >
+              {"<"}
+            </Button>
+            <Button
+              onClick={() => table.nextPage()}
+              disabled={!table.getCanNextPage()}
+            >
+              {">"}
+            </Button>
+          </ButtonGroup>
+        </VStack>
+        <Button onClick={addNewRow}>Add new</Button>
+      </HStack>
     </Box>
   );
 }
