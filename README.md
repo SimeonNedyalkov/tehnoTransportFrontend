@@ -2,6 +2,6 @@
 
 # To do:
 
-# 1. integrate cookies
+# 1. integrate cookies - Х
 
-# 2. implement table sort
+# 2. implement table sort - ✓
