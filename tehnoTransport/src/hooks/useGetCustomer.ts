@@ -8,21 +8,33 @@ export default function useGetCustomer() {
   const navigation = useNavigate();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      console.error("No token found, redirecting to login...");
-      navigation("/");
-      return;
-    }
+    // Function to get a specific cookie value
+    // const getCookie = (name: string) => {
+    //   return Cookies.get(name);
+    // };
+
+    // const token = getCookie("authToken");
+    // console.log(token);
+    // if (!token) {
+    //   console.error("No token found in cookies, redirecting to login...");
+    //   navigation("/");
+    //   return;
+    // }
 
     const getCustomer = async () => {
       try {
         const response = await fetch(DBURL, {
           method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          credentials: "include", // Required to send cookies with requests
+          // headers: {
+          //   Authorization: `Bearer ${token}`,
+          // },
         });
+
+        if (!response.ok) {
+          throw new Error("Failed to fetch customer data");
+        }
+
         const data = await response.json();
 
         const filteredData: Customer[] = data.map((customer: any) => {
@@ -32,7 +44,6 @@ export default function useGetCustomer() {
           const date = new Date(seconds * 1000);
           const adjustedDate = new Date(date.getTime() + nanoseconds / 1000000);
 
-          console.log(adjustedDate.toISOString());
           return {
             id: customer.id,
             brand: customer.brand,
@@ -51,7 +62,9 @@ export default function useGetCustomer() {
         console.error("Error fetching customer data:", error);
       }
     };
+
     getCustomer();
   }, []);
+
   return customers;
 }

@@ -1,6 +1,18 @@
 import { Checkbox, Field, Label } from "@headlessui/react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import firebase from "firebase/app";
+import "firebase/auth";
+
+// const firebaseConfig = {
+//   apiKey: process.env.VITE_API_KEY,
+//   authDomain: process.env.VITE_AUTH_DOMAIN,
+//   projectId: process.env.VITE_PROJECT_ID,
+//   storageBucket: process.env.VITE_STORAGE_BUCKET,
+//   messagingSenderId: process.env.VITE_MESSAGING_SENDER_ID,
+//   appId: process.env.VITE_APP_ID,
+//   measurementId: process.env.VITE_MEASUREMENT_ID,
+// };
 
 export default function Login() {
   const [enabled, setEnabled] = useState(false);
@@ -10,6 +22,11 @@ export default function Login() {
   const navigation = useNavigate();
   const LOGINURL = "http://localhost:3000/user/login";
 
+  // firebase.initializeApp(firebaseConfig)
+  // const login=async()=>{
+  //   const provider = new firebase.auth.GoogleAuthProvider()
+  // }
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setError("");
@@ -17,9 +34,8 @@ export default function Login() {
     try {
       const response = await fetch(LOGINURL, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
 
@@ -31,10 +47,10 @@ export default function Login() {
 
       console.log("User logged in successfully!", data);
 
-      localStorage.setItem("token", data.idToken);
-      if (!data.idToken) {
-        throw new Error("Token is missing from response");
-      }
+      // localStorage.setItem("token", data.idToken);
+      // if (!data.idToken) {
+      //   throw new Error("Token is missing from response");
+      // }
       // Navigate to dashboard
       navigation("/app/dashboard");
     } catch (err) {

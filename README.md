@@ -5,3 +5,5 @@
 # 1. integrate cookies - Х
 
 # 2. implement table sort - ✓
+
+# 3. implement pie chart - ✓

@@ -12,7 +12,6 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
-import { Timestamp } from "firebase/firestore";
 
 export default function Dashboard() {
   const customers = useGetCustomer();
