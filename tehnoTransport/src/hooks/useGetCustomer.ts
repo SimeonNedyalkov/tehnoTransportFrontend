@@ -13,14 +13,15 @@ export default function useGetCustomer() {
     //   return Cookies.get(name);
     // };
 
-    // const token = getCookie("authToken");
+    // const token = document.cookie.match("/authToken/gm");
     // console.log(token);
     // if (!token) {
     //   console.error("No token found in cookies, redirecting to login...");
     //   navigation("/");
     //   return;
     // }
-
+    // const cookieValue = document.cookie.split("; ");
+    // console.log(cookieValue);
     const getCustomer = async () => {
       try {
         const response = await fetch(DBURL, {
@@ -32,6 +33,7 @@ export default function useGetCustomer() {
         });
 
         if (!response.ok) {
+          navigation("/");
           throw new Error("Failed to fetch customer data");
         }
 

@@ -18,6 +18,9 @@ import FilterPopover from "./tableCells/FilterPopover";
 import SortIcon from "../components/ui/Icons/SortIcon";
 import { Button } from "@chakra-ui/react";
 import NewCustomer from "../interfaces/newCustomer";
+import useUpdateCustomer from "../hooks/useUpdateCustomer";
+import { useNavigate } from "react-router-dom";
+
 const columns = [
   {
     accessorKey: "brand",
@@ -59,6 +62,7 @@ export default function Table() {
   const DATA = useGetCustomer();
   const [data, setData] = useState<NewCustomer[]>(DATA);
   const [columnFilters, setColumnFilters] = useState([]);
+  const navigation = useNavigate();
   useEffect(() => {
     setData(DATA);
   }, [DATA]);
@@ -90,6 +94,7 @@ export default function Table() {
   console.log(data);
   const addNewRow = () => {
     const newRow: NewCustomer = {
+      id: "",
       brand: "",
       model: "",
       regNumber: "",
@@ -100,19 +105,62 @@ export default function Table() {
     };
     setData((prev) => [...prev, newRow]);
   };
+  function getAuthTokenFromCookies(): string | null {
+    const match = document.cookie.match(/(^|;\s*)authToken=([^;]*)/);
+    return match ? decodeURIComponent(match[2]) : null;
+  }
+
+  // Usage
+
+  const updateCustomers = async (id: string, customer: NewCustomer) => {
+    const DBURL = "http://localhost:3000/customers/";
+    const authToken = getAuthTokenFromCookies();
+
+    try {
+      const response = await fetch(DBURL + id, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+        credentials: "include",
+        body: JSON.stringify(customer),
+      });
+      console.log(customer);
+      // if (!response.ok) {
+      //   navigation("/");
+      //   throw new Error("Failed to update customer data");
+      // }
+
+      return response;
+    } catch (error) {
+      console.error("Error updating customer data:", error);
+    }
+  };
+  const updateAll = async () => {
+    for (const row of table.getRowModel().flatRows) {
+      const singleRow = row.original;
+      console.log(singleRow.id);
+      await updateCustomers(singleRow.id, singleRow); // Perform async update for each row
+    }
+  };
   return (
     <Box>
-      <HStack mb={6}>
-        <Filters
-          columnFilters={columnFilters}
-          setColumnFilters={setColumnFilters}
-        />
-        <FilterPopover
-          columnFilters={columnFilters}
-          setColumnFilters={setColumnFilters}
-        />
+      <HStack justifyContent="space-between" w="100%" mb={6}>
+        <HStack>
+          <Filters
+            columnFilters={columnFilters}
+            setColumnFilters={setColumnFilters}
+          />
+          <FilterPopover
+            columnFilters={columnFilters}
+            setColumnFilters={setColumnFilters}
+          />
+        </HStack>
+        <Button size="sm" onClick={updateAll}>
+          Save all
+        </Button>
       </HStack>
-
       <Box className="table" w={table.getTotalSize()}>
         {table.getHeaderGroups().map((headerGroup) => (
           <Box className="tr" key={headerGroup.id}>
