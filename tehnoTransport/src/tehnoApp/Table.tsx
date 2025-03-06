@@ -115,6 +115,17 @@ export default function Table() {
   const updateCustomers = async (id: string, customer: NewCustomer) => {
     const DBURL = "http://localhost:3000/customers/";
     const authToken = getAuthTokenFromCookies();
+    const customer1 = {
+      ...customer,
+      dateOfTehnoTest:
+        customer.dateOfTehnoTest instanceof Date
+          ? customer.dateOfTehnoTest
+          : typeof customer.dateOfTehnoTest === "string"
+          ? new Date(customer.dateOfTehnoTest)
+          : customer.dateOfTehnoTest?.toDate instanceof Function
+          ? customer.dateOfTehnoTest.toDate()
+          : new Date(String(customer.dateOfTehnoTest)),
+    };
 
     try {
       const response = await fetch(DBURL + id, {
