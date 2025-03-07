@@ -70,14 +70,13 @@ export default function Table() {
   const [refreshData, setRefreshData] = useState(false);
   const DATA = useGetCustomer(refreshData);
   const [data, setData] = useState<NewCustomer[]>(DATA);
+  const [originalData, setOriginalData] = useState<NewCustomer[]>(DATA);
   const [columnFilters, setColumnFilters] = useState([]);
   const navigation = useNavigate();
   useEffect(() => {
     setData(DATA);
   }, [DATA]);
-  // useEffect(() => {
-  //   setRefreshData((prev) => !prev);
-  // }, [refreshData]);
+
   const table = useReactTable({
     data,
     columns,
@@ -101,10 +100,15 @@ export default function Table() {
               : row
           )
         ),
+      removeRow: (rowIndex: number) => {
+        const setFilterFunc = (old: Customer[]) =>
+          old.filter((_row: Customer, index: number) => index !== rowIndex);
+        setData(setFilterFunc);
+        setOriginalData(setFilterFunc);
+      },
     },
   });
 
-  console.log(data);
   const addNewRow = () => {
     const newRow: NewCustomer = {
       id: "",
@@ -139,9 +143,8 @@ export default function Table() {
         credentials: "include",
         body: JSON.stringify(customer),
       });
-      console.log(customer);
       if (!response.ok && customer.brand != "") {
-        console.log("hi");
+        console.log("Error Update failed");
       }
       setRefreshData((prev) => !prev);
       return response;
@@ -152,7 +155,6 @@ export default function Table() {
   const updateAll = async () => {
     for (const row of table.getRowModel().flatRows) {
       const singleRow = row.original;
-      console.log(singleRow.id);
       await updateCustomers(singleRow.id, singleRow); // Perform async update for each row
     }
   };

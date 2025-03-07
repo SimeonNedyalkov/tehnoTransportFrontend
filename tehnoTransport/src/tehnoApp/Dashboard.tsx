@@ -14,7 +14,8 @@ import {
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 
 export default function Dashboard() {
-  const customers = useGetCustomer();
+  const [refreshData, setRefreshData] = useState(false);
+  const customers = useGetCustomer(refreshData);
   const [customersState, setCustomersState] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,7 +24,6 @@ export default function Dashboard() {
     dueSoon: 0,
     overdue: 0,
   });
-
   useEffect(() => {
     const getCustomer = async () => {
       setLoading(true);
@@ -39,6 +39,7 @@ export default function Dashboard() {
         });
         setStatusCounts({ upcoming, dueSoon, overdue });
         setCustomersState(filteredData);
+        setRefreshData((prev) => !prev);
       } catch (error) {
         console.error(error);
         setError("An error occurred while fetching customer data.");
@@ -136,7 +137,13 @@ export default function Dashboard() {
               >
                 {customer.status}
               </Text>
-              <Text>{customer.dateOfTehnoTest.toString().split("T")[0]}</Text>
+              <Text>
+                {
+                  new Date(customer.dateOfTehnoTest?.seconds * 1000)
+                    .toISOString()
+                    .split("T")[0]
+                }
+              </Text>
             </HStack>
           ))}
       </Box>

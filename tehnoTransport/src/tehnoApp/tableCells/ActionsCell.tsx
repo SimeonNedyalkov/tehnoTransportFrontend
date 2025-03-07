@@ -39,7 +39,6 @@ export default function ActionsCell({
       console.error("No date provided:", customer.dateOfTehnoTest);
     }
 
-    console.log(customer);
     try {
       const response = await fetch(DBURL, {
         method: "POST",
@@ -50,11 +49,14 @@ export default function ActionsCell({
         credentials: "include",
         body: JSON.stringify(customer),
       });
-      console.log(customer);
       if (!response.ok) {
         console.log("Create customer failed");
       }
       setCustomer(response);
+      const updatedCustomer = await response.json();
+      Object.keys(updatedCustomer).forEach((key) => {
+        table.options.meta.updateData(row.index, key, updatedCustomer[key]);
+      });
       return response;
     } catch (error) {
       console.error("Error create customer data:", error);
@@ -75,11 +77,14 @@ export default function ActionsCell({
         credentials: "include",
         body: JSON.stringify(customer),
       });
-      console.log(customer);
       if (!response.ok && customer.brand != "") {
-        console.log("hi");
+        console.log("Update failed");
       }
       setCustomer(response);
+      const updatedCustomer = await response.json();
+      Object.keys(updatedCustomer).forEach((key) => {
+        table.options.meta.updateData(row.index, key, updatedCustomer[key]);
+      });
       return response;
     } catch (error) {
       console.error("Error updating customer data:", error);
@@ -99,11 +104,11 @@ export default function ActionsCell({
         },
         credentials: "include",
       });
-      console.log(customer);
       if (!response.ok && customer.brand != "") {
-        console.log("hi");
+        console.log("Delete failed");
       }
       setCustomer(response);
+      table.options.meta.removeRow(row.index);
       return response;
     } catch (error) {
       console.error("Error updating customer data:", error);
