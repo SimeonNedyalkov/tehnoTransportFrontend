@@ -1,4 +1,4 @@
-import { Box, Button, Icon, Text, VStack, Flex } from "@chakra-ui/react";
+import { Button, Text, VStack, Flex } from "@chakra-ui/react";
 import {
   PopoverArrow,
   PopoverBody,
@@ -34,13 +34,18 @@ function KeyItem({
       _hover={{ bg: "gray.800" }}
       bgColor={selectedItem === filteredItem ? "gray.700" : "transparent"}
       onClick={() => {
-        setColumnFilters([
-          {
-            id: [filteredItem],
-            value: "",
-          },
-        ]);
-        setSelectedItem(filteredItem);
+        if (selectedItem === filteredItem) {
+          setSelectedItem("");
+          setColumnFilters([]);
+        } else {
+          setColumnFilters([
+            {
+              id: [filteredItem],
+              value: "",
+            },
+          ]);
+          setSelectedItem(filteredItem);
+        }
       }}
     >
       {filteredItem}
