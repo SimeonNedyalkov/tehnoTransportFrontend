@@ -5,6 +5,7 @@ import { Timestamp } from "firebase/firestore";
 import { CiViewTable } from "react-icons/ci";
 import { FiEdit } from "react-icons/fi";
 import { FaTrashAlt } from "react-icons/fa";
+import { Tooltip } from "../../components/ui/tooltip";
 
 export default function ActionsCell({
   getValue,
@@ -140,32 +141,46 @@ export default function ActionsCell({
   }, [tableState]);
   return (
     <Box>
-      <Button
-        size="md"
-        onClick={() => handleCreate(row.index)}
-        background="transparent"
-        padding="8px"
+      <Tooltip showArrow content="Add" positioning={{ placement: "top-end" }}>
+        <Button
+          size="md"
+          onClick={() => handleCreate(row.index)}
+          background="transparent"
+          padding="8px"
+        >
+          <CiViewTable color="blue" size="md" />
+        </Button>
+      </Tooltip>
+      <Tooltip
+        showArrow
+        content="Update"
+        positioning={{ placement: "top-end" }}
       >
-        <CiViewTable color="blue" size="md" />
-      </Button>
-      <Button
-        size="sm"
-        colorScheme="green"
-        bg="transparent"
-        onClick={() => handleUpdate(row.index)}
-        padding="8px"
+        <Button
+          size="sm"
+          colorScheme="green"
+          bg="transparent"
+          onClick={() => handleUpdate(row.index)}
+          padding="8px"
+        >
+          <FiEdit color="green" />
+        </Button>
+      </Tooltip>
+      <Tooltip
+        showArrow
+        content="Delete"
+        positioning={{ placement: "top-end" }}
       >
-        <FiEdit color="green" />
-      </Button>
-      <Button
-        size="sm"
-        colorScheme="red"
-        bg="transparent"
-        onClick={() => handleDelete(row.index)}
-        padding="8px"
-      >
-        <FaTrashAlt color="red" />
-      </Button>
+        <Button
+          size="sm"
+          colorScheme="red"
+          bg="transparent"
+          onClick={() => handleDelete(row.index)}
+          padding="8px"
+        >
+          <FaTrashAlt color="red" />
+        </Button>
+      </Tooltip>
     </Box>
   );
 }
