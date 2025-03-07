@@ -43,15 +43,16 @@ export default function DateCell({
   table,
 }: CellPropsInterface) {
   let date = getValue();
+  console.log(date);
 
   if (date && typeof date === "object" && "_seconds" in date) {
     date = new Date(date._seconds * 1000);
+  } else if (date && typeof date === "object" && "seconds" in date) {
+    date = new Date(date.seconds * 1000);
   } else if (date instanceof Timestamp) {
     date = date.toDate();
   }
-
   const { updateData } = table.options.meta;
-  console.log(date);
   return (
     <DatePicker
       wrapperClassName="date-wrapper"

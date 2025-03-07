@@ -20,6 +20,7 @@ import { Button } from "@chakra-ui/react";
 import NewCustomer from "../interfaces/newCustomer";
 import useUpdateCustomer from "../hooks/useUpdateCustomer";
 import { useNavigate } from "react-router-dom";
+import ActionsCell from "./tableCells/ActionsCell";
 
 const columns = [
   {
@@ -31,6 +32,7 @@ const columns = [
     accessorKey: "model",
     header: "Model",
     cell: EditableCell,
+    size: 100,
   },
   {
     accessorKey: "regNumber",
@@ -57,15 +59,25 @@ const columns = [
     header: "Last tehno test",
     cell: DateCell,
   },
+  {
+    id: "actions",
+    header: "Actions",
+    cell: ActionsCell,
+    size: 120,
+  },
 ];
 export default function Table() {
-  const DATA = useGetCustomer();
+  const [refreshData, setRefreshData] = useState(false);
+  const DATA = useGetCustomer(refreshData);
   const [data, setData] = useState<NewCustomer[]>(DATA);
   const [columnFilters, setColumnFilters] = useState([]);
   const navigation = useNavigate();
   useEffect(() => {
     setData(DATA);
   }, [DATA]);
+  // useEffect(() => {
+  //   setRefreshData((prev) => !prev);
+  // }, [refreshData]);
   const table = useReactTable({
     data,
     columns,
@@ -91,6 +103,7 @@ export default function Table() {
         ),
     },
   });
+
   console.log(data);
   const addNewRow = () => {
     const newRow: NewCustomer = {
@@ -115,17 +128,6 @@ export default function Table() {
   const updateCustomers = async (id: string, customer: NewCustomer) => {
     const DBURL = "http://localhost:3000/customers/";
     const authToken = getAuthTokenFromCookies();
-    const customer1 = {
-      ...customer,
-      dateOfTehnoTest:
-        customer.dateOfTehnoTest instanceof Date
-          ? customer.dateOfTehnoTest
-          : typeof customer.dateOfTehnoTest === "string"
-          ? new Date(customer.dateOfTehnoTest)
-          : customer.dateOfTehnoTest?.toDate instanceof Function
-          ? customer.dateOfTehnoTest.toDate()
-          : new Date(String(customer.dateOfTehnoTest)),
-    };
 
     try {
       const response = await fetch(DBURL + id, {
@@ -138,11 +140,10 @@ export default function Table() {
         body: JSON.stringify(customer),
       });
       console.log(customer);
-      // if (!response.ok) {
-      //   navigation("/");
-      //   throw new Error("Failed to update customer data");
-      // }
-
+      if (!response.ok && customer.brand != "") {
+        console.log("hi");
+      }
+      setRefreshData((prev) => !prev);
       return response;
     } catch (error) {
       console.error("Error updating customer data:", error);
@@ -155,6 +156,7 @@ export default function Table() {
       await updateCustomers(singleRow.id, singleRow); // Perform async update for each row
     }
   };
+
   return (
     <Box>
       <HStack justifyContent="space-between" w="100%" mb={6}>
@@ -170,6 +172,9 @@ export default function Table() {
         </HStack>
         <Button size="sm" onClick={updateAll}>
           Save all
+        </Button>
+        <Button size="sm" onClick={() => setRefreshData((prev) => !prev)}>
+          Refresh page
         </Button>
       </HStack>
       <Box className="table" w={table.getTotalSize()}>
