@@ -31,8 +31,8 @@ function KeyItem({
       borderRadius={5}
       fontWeight="bold"
       p={1.5}
-      _hover={{ bg: "gray.800" }}
-      bgColor={selectedItem === filteredItem ? "gray.700" : "transparent"}
+      _hover={{ bg: "gray.300" }}
+      bgColor={selectedItem === filteredItem ? "gray.200" : "transparent"}
       onClick={() => {
         if (selectedItem === filteredItem) {
           setSelectedItem("");
