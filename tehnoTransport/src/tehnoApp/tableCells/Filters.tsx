@@ -22,6 +22,13 @@ export default function Filters({ columnFilters, setColumnFilters }: any) {
   const onFilterChange = (id: any, value: any) => {
     setColumnFilters((prev: any) => {
       const existingFilter = prev.find((f: any) => f.id === id);
+      // If the filter is dateOfTehnoTest, we need to handle the value as a date.
+      if (id === "dateOfTehnoTest") {
+        // Convert Firebase timestamp to a Date object.
+        const dateValue = new Date(value.seconds * 1000); // Multiply seconds by 1000 to get milliseconds
+        value = dateValue.toISOString().split("T")[0]; // Convert to ISO string format for easy comparison
+      }
+
       if (existingFilter?.value === value) return prev;
       return prev
         .filter((f: any) => f.id !== id)

@@ -66,8 +66,8 @@ export default function Dashboard() {
 
   // Data for Pie Chart
   const chartData = [
+    { name: "Due Soon", value: statusCounts.dueSoon, color: "#48BB78" },
     { name: "Upcoming", value: statusCounts.upcoming, color: "#3182CE" },
-    { name: "Due Soon", value: statusCounts.dueSoon, color: "#ECC94B" },
     { name: "Overdue", value: statusCounts.overdue, color: "#E53E3E" },
   ];
 
@@ -96,17 +96,18 @@ export default function Dashboard() {
       {/* KPI Cards */}
       <StatGroup w="80%" justifyContent="space-between">
         <Stat.Root>
+          <StatLabel>Due Soon</StatLabel>
+          <Stat.ValueText color="green.500">
+            {statusCounts.dueSoon}
+          </Stat.ValueText>
+        </Stat.Root>
+        <Stat.Root>
           <Stat.Label>Upcoming Tests</Stat.Label>
           <Stat.ValueText color="blue.500">
             {statusCounts.upcoming}
           </Stat.ValueText>
         </Stat.Root>
-        <Stat.Root>
-          <StatLabel>Due Soon</StatLabel>
-          <Stat.ValueText color="yellow.500">
-            {statusCounts.dueSoon}
-          </Stat.ValueText>
-        </Stat.Root>
+
         <Stat.Root>
           <StatLabel>Overdue</StatLabel>
           <Stat.ValueText color="red.500">
@@ -153,7 +154,7 @@ export default function Dashboard() {
               <Text>{customer.firstName}</Text>
               <Text
                 color={
-                  customer.status === "Due Soon" ? "yellow.500" : "blue.500"
+                  customer.status === "Due Soon" ? "green.500" : "blue.500"
                 }
               >
                 {customer.status}
