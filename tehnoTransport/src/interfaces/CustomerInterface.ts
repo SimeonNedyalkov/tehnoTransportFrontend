@@ -4,7 +4,7 @@ export default interface Customer {
   id: string;
   brand: string | "Unknown Brand";
   createdAt?: Timestamp | Date;
-  dateOfTehnoTest: Timestamp | Date;
+  dateOfTehnoTest: Timestamp | Date | { seconds: number; nanoseconds: number };
   firstName: string;
   model: string;
   phone: number;

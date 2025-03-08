@@ -67,10 +67,9 @@ const columns = [
   },
 ];
 export default function Table() {
-  const [refreshData, setRefreshData] = useState(false);
-  const DATA = useGetCustomer(refreshData);
+  const DATA = useGetCustomer();
   const [data, setData] = useState<NewCustomer[]>(DATA);
-  const [originalData, setOriginalData] = useState<NewCustomer[]>(DATA);
+  // const [originalData, setOriginalData] = useState<NewCustomer[]>(DATA);
   const [columnFilters, setColumnFilters] = useState([]);
   const navigation = useNavigate();
   useEffect(() => {
@@ -104,7 +103,7 @@ export default function Table() {
         const setFilterFunc = (old: Customer[]) =>
           old.filter((_row: Customer, index: number) => index !== rowIndex);
         setData(setFilterFunc);
-        setOriginalData(setFilterFunc);
+        // setOriginalData(setFilterFunc);
       },
     },
   });
@@ -146,7 +145,6 @@ export default function Table() {
       if (!response.ok && customer.brand != "") {
         console.log("Error Update failed");
       }
-      setRefreshData((prev) => !prev);
       return response;
     } catch (error) {
       console.error("Error updating customer data:", error);
@@ -175,9 +173,9 @@ export default function Table() {
         <Button size="sm" onClick={updateAll}>
           Save all
         </Button>
-        <Button size="sm" onClick={() => setRefreshData((prev) => !prev)}>
+        {/* <Button size="sm" onClick={() => setRefreshData((prev) => !prev)}>
           Refresh page
-        </Button>
+        </Button> */}
       </HStack>
       <Box className="table" w={table.getTotalSize()}>
         {table.getHeaderGroups().map((headerGroup) => (

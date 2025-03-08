@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
 import { useNavigate } from "react-router-dom";
 
-export default function useGetCustomer(refreshData: boolean) {
+export default function useGetCustomer() {
   const [customers, setCustomers] = useState<Customer[]>([]);
   const DBURL = "http://localhost:3000/customers";
   const navigation = useNavigate();
@@ -43,7 +43,7 @@ export default function useGetCustomer(refreshData: boolean) {
     };
 
     getCustomer();
-  }, [refreshData]);
+  }, []);
 
   return customers;
 }

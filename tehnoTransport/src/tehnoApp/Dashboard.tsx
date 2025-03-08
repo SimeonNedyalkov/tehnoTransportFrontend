@@ -12,10 +12,11 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
+import { Timestamp } from "firebase/firestore";
 
 export default function Dashboard() {
   const [refreshData, setRefreshData] = useState(false);
-  const customers = useGetCustomer(refreshData);
+  const customers = useGetCustomer();
   const [customersState, setCustomersState] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -69,6 +70,26 @@ export default function Dashboard() {
     { name: "Due Soon", value: statusCounts.dueSoon, color: "#ECC94B" },
     { name: "Overdue", value: statusCounts.overdue, color: "#E53E3E" },
   ];
+
+  const formatDate = (date: any): string => {
+    if (!date) return "No Date";
+
+    let formattedDate: Date;
+
+    if (date instanceof Timestamp) {
+      formattedDate = date.toDate();
+    } else if (typeof date === "object" && date.seconds) {
+      formattedDate = new Date(date.seconds * 1000);
+    } else if (date instanceof Date) {
+      formattedDate = date;
+    } else {
+      return "Invalid Date";
+    }
+
+    return formattedDate.toLocaleDateString();
+  };
+
+  // Usage in your component:
 
   return (
     <VStack wordSpacing={6} w="100%">
@@ -137,13 +158,7 @@ export default function Dashboard() {
               >
                 {customer.status}
               </Text>
-              <Text>
-                {
-                  new Date(customer.dateOfTehnoTest?.seconds * 1000)
-                    .toISOString()
-                    .split("T")[0]
-                }
-              </Text>
+              <Text>{formatDate(customer.dateOfTehnoTest)}</Text>
             </HStack>
           ))}
       </Box>
