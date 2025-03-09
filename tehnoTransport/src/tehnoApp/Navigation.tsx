@@ -8,7 +8,7 @@ function classNames(...classes: any[]) {
 export default function Navigation() {
   const navigation = useNavigate();
   const handleLogout = () => {
-    localStorage.removeItem("token");
+    // document.cookie
     navigation("/");
   };
   return (
