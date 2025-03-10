@@ -68,6 +68,18 @@ export default function ActionsCell({
     const DBURL = "http://localhost:3000/customers/";
     const authToken = getAuthTokenFromCookies();
     const customer = row.original;
+    if (customer.dateOfTehnoTest) {
+      const date = new Date(customer.dateOfTehnoTest);
+
+      // Check if it's a valid date before converting
+      if (!isNaN(date.getTime())) {
+        customer.dateOfTehnoTest = Timestamp.fromDate(date);
+      } else {
+        console.error("Invalid date format:", customer.dateOfTehnoTest);
+      }
+    } else {
+      console.error("No date provided:", customer.dateOfTehnoTest);
+    }
     try {
       const response = await fetch(DBURL + customer.id, {
         method: "PATCH",

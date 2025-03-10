@@ -21,6 +21,7 @@ import NewCustomer from "../interfaces/newCustomer";
 import useUpdateCustomer from "../hooks/useUpdateCustomer";
 import { useNavigate } from "react-router-dom";
 import ActionsCell from "./tableCells/ActionsCell";
+import { Timestamp } from "firebase/firestore";
 
 const columns = [
   {
@@ -131,6 +132,11 @@ export default function Table() {
   const updateCustomers = async (id: string, customer: NewCustomer) => {
     const DBURL = "http://localhost:3000/customers/";
     const authToken = getAuthTokenFromCookies();
+    if (customer.dateOfTehnoTest) {
+      customer.dateOfTehnoTest = Timestamp.fromDate(
+        new Date(`${customer.dateOfTehnoTest}T00:00:00Z`)
+      );
+    }
 
     try {
       const response = await fetch(DBURL + id, {
