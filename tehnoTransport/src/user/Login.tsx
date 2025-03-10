@@ -65,7 +65,7 @@ export default function Login() {
         <div className="formWrapper">
           <form className="flex flex-col" onSubmit={handleSubmit}>
             <div className="intro">
-              <h1 className="introh1 text-4xl text-sky-950 pb-5">
+              <h1 className="introh1 text-4xl text-sky-950 pb-5 mb-8 pb-8">
                 Tehno Transport Admin Login.
               </h1>
               <h5 className="text-sm text-gray-600 pb-5">
@@ -99,7 +99,7 @@ export default function Login() {
               />
             </div>
 
-            <div className="mb-3 mt-3 flex flex-row items-center justify-between">
+            <div className="rememberMeForgotPassword mb-3 mt-3 flex flex-row items-center justify-between">
               <Field className="flex items-center gap-2">
                 <Checkbox
                   checked={enabled}

@@ -11,4 +11,5 @@ export default interface Customer {
   regNumber: string;
   status?: string;
   daysRemaining?: number;
+  // checked?: false;
 }

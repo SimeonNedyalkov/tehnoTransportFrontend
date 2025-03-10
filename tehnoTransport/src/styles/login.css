@@ -17,6 +17,7 @@
 }
 .introh1 {
   font-size: 1.5rem;
+  margin-bottom: 1rem;
 }
 .divider {
   display: flex;
@@ -80,10 +81,6 @@
 .styledInput:focus {
   border: 1px solid #0a7fec;
 }
-/* .styledInput:focus ~ .styledEmail {
-  border: 1px solid #0a7fec;
-  color: #0a7fec;
-} */
 
 /* btn */
 .loginBtn {
@@ -101,4 +98,8 @@
 }
 .loginBtn:hover {
   background-color: #4b5bb7;
+}
+.rememberMeForgotPassword {
+  margin-top: 1rem;
+  padding-top: 1rem;
 }
