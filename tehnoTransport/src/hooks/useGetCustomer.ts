@@ -27,7 +27,9 @@ export default function useGetCustomer() {
             id: customer.id,
             brand: customer.brand,
             createdAt: customer.createdAt,
-            dateOfTehnoTest: customer.dateOfTehnoTest,
+            dateOfTehnoTest: new Date(customer.dateOfTehnoTest.seconds * 1000)
+              .toISOString()
+              .split("T")[0],
             firstName: customer.firstName,
             model: customer.model,
             phone: String(customer.phone),

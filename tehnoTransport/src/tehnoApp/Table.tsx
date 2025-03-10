@@ -75,7 +75,7 @@ export default function Table() {
   useEffect(() => {
     setData(DATA);
   }, [DATA]);
-
+  console.log(data);
   const table = useReactTable({
     data,
     columns,

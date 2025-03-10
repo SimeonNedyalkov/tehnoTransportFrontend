@@ -51,6 +51,7 @@ export default function DateCell({
   } else if (date instanceof Timestamp) {
     date = date.toDate();
   }
+  console.log(date);
   const { updateData } = table.options.meta;
   return (
     <DatePicker

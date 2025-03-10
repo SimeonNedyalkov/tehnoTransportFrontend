@@ -8,7 +8,7 @@
 
 # 3. implement pie chart - ✓
 
-# 4. Fix save all method to update all and create if not updated
+# 4. Fix save all method to update all and create if not updated - X
 
 # 5. make another table for customers to check and send to phone - X
 
