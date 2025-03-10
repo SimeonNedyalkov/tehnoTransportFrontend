@@ -43,11 +43,20 @@ export default function DateCell({
   table,
 }: CellPropsInterface) {
   let date = getValue();
+  console.log(date);
 
   if (date && typeof date === "object" && "_seconds" in date) {
     date = new Date(date._seconds * 1000);
+    const localDate = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    );
+    date = localDate.toISOString().split("T")[0];
   } else if (date && typeof date === "object" && "seconds" in date) {
     date = new Date(date.seconds * 1000);
+    const localDate = new Date(
+      date.getTime() - date.getTimezoneOffset() * 60000
+    );
+    date = localDate.toISOString().split("T")[0];
   } else if (date instanceof Timestamp) {
     date = date.toDate();
   }
@@ -56,7 +65,7 @@ export default function DateCell({
     <DatePicker
       wrapperClassName="date-wrapper"
       dateFormat="yyyy MMM d"
-      selected={date || null}
+      selected={date}
       onChange={(newDate) => updateData(row.index, column.id, newDate)}
       isClearable
       customInput={

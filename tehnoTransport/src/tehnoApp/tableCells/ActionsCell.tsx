@@ -23,8 +23,16 @@ export default function ActionsCell({
 
     try {
       const updatedCustomer = await API.createCustomer(customer);
+      // const date = new Date(customer.dateOfTehnoTest.seconds * 1000);
+      // const localDate = new Date(
+      //   date.getTime() - date.getTimezoneOffset() * 60000
+      // );
+      // const newdate = localDate.toISOString().split("T")[0];
+      // updatedCustomer.dateOfTehnoTest = newdate;
       setCustomer(updatedCustomer);
       Object.keys(updatedCustomer).forEach((key) => {
+        if (key === "dateOfTehnoTest") {
+        }
         table.options.meta.updateData(row.index, key, updatedCustomer[key]);
       });
       return updatedCustomer;
@@ -37,6 +45,12 @@ export default function ActionsCell({
     const customer = row.original;
     try {
       const updatedCustomer = await API.updateCustomer(customer.id, customer);
+      const date = new Date(customer.dateOfTehnoTest.seconds * 1000);
+      const localDate = new Date(
+        date.getTime() - date.getTimezoneOffset() * 60000
+      );
+      const newdate = localDate.toISOString().split("T")[0];
+      updatedCustomer.dateOfTehnoTest = newdate;
       setCustomer(updatedCustomer);
       Object.keys(updatedCustomer).forEach((key) => {
         table.options.meta.updateData(row.index, key, updatedCustomer[key]);

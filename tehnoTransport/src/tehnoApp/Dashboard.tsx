@@ -71,23 +71,23 @@ export default function Dashboard() {
     { name: "Overdue", value: statusCounts.overdue, color: "#E53E3E" },
   ];
 
-  const formatDate = (date: any): string => {
-    if (!date) return "No Date";
+  // const formatDate = (date: any): string => {
+  //   if (!date) return "No Date";
 
-    let formattedDate: Date;
+  //   let formattedDate: Date;
 
-    if (date instanceof Timestamp) {
-      formattedDate = date.toDate();
-    } else if (typeof date === "object" && date.seconds) {
-      formattedDate = new Date(date.seconds * 1000);
-    } else if (date instanceof Date) {
-      formattedDate = date;
-    } else {
-      return "Invalid Date";
-    }
+  //   if (date instanceof Timestamp) {
+  //     formattedDate = date.toDate();
+  //   } else if (typeof date === "object" && date.seconds) {
+  //     formattedDate = new Date(date.seconds * 1000);
+  //   } else if (date instanceof Date) {
+  //     formattedDate = date;
+  //   } else {
+  //     return "Invalid Date";
+  //   }
 
-    return formattedDate.toLocaleDateString();
-  };
+  //   return formattedDate.toLocaleDateString();
+  // };
 
   // Usage in your component:
 
