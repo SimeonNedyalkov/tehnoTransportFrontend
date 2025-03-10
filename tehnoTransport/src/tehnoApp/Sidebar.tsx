@@ -6,8 +6,8 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const menuItems = [
     { name: "Dashboard", icon: Home, path: "/app/dashboard" },
-    { name: "Vehicles", icon: Car, path: "/app/vehicles" },
     { name: "Customers", icon: Users, path: "/app/customers" },
+    { name: "Vehicles", icon: Car, path: "/app/vehicles" },
     { name: "Reports", icon: FileText, path: "/app/reports" },
     { name: "Settings", icon: Settings, path: "/app/settings" },
   ];

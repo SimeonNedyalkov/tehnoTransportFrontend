@@ -64,35 +64,14 @@ export default function Dashboard() {
     return <Text color="red.500">{error}</Text>;
   }
 
-  // Data for Pie Chart
   const chartData = [
     { name: "Due Soon", value: statusCounts.dueSoon, color: "#48BB78" },
     { name: "Upcoming", value: statusCounts.upcoming, color: "#3182CE" },
     { name: "Overdue", value: statusCounts.overdue, color: "#E53E3E" },
   ];
 
-  // const formatDate = (date: any): string => {
-  //   if (!date) return "No Date";
-
-  //   let formattedDate: Date;
-
-  //   if (date instanceof Timestamp) {
-  //     formattedDate = date.toDate();
-  //   } else if (typeof date === "object" && date.seconds) {
-  //     formattedDate = new Date(date.seconds * 1000);
-  //   } else if (date instanceof Date) {
-  //     formattedDate = date;
-  //   } else {
-  //     return "Invalid Date";
-  //   }
-
-  //   return formattedDate.toLocaleDateString();
-  // };
-
-  // Usage in your component:
-
   return (
-    <VStack wordSpacing={6} w="100%">
+    <VStack wordSpacing={6} w="100%" marginTop="10">
       {/* KPI Cards */}
       <StatGroup w="80%" justifyContent="space-between">
         <Stat.Root>
@@ -136,13 +115,15 @@ export default function Dashboard() {
           Customers with Upcoming Tests
         </Text>
         <HStack justifyContent="space-between" w="100%" fontWeight="bold">
-          <Text>Name</Text>
-          <Text>Status</Text>
-          <Text>Next Test Date</Text>
+          <Text flex={2}>Name</Text>
+          <Text flex={1}>Status</Text>
+          <Text flex={1} textAlign="right">
+            Next Test Date
+          </Text>
         </HStack>
         {customersState
-          .filter((c) => c.status !== "Overdue") // Show only upcoming/due soon
-          .slice(0, 5) // Limit to 5 customers
+          .filter((c) => c.status !== "Overdue")
+          .slice(0, 5)
           .map((customer) => (
             <HStack
               key={customer.id}
@@ -151,15 +132,25 @@ export default function Dashboard() {
               p={2}
               borderBottom="1px solid lightgray"
             >
-              <Text>{customer.firstName}</Text>
               <Text
+                flex={2}
+                whiteSpace="nowrap"
+                overflow="hidden"
+                textOverflow="ellipsis"
+              >
+                {customer.firstName}
+              </Text>
+              <Text
+                flex={1}
                 color={
                   customer.status === "Due Soon" ? "green.500" : "blue.500"
                 }
               >
                 {customer.status}
               </Text>
-              <Text>{String(customer.dateOfTehnoTest)}</Text>
+              <Text flex={1} textAlign="right">
+                {String(customer.dateOfTehnoTest)}
+              </Text>
             </HStack>
           ))}
       </Box>
