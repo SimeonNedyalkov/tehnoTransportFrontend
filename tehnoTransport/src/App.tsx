@@ -5,6 +5,7 @@ import Login from "./user/Login";
 import Customers from "./tehnoApp/Customers";
 import Navigation from "./tehnoApp/Navigation";
 import Settings from "./tehnoApp/Settings";
+import Reports from "./tehnoApp/Reports";
 
 function Layout() {
   return (
@@ -17,6 +18,7 @@ function Layout() {
         <Routes>
           <Route path="dashboard" element={<Dashboard />} />
           <Route path="customers" element={<Customers />} />
+          <Route path="reports" element={<Reports />} />
           <Route path="settings" element={<Settings />} />
         </Routes>
       </div>
