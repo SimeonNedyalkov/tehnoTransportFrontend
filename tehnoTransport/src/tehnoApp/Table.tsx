@@ -18,7 +18,7 @@ import FilterPopover from "./tableCells/FilterPopover";
 import SortIcon from "../components/ui/Icons/SortIcon";
 import { Button } from "@chakra-ui/react";
 import NewCustomer from "../interfaces/newCustomer";
-import useUpdateCustomer from "../hooks/useUpdateCustomer";
+import API from "../crud/API";
 import { useNavigate } from "react-router-dom";
 import ActionsCell from "./tableCells/ActionsCell";
 import { Timestamp } from "firebase/firestore";
@@ -122,45 +122,82 @@ export default function Table() {
     };
     setData((prev) => [...prev, newRow]);
   };
-  function getAuthTokenFromCookies(): string | null {
-    const match = document.cookie.match(/(^|;\s*)authToken=([^;]*)/);
-    return match ? decodeURIComponent(match[2]) : null;
-  }
+  // function getAuthTokenFromCookies(): string | null {
+  //   const match = document.cookie.match(/(^|;\s*)authToken=([^;]*)/);
+  //   return match ? decodeURIComponent(match[2]) : null;
+  // }
 
   // Usage
 
-  const updateCustomers = async (id: string, customer: NewCustomer) => {
-    const DBURL = "http://localhost:3000/customers/";
-    const authToken = getAuthTokenFromCookies();
-    if (customer.dateOfTehnoTest) {
-      customer.dateOfTehnoTest = Timestamp.fromDate(
-        new Date(`${customer.dateOfTehnoTest}T00:00:00Z`)
-      );
-    }
+  // const updateCustomers = async (id: string, customer: NewCustomer) => {
+  //   const DBURL = "http://localhost:3000/customers/";
+  //   const authToken = getAuthTokenFromCookies();
+  //   if (customer.dateOfTehnoTest) {
+  //     customer.dateOfTehnoTest = Timestamp.fromDate(
+  //       new Date(`${customer.dateOfTehnoTest}T00:00:00Z`)
+  //     );
+  //   }
 
-    try {
-      const response = await fetch(DBURL + id, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-        credentials: "include",
-        body: JSON.stringify(customer),
-      });
-      if (!response.ok && customer.brand != "") {
-        console.log("Error Update failed");
-      }
-      return response;
-    } catch (error) {
-      console.error("Error updating customer data:", error);
-    }
-  };
+  //   try {
+  //     const response = await fetch(DBURL + id, {
+  //       method: "PATCH",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //         Authorization: `Bearer ${authToken}`,
+  //       },
+  //       credentials: "include",
+  //       body: JSON.stringify(customer),
+  //     });
+  //     if (!response.ok && customer.brand != "") {
+  //       console.log("Error Update failed");
+  //     }
+  //     return response;
+  //   } catch (error) {
+  //     console.error("Error updating customer data:", error);
+  //   }
+  // };
   const updateAll = async () => {
     for (const row of table.getRowModel().flatRows) {
       const singleRow = row.original;
-      await updateCustomers(singleRow.id, singleRow); // Perform async update for each row
-    }
+      if (singleRow.id !== "") {
+        await API.updateCustomer(singleRow.id, singleRow);
+      }
+    } // Perform async update for each row
+    //   } else {
+    //     const DBURL = "http://localhost:3000/customers/";
+    //     const authToken = getAuthTokenFromCookies();
+    //     const { id, ...customer } = row.original;
+
+    //     // Ensure that the conversion to `Timestamp` happens correctly
+    //     if (customer.dateOfTehnoTest) {
+    //       customer.dateOfTehnoTest = Timestamp.fromDate(
+    //         new Date(`${customer.dateOfTehnoTest}T00:00:00Z`)
+    //       );
+    //     }
+
+    //     try {
+    //       const response = await fetch(DBURL, {
+    //         method: "POST",
+    //         headers: {
+    //           "Content-Type": "application/json",
+    //           Authorization: `Bearer ${authToken}`,
+    //         },
+    //         credentials: "include",
+    //         body: JSON.stringify(customer),
+    //       });
+    //       if (!response.ok) {
+    //         console.log("Create customer failed");
+    //       }
+    //       const updatedCustomer = await response.json();
+    //       Object.keys(updatedCustomer).forEach((key) => {
+    //         table.options.meta.updateData(row.index, key, updatedCustomer[key]);
+    //       });
+    //       return updatedCustomer;
+    //     } catch (error) {
+    //       console.error("Error create customer data:", error);
+    //     }
+    //   }
+    // }
   };
 
   return (

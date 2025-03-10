@@ -26,6 +26,7 @@ export default function StatusCell({
           height="100%"
           overflow="hidden"
           whiteSpace="nowrap"
+          disabled
         >
           {value}
         </Button>

@@ -159,7 +159,7 @@ export default function Dashboard() {
               >
                 {customer.status}
               </Text>
-              <Text>{formatDate(customer.dateOfTehnoTest)}</Text>
+              <Text>{String(customer.dateOfTehnoTest)}</Text>
             </HStack>
           ))}
       </Box>

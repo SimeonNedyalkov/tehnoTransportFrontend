@@ -23,13 +23,15 @@ export default function useGetCustomer() {
         const data = await response.json();
 
         const filteredData: Customer[] = data.map((customer: any) => {
+          const date = new Date(customer.dateOfTehnoTest.seconds * 1000);
+          const localDate = new Date(
+            date.getTime() - date.getTimezoneOffset() * 60000
+          );
           return {
             id: customer.id,
             brand: customer.brand,
             createdAt: customer.createdAt,
-            dateOfTehnoTest: new Date(customer.dateOfTehnoTest.seconds * 1000)
-              .toISOString()
-              .split("T")[0],
+            dateOfTehnoTest: localDate.toISOString().split("T")[0],
             firstName: customer.firstName,
             model: customer.model,
             phone: String(customer.phone),

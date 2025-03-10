@@ -6,6 +6,8 @@ import { CiViewTable } from "react-icons/ci";
 import { FiEdit } from "react-icons/fi";
 import { FaTrashAlt } from "react-icons/fa";
 import { Tooltip } from "../../components/ui/tooltip";
+import API from "../../crud/API";
+import Customer from "../../interfaces/CustomerInterface";
 
 export default function ActionsCell({
   getValue,
@@ -16,141 +18,47 @@ export default function ActionsCell({
   const [customer, setCustomer] = useState<any>({});
   const [tableState, setTableState] = useState(false);
 
-  function getAuthTokenFromCookies(): string | null {
-    const match = document.cookie.match(/(^|;\s*)authToken=([^;]*)/);
-    return match ? decodeURIComponent(match[2]) : null;
-  }
-
   const handleCreate = async (rowIndex: number) => {
-    const DBURL = "http://localhost:3000/customers/";
-    const authToken = getAuthTokenFromCookies();
     const { id, ...customer } = row.original;
 
-    // Ensure that the conversion to `Timestamp` happens correctly
-    if (customer.dateOfTehnoTest) {
-      const date = new Date(customer.dateOfTehnoTest);
-
-      // Check if it's a valid date before converting
-      if (!isNaN(date.getTime())) {
-        customer.dateOfTehnoTest = Timestamp.fromDate(date);
-      } else {
-        console.error("Invalid date format:", customer.dateOfTehnoTest);
-      }
-    } else {
-      console.error("No date provided:", customer.dateOfTehnoTest);
-    }
-
     try {
-      const response = await fetch(DBURL, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-        credentials: "include",
-        body: JSON.stringify(customer),
-      });
-      if (!response.ok) {
-        console.log("Create customer failed");
-      }
-      setCustomer(response);
-      const updatedCustomer = await response.json();
+      const updatedCustomer = await API.createCustomer(customer);
+      setCustomer(updatedCustomer);
       Object.keys(updatedCustomer).forEach((key) => {
         table.options.meta.updateData(row.index, key, updatedCustomer[key]);
       });
-      return response;
+      return updatedCustomer;
     } catch (error) {
       console.error("Error create customer data:", error);
     }
   };
 
   const handleUpdate = async (rowIndex: number) => {
-    const DBURL = "http://localhost:3000/customers/";
-    const authToken = getAuthTokenFromCookies();
     const customer = row.original;
-    if (customer.dateOfTehnoTest) {
-      const date = new Date(customer.dateOfTehnoTest);
-
-      // Check if it's a valid date before converting
-      if (!isNaN(date.getTime())) {
-        customer.dateOfTehnoTest = Timestamp.fromDate(date);
-      } else {
-        console.error("Invalid date format:", customer.dateOfTehnoTest);
-      }
-    } else {
-      console.error("No date provided:", customer.dateOfTehnoTest);
-    }
     try {
-      const response = await fetch(DBURL + customer.id, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-        credentials: "include",
-        body: JSON.stringify(customer),
-      });
-      if (!response.ok && customer.brand != "") {
-        console.log("Update failed");
-      }
-      setCustomer(response);
-      const updatedCustomer = await response.json();
+      const updatedCustomer = await API.updateCustomer(customer.id, customer);
+      setCustomer(updatedCustomer);
       Object.keys(updatedCustomer).forEach((key) => {
         table.options.meta.updateData(row.index, key, updatedCustomer[key]);
       });
-      return response;
+      return updatedCustomer;
     } catch (error) {
       console.error("Error updating customer data:", error);
     }
   };
 
   const handleDelete = async (rowIndex: number) => {
-    const DBURL = "http://localhost:3000/customers/";
-    const authToken = getAuthTokenFromCookies();
     const customer = row.original;
     try {
-      const response = await fetch(DBURL + customer.id, {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${authToken}`,
-        },
-        credentials: "include",
-      });
-      if (!response.ok && customer.brand != "") {
-        console.log("Delete failed");
-      }
-      setCustomer(response);
+      const deletedCustomer = await API.deleteCustomer(customer.id);
+      setCustomer(deletedCustomer);
       table.options.meta.removeRow(row.index);
-      return response;
+      return deletedCustomer;
     } catch (error) {
       console.error("Error updating customer data:", error);
     }
   };
-  const fetchCustomers = async () => {
-    const DBURL = "http://localhost:3000/customers/";
-    const authToken = getAuthTokenFromCookies();
-    try {
-      const response = await fetch(DBURL, {
-        headers: {
-          Authorization: `Bearer ${authToken}`,
-        },
-        credentials: "include",
-      });
-      if (response.ok) {
-        const data = await response.json();
-        setCustomer(data); // Set the customer data after fetch
-      } else {
-        console.error("Failed to fetch customers");
-      }
-    } catch (error) {
-      console.error("Error fetching customers:", error);
-    }
-  };
 
-  useEffect(() => {
-    fetchCustomers();
-  }, [tableState]);
   return (
     <Box>
       <Tooltip showArrow content="Add" positioning={{ placement: "top-end" }}>

@@ -3,5 +3,6 @@ interface CellPropsInterface {
   row: any;
   column: any;
   table: any;
+  disabled?: any;
 }
 export default CellPropsInterface;
