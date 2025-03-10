@@ -8,7 +8,7 @@ import {
 } from "@tanstack/react-table";
 import useGetCustomer from "../hooks/useGetCustomer";
 import { Box, ButtonGroup, HStack, Icon, Text, VStack } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
 import EditableCell from "./tableCells/EditableCell";
 import StatusCell from "./tableCells/StatusCell";
@@ -22,55 +22,59 @@ import API from "../crud/API";
 import { useNavigate } from "react-router-dom";
 import ActionsCell from "./tableCells/ActionsCell";
 import { Timestamp } from "firebase/firestore";
+import React from "react";
 
-const columns = [
-  {
-    accessorKey: "brand",
-    header: "Brand",
-    cell: EditableCell,
-  },
-  {
-    accessorKey: "model",
-    header: "Model",
-    cell: EditableCell,
-    size: 100,
-  },
-  {
-    accessorKey: "regNumber",
-    header: "Registration Number",
-    cell: EditableCell,
-  },
-  {
-    accessorKey: "firstName",
-    header: "First Name",
-    cell: EditableCell,
-  },
-  {
-    accessorKey: "phone",
-    header: "Phone Number",
-    cell: EditableCell,
-  },
-  {
-    accessorKey: "status",
-    header: "Status",
-    cell: StatusCell,
-  },
-  {
-    accessorKey: "dateOfTehnoTest",
-    header: "Last tehno test",
-    cell: DateCell,
-  },
-  {
-    id: "actions",
-    header: "Actions",
-    cell: ActionsCell,
-    size: 120,
-  },
-];
 export default function Table() {
+  const columns = useMemo(
+    () => [
+      {
+        accessorKey: "brand",
+        header: "Brand",
+        cell: EditableCell,
+      },
+      {
+        accessorKey: "model",
+        header: "Model",
+        cell: EditableCell,
+        size: 100,
+      },
+      {
+        accessorKey: "regNumber",
+        header: "Registration Number",
+        cell: EditableCell,
+      },
+      {
+        accessorKey: "firstName",
+        header: "First Name",
+        cell: EditableCell,
+      },
+      {
+        accessorKey: "phone",
+        header: "Phone Number",
+        cell: EditableCell,
+      },
+      {
+        accessorKey: "status",
+        header: "Status",
+        cell: StatusCell,
+      },
+      {
+        accessorKey: "dateOfTehnoTest",
+        header: "Last tehno test",
+        cell: DateCell,
+      },
+      {
+        id: "actions",
+        header: "Actions",
+        cell: ActionsCell,
+        size: 120,
+      },
+    ],
+    []
+  );
   const DATA = useGetCustomer();
   const [data, setData] = useState<NewCustomer[]>(DATA);
-  // const [originalData, setOriginalData] = useState<NewCustomer[]>(DATA);
+
   const [columnFilters, setColumnFilters] = useState([]);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
@@ -78,8 +82,9 @@ export default function Table() {
   });
   const navigation = useNavigate();
   useEffect(() => {
-    setData(DATA);
-    console.log(data);
+    if (DATA.length !== data.length) {
+      setData(DATA);
+    }
   }, [DATA]);
 
   const table = useReactTable({
@@ -93,6 +98,8 @@ export default function Table() {
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    autoResetPageIndex: false,
+    autoResetExpanded: false,
     onPaginationChange: (newPagination) => {
       setPagination(newPagination);
     },
@@ -113,7 +120,6 @@ export default function Table() {
         const setFilterFunc = (old: Customer[]) =>
           old.filter((_row: Customer, index: number) => index !== rowIndex);
         setData(setFilterFunc);
-        // setOriginalData(setFilterFunc);
       },
     },
   });
@@ -131,7 +137,6 @@ export default function Table() {
     };
     setData((prev) => {
       const updatedData = [...prev, newRow];
-      // If we're adding a new row on the last page and it's full, go to the next page
       const totalRows = updatedData.length;
       const totalPages = Math.ceil(totalRows / pagination.pageSize);
       if (pagination.pageIndex >= totalPages - 1) {
