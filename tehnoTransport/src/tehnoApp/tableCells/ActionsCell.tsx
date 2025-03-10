@@ -82,7 +82,7 @@ export default function ActionsCell({
           background="transparent"
           padding="8px"
         >
-          <CiViewTable color="blue" size="md" />
+          <CiViewTable color="blue" size="8" />
         </Button>
       </Tooltip>
       <Tooltip
@@ -97,7 +97,7 @@ export default function ActionsCell({
           onClick={() => handleUpdate(row.index)}
           padding="8px"
         >
-          <FiEdit color="green" />
+          <FiEdit color="green" size="8" />
         </Button>
       </Tooltip>
       <Tooltip
@@ -112,7 +112,7 @@ export default function ActionsCell({
           onClick={() => handleDelete(row.index)}
           padding="8px"
         >
-          <FaTrashAlt color="red" />
+          <FaTrashAlt color="red" size="8" />
         </Button>
       </Tooltip>
     </Box>

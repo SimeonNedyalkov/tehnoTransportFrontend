@@ -72,21 +72,30 @@ export default function Table() {
   const [data, setData] = useState<NewCustomer[]>(DATA);
   // const [originalData, setOriginalData] = useState<NewCustomer[]>(DATA);
   const [columnFilters, setColumnFilters] = useState([]);
+  const [pagination, setPagination] = useState({
+    pageIndex: 0,
+    pageSize: 10,
+  });
   const navigation = useNavigate();
   useEffect(() => {
     setData(DATA);
+    console.log(data);
   }, [DATA]);
-  console.log(data);
+
   const table = useReactTable({
     data,
     columns,
     state: {
       columnFilters,
+      pagination,
     },
     getCoreRowModel: getCoreRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
+    onPaginationChange: (newPagination) => {
+      setPagination(newPagination);
+    },
     columnResizeMode: "onChange",
     meta: {
       updateData: (rowIndex: number, columnId: string, value: any) =>
@@ -120,7 +129,19 @@ export default function Table() {
       status: "",
       dateOfTehnoTest: new Date(),
     };
-    setData((prev) => [...prev, newRow]);
+    setData((prev) => {
+      const updatedData = [...prev, newRow];
+      // If we're adding a new row on the last page and it's full, go to the next page
+      const totalRows = updatedData.length;
+      const totalPages = Math.ceil(totalRows / pagination.pageSize);
+      if (pagination.pageIndex >= totalPages - 1) {
+        setPagination((prevState) => ({
+          ...prevState,
+          pageIndex: totalPages - 1,
+        }));
+      }
+      return updatedData;
+    });
   };
   // function getAuthTokenFromCookies(): string | null {
   //   const match = document.cookie.match(/(^|;\s*)authToken=([^;]*)/);

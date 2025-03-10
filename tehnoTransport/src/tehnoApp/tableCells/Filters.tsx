@@ -4,8 +4,6 @@ import { LuSearch } from "react-icons/lu";
 import { useEffect, useState } from "react";
 
 export default function Filters({ columnFilters, setColumnFilters }: any) {
-  console.log(columnFilters);
-
   const selectedFilter = columnFilters[columnFilters.length - 1]?.id || "brand";
   const taskName =
     columnFilters.find((f: any) => f.id === selectedFilter)?.value || "";
