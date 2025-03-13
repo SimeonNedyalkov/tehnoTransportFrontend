@@ -44,8 +44,9 @@ export default function Reports() {
     }
   }, [DATA]);
   return (
-    <Stack width="full" gap="5">
+    <Stack width="full" gap="5" mt="10rem">
       <Heading size="xl">Tehno Transport</Heading>
+
       <Table.Root size="sm" variant="outline" striped>
         <Table.Header>
           <Table.Row>
