@@ -35,6 +35,27 @@ export default function Reports() {
     }));
     setValues(allDueSoon2);
   }, [data]);
+  const allChecked = values.every((value) => value.checked);
+  const indeterminate = values.some((value) => value.checked) && !allChecked;
+
+  const items = values.map((item, index) => (
+    <Checkbox.Root
+      ms="6"
+      key={item.id}
+      checked={item.checked}
+      onCheckedChange={(e) => {
+        setValues((current) => {
+          const newValues = [...current];
+          newValues[index] = { ...newValues[index], checked: !!e.checked };
+          return newValues;
+        });
+      }}
+    >
+      <Checkbox.HiddenInput />
+      <Checkbox.Control />
+      <Checkbox.Label>{item.phone}</Checkbox.Label>
+    </Checkbox.Root>
+  ));
 
   console.log(values);
   const [count, setCount] = useState(0);
@@ -43,32 +64,52 @@ export default function Reports() {
       setData(DATA);
     }
   }, [DATA]);
+  console.log(items);
   return (
     <Stack width="full" gap="5" mt="10rem">
       <Heading size="xl">Tehno Transport</Heading>
+      <Stack align="flex-end">
+        <Checkbox.Root
+          checked={indeterminate ? "indeterminate" : allChecked}
+          onCheckedChange={(e) => {
+            setValues((current) =>
+              current.map((value) => ({ ...value, checked: !!e.checked }))
+            );
+          }}
+        >
+          <Checkbox.HiddenInput />
+          <Checkbox.Control>
+            <Checkbox.Indicator />
+          </Checkbox.Control>
+          <Checkbox.Label>Weekdays</Checkbox.Label>
+        </Checkbox.Root>
 
-      <Table.Root size="sm" variant="outline" striped>
-        <Table.Header>
-          <Table.Row>
-            <Table.ColumnHeader>Name</Table.ColumnHeader>
-            <Table.ColumnHeader>Reg number</Table.ColumnHeader>
-            <Table.ColumnHeader>Category</Table.ColumnHeader>
-            <Table.ColumnHeader>Model</Table.ColumnHeader>
-            <Table.ColumnHeader>Phone</Table.ColumnHeader>
-            <Table.ColumnHeader>Date</Table.ColumnHeader>
-          </Table.Row>
-        </Table.Header>
-        <Table.Body>
-          {values.map((customer) =>
-            customer.status === "Due Soon" ? (
-              <Table.Row key={customer.id}>
-                <Table.Cell>{customer.firstName}</Table.Cell>
-                <Table.Cell>{customer.regNumber}</Table.Cell>
-                <Table.Cell>{customer.brand}</Table.Cell>
-                <Table.Cell>{customer.model}</Table.Cell>
-                <Table.Cell>{customer.phone}</Table.Cell>
-                <Table.Cell>{String(customer.dateOfTehnoTest)}</Table.Cell>
-                {/* <Checkbox.Root>
+        <Table.Root size="sm" variant="outline" striped>
+          <Table.Header>
+            <Table.Row>
+              <Table.ColumnHeader>Name</Table.ColumnHeader>
+              <Table.ColumnHeader>Reg number</Table.ColumnHeader>
+              <Table.ColumnHeader>Category</Table.ColumnHeader>
+              <Table.ColumnHeader>Model</Table.ColumnHeader>
+              <Table.ColumnHeader>Phone</Table.ColumnHeader>
+              <Table.ColumnHeader>Date</Table.ColumnHeader>
+              <Table.ColumnHeader>People to send sms</Table.ColumnHeader>
+            </Table.Row>
+          </Table.Header>
+          <Table.Body>
+            {values.map((customer) =>
+              customer.status === "Due Soon" ? (
+                <Table.Row key={customer.id}>
+                  <Table.Cell>{customer.firstName}</Table.Cell>
+                  <Table.Cell>{customer.regNumber}</Table.Cell>
+                  <Table.Cell>{customer.brand}</Table.Cell>
+                  <Table.Cell>{customer.model}</Table.Cell>
+                  <Table.Cell>{customer.phone}</Table.Cell>
+                  <Table.Cell>{String(customer.dateOfTehnoTest)}</Table.Cell>
+                  <Table.Cell>
+                    {items.filter((x) => x.key === customer.id)}
+                  </Table.Cell>
+                  {/* <Checkbox.Root>
                   <Checkbox.HiddenInput />
                   <Checkbox.Control
                     sx={{
@@ -79,14 +120,14 @@ export default function Reports() {
                     }}
                   />
                 </Checkbox.Root> */}
-              </Table.Row>
-            ) : (
-              <></>
-            )
-          )}
-        </Table.Body>
-      </Table.Root>
-
+                </Table.Row>
+              ) : (
+                <></>
+              )
+            )}
+          </Table.Body>
+        </Table.Root>
+      </Stack>
       <PaginationRoot count={values.length} pageSize={5} page={1}>
         <HStack wrap="wrap">
           <PaginationPrevTrigger />
