@@ -24,6 +24,7 @@ export default function Dashboard() {
     upcoming: 0,
     dueSoon: 0,
     overdue: 0,
+    valid: 0,
   });
   useEffect(() => {
     const getCustomer = async () => {
@@ -32,13 +33,15 @@ export default function Dashboard() {
         let upcoming = 0;
         let dueSoon = 0;
         let overdue = 0;
+        let valid = 0;
         const filteredData: Customer[] = customers.map((customer) => {
           if (customer.status === "Upcoming") upcoming += 1;
           else if (customer.status === "Due Soon") dueSoon += 1;
           else if (customer.status === "Overdue") overdue += 1;
+          else if (customer.status === "Valid") valid += 1;
           return { ...customer };
         });
-        setStatusCounts({ upcoming, dueSoon, overdue });
+        setStatusCounts({ upcoming, dueSoon, overdue, valid });
         setCustomersState(filteredData);
         setRefreshData((prev) => !prev);
       } catch (error) {
@@ -65,9 +68,14 @@ export default function Dashboard() {
   }
 
   const chartData = [
-    { name: "Due Soon", value: statusCounts.dueSoon, color: "#48BB78" },
-    { name: "Upcoming", value: statusCounts.upcoming, color: "#3182CE" },
-    { name: "Overdue", value: statusCounts.overdue, color: "#E53E3E" },
+    { name: "Due Soon", value: statusCounts.dueSoon, color: "#E53E3E" }, // Red
+    { name: "Upcoming", value: statusCounts.upcoming, color: "#3182CE" }, // Blue
+    { name: "Overdue", value: statusCounts.overdue, color: "#8B4513" }, // Brown
+    {
+      name: "Valid",
+      value: statusCounts.valid,
+      color: "#48BB78",
+    }, // Green
   ];
 
   return (
@@ -76,7 +84,7 @@ export default function Dashboard() {
       <StatGroup w="80%" justifyContent="space-between">
         <Stat.Root>
           <StatLabel>Due Soon</StatLabel>
-          <Stat.ValueText color="green.500">
+          <Stat.ValueText color="red.500">
             {statusCounts.dueSoon}
           </Stat.ValueText>
         </Stat.Root>
@@ -86,10 +94,15 @@ export default function Dashboard() {
             {statusCounts.upcoming}
           </Stat.ValueText>
         </Stat.Root>
-
+        <Stat.Root>
+          <StatLabel>Have Tehno Test</StatLabel>
+          <Stat.ValueText color="green.500">
+            {statusCounts.valid}
+          </Stat.ValueText>
+        </Stat.Root>
         <Stat.Root>
           <StatLabel>Overdue</StatLabel>
-          <Stat.ValueText color="red.500">
+          <Stat.ValueText color="#8B4513">
             {statusCounts.overdue}
           </Stat.ValueText>
         </Stat.Root>
@@ -142,9 +155,7 @@ export default function Dashboard() {
               </Text>
               <Text
                 flex={1}
-                color={
-                  customer.status === "Due Soon" ? "green.500" : "blue.500"
-                }
+                color={customer.status === "Due Soon" ? "red.500" : "blue.500"}
               >
                 {customer.status}
               </Text>
