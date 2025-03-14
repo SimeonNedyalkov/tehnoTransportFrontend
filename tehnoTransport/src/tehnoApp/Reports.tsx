@@ -42,6 +42,7 @@ export default function Reports() {
     <Checkbox.Root
       ms="6"
       key={item.id}
+      colorPalette="cyan"
       checked={item.checked}
       onCheckedChange={(e) => {
         setValues((current) => {
@@ -52,7 +53,9 @@ export default function Reports() {
       }}
     >
       <Checkbox.HiddenInput />
-      <Checkbox.Control />
+      <Checkbox.Control>
+        <Checkbox.Indicator />
+      </Checkbox.Control>
       <Checkbox.Label>{item.phone}</Checkbox.Label>
     </Checkbox.Root>
   ));
@@ -67,23 +70,28 @@ export default function Reports() {
   console.log(items);
   return (
     <Stack width="full" gap="5" mt="10rem">
-      <Heading size="xl">Tehno Transport</Heading>
       <Stack align="flex-end">
-        <Checkbox.Root
-          checked={indeterminate ? "indeterminate" : allChecked}
-          onCheckedChange={(e) => {
-            setValues((current) =>
-              current.map((value) => ({ ...value, checked: !!e.checked }))
-            );
-          }}
-        >
-          <Checkbox.HiddenInput />
-          <Checkbox.Control>
-            <Checkbox.Indicator />
-          </Checkbox.Control>
-          <Checkbox.Label>Weekdays</Checkbox.Label>
-        </Checkbox.Root>
-
+        <HStack justifyContent="space-between" w="100%" paddingBottom="1rem">
+          <Heading size="xl" marginLeft="4rem">
+            Tehno Transport
+          </Heading>
+          <Checkbox.Root
+            colorPalette="cyan"
+            marginRight="4rem"
+            checked={indeterminate ? "indeterminate" : allChecked}
+            onCheckedChange={(e) => {
+              setValues((current) =>
+                current.map((value) => ({ ...value, checked: !!e.checked }))
+              );
+            }}
+          >
+            <Checkbox.HiddenInput />
+            <Checkbox.Control>
+              <Checkbox.Indicator />
+            </Checkbox.Control>
+            <Checkbox.Label>Select All</Checkbox.Label>
+          </Checkbox.Root>
+        </HStack>
         <Table.Root size="sm" variant="outline" striped>
           <Table.Header>
             <Table.Row>
