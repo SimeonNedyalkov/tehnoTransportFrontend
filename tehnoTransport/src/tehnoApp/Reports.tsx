@@ -77,7 +77,8 @@ export default function Reports() {
   console.log(items);
 
   const handleSendToApp = () => {
-    return console.log("hello");
+    const checked = values.filter((x) => x.checked === true);
+    return console.log(checked);
   };
   return (
     <Stack width="full" gap="5" mt="10rem">

@@ -14,7 +14,7 @@ export default function StatusCell({
   table,
 }: CellPropsInterface) {
   const value = getValue() || "";
-  const statuses = ["Upcoming", "Overdue", "Due Soon"];
+  const statuses = ["Upcoming", "Overdue", "Due Soon", "Valid", "Expired"];
   const { updateData } = table.options.meta;
   return (
     <MenuRoot>
