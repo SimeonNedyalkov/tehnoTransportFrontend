@@ -1,4 +1,11 @@
-import { Stack, Heading, Table, HStack, Checkbox } from "@chakra-ui/react";
+import {
+  Stack,
+  Heading,
+  Table,
+  HStack,
+  Checkbox,
+  Button,
+} from "@chakra-ui/react";
 import {
   PaginationItems,
   PaginationNextTrigger,
@@ -68,6 +75,10 @@ export default function Reports() {
     }
   }, [DATA]);
   console.log(items);
+
+  const handleSendToApp = () => {
+    return console.log("hello");
+  };
   return (
     <Stack width="full" gap="5" mt="10rem">
       <Stack align="flex-end">
@@ -137,10 +148,13 @@ export default function Reports() {
         </Table.Root>
       </Stack>
       <PaginationRoot count={values.length} pageSize={5} page={1}>
-        <HStack wrap="wrap">
-          <PaginationPrevTrigger />
-          <PaginationItems />
-          <PaginationNextTrigger />
+        <HStack justifyContent="space-between">
+          <HStack wrap="wrap">
+            <PaginationPrevTrigger />
+            <PaginationItems />
+            <PaginationNextTrigger />
+          </HStack>
+          <Button onClick={handleSendToApp}>Send to app</Button>
         </HStack>
       </PaginationRoot>
     </Stack>
