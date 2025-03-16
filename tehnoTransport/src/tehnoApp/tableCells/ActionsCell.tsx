@@ -8,6 +8,7 @@ import { FaTrashAlt } from "react-icons/fa";
 import { Tooltip } from "../../components/ui/tooltip";
 import API from "../../crud/API";
 import Customer from "../../interfaces/CustomerInterface";
+import daysRemainingAndStatusCalc from "../../tools/daysRemainingAndStatusCalc";
 
 export default function ActionsCell({
   getValue,
@@ -29,6 +30,13 @@ export default function ActionsCell({
       // );
       // const newdate = localDate.toISOString().split("T")[0];
       // updatedCustomer.dateOfTehnoTest = newdate;
+      const testDate = new Date(updatedCustomer.dateOfTehnoTest.seconds * 1000);
+      const timestamp = Timestamp.fromDate(testDate);
+      updatedCustomer.daysRemaining =
+        daysRemainingAndStatusCalc.calculateDaysRemaining(timestamp);
+      updatedCustomer.status = daysRemainingAndStatusCalc.getStatus(
+        updatedCustomer.daysRemaining
+      );
       setCustomer(updatedCustomer);
       Object.keys(updatedCustomer).forEach((key) => {
         if (key === "dateOfTehnoTest") {
@@ -51,6 +59,14 @@ export default function ActionsCell({
       );
       const newdate = localDate.toISOString().split("T")[0];
       updatedCustomer.dateOfTehnoTest = newdate;
+      const testDate = new Date(updatedCustomer.dateOfTehnoTest);
+      const timestamp = Timestamp.fromDate(testDate);
+      updatedCustomer.daysRemaining =
+        daysRemainingAndStatusCalc.calculateDaysRemaining(timestamp);
+      updatedCustomer.status = daysRemainingAndStatusCalc.getStatus(
+        updatedCustomer.daysRemaining
+      );
+
       setCustomer(updatedCustomer);
       Object.keys(updatedCustomer).forEach((key) => {
         table.options.meta.updateData(row.index, key, updatedCustomer[key]);

@@ -82,11 +82,9 @@ export default function Table() {
   });
   const navigation = useNavigate();
   useEffect(() => {
-    if (DATA.length !== data.length) {
-      setData(DATA);
-    }
+    setData(DATA);
   }, [DATA]);
-
+  console.log(data);
   const table = useReactTable({
     data,
     columns,
@@ -132,7 +130,7 @@ export default function Table() {
       regNumber: "",
       firstName: "",
       phone: 359,
-      status: "",
+      // status: "",
       dateOfTehnoTest: new Date(),
     };
     setData((prev) => {

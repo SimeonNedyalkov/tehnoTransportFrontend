@@ -9,7 +9,7 @@ export default interface Customer {
   model: string;
   phone: number;
   regNumber: string;
-  status?: string;
-  daysRemaining?: number;
+  // status?: string;
+  // daysRemaining?: number;
   // checked?: false;
 }

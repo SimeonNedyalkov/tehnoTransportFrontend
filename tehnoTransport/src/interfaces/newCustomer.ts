@@ -9,6 +9,6 @@ export default interface NewCustomer {
   model: string;
   phone: number;
   regNumber: string;
-  status?: string;
-  daysRemaining?: number;
+  // status?: string;
+  // daysRemaining?: number;
 }

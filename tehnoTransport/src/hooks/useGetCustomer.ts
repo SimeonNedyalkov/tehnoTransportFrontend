@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
 import { useNavigate } from "react-router-dom";
+import { Timestamp } from "firebase/firestore";
+import daysRemainingAndStatusCalc from "../tools/daysRemainingAndStatusCalc";
 
 export default function useGetCustomer() {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -27,6 +29,21 @@ export default function useGetCustomer() {
           const localDate = new Date(
             date.getTime() - date.getTimezoneOffset() * 60000
           );
+          let testDate: Date;
+          if (customer.dateOfTehnoTest instanceof Timestamp) {
+            // If it's a Firebase Timestamp
+            testDate = customer.dateOfTehnoTest.toDate();
+          } else if (customer.dateOfTehnoTest instanceof Date) {
+            // If it's already a Date object
+            testDate = customer.dateOfTehnoTest;
+          } else {
+            // If it's an object with seconds and nanoseconds (common in Firestore documents)
+            testDate = new Date(customer.dateOfTehnoTest.seconds * 1000);
+          }
+          const timestamp = Timestamp.fromDate(testDate);
+          const daysRemaining =
+            daysRemainingAndStatusCalc.calculateDaysRemaining(timestamp);
+          const status = daysRemainingAndStatusCalc.getStatus(daysRemaining);
           return {
             id: customer.id,
             brand: customer.brand,
@@ -36,7 +53,8 @@ export default function useGetCustomer() {
             model: customer.model,
             phone: String(customer.phone),
             regNumber: customer.regNumber,
-            status: customer.status,
+            status: status,
+            daysRemaining: daysRemaining,
           };
         });
 
