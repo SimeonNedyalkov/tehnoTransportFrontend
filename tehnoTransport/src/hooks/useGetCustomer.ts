@@ -3,6 +3,7 @@ import Customer from "../interfaces/CustomerInterface";
 import { useNavigate } from "react-router-dom";
 import { Timestamp } from "firebase/firestore";
 import daysRemainingAndStatusCalc from "../tools/daysRemainingAndStatusCalc";
+import refreshAuthToken from "../tools/refreshToken";
 
 export default function useGetCustomer() {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -12,12 +13,29 @@ export default function useGetCustomer() {
   useEffect(() => {
     const getCustomer = async () => {
       try {
-        const response = await fetch(DBURL, {
+        let response = await fetch(DBURL, {
           method: "GET",
           credentials: "include",
         });
 
         if (!response.ok) {
+          try {
+            const refreshedData = await refreshAuthToken();
+            if (!response.ok) {
+              console.error("Failed to fetch data");
+              if (refreshedData) {
+                console.log("Retrying request with refreshed token...");
+                response = await fetch(DBURL, {
+                  method: "GET",
+                  credentials: "include",
+                });
+                console.log(response);
+              }
+            } else {
+              const data = await refreshedData.json();
+              console.log("API Data:", data);
+            }
+          } catch (error) {}
           navigation("/");
           throw new Error("Failed to fetch customer data");
         }

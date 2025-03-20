@@ -6,8 +6,10 @@ import Customers from "./tehnoApp/Customers";
 import Navigation from "./tehnoApp/Navigation";
 import Settings from "./tehnoApp/Settings";
 import Reports from "./tehnoApp/Reports";
+import useAuth from "./hooks/useAuth";
 
 function Layout() {
+  const { isAuthenticated } = useAuth();
   return (
     <div className="flex flex-row">
       <Sidebar />
@@ -16,10 +18,22 @@ function Layout() {
           <Navigation />
         </div>
         <Routes>
-          <Route path="dashboard" element={<Dashboard />} />
-          <Route path="customers" element={<Customers />} />
-          <Route path="reports" element={<Reports />} />
-          <Route path="settings" element={<Settings />} />
+          <Route
+            path="dashboard"
+            element={isAuthenticated ? <Dashboard /> : <Login />}
+          />
+          <Route
+            path="customers"
+            element={isAuthenticated ? <Customers /> : <Login />}
+          />
+          <Route
+            path="reports"
+            element={isAuthenticated ? <Reports /> : <Login />}
+          />
+          <Route
+            path="settings"
+            element={isAuthenticated ? <Settings /> : <Login />}
+          />
         </Routes>
       </div>
     </div>

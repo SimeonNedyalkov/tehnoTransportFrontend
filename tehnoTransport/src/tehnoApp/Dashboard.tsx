@@ -145,7 +145,12 @@ export default function Dashboard() {
           </Text>
         </HStack>
         {customersState
-          .filter((c) => c.status !== "Overdue")
+          .filter(
+            (c) =>
+              c.status !== "Overdue" &&
+              c.status !== "Valid" &&
+              c.status !== "Expired"
+          )
           .slice(0, 5)
           .map((customer) => (
             <HStack
