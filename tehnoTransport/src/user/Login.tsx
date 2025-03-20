@@ -46,12 +46,6 @@ export default function Login() {
       const data = await response.json();
 
       console.log("User logged in successfully!", data);
-
-      // localStorage.setItem("token", data.idToken);
-      // if (!data.idToken) {
-      //   throw new Error("Token is missing from response");
-      // }
-      // Navigate to dashboard
       navigation("/app/dashboard");
     } catch (err) {
       console.error("Login error:", err);

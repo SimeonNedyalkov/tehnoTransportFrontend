@@ -7,9 +7,23 @@ function classNames(...classes: any[]) {
 
 export default function Navigation() {
   const navigation = useNavigate();
-  const handleLogout = () => {
-    // document.cookie
-    navigation("/");
+  const LOGOUTURL = "http://localhost:3000/user/logout";
+  const handleLogout = async () => {
+    try {
+      const response = await fetch(LOGOUTURL, {
+        method: "POST",
+        credentials: "include", // Ensures cookies are sent
+      });
+
+      if (response.status == 200) {
+        console.log("User logged out successfully!");
+        navigation("/"); // Redirect to login page
+      } else {
+        console.log(`${response.status} -- Logout failed`);
+      }
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
   };
   return (
     <Menu as="div" className="relative ml-3">
