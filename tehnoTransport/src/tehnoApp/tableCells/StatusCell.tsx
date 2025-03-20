@@ -6,6 +6,7 @@ import {
 } from "../../components/ui/menu.tsx";
 import { Button } from "@chakra-ui/react";
 import CellPropsInterface from "../../interfaces/CellPropsInterface.ts";
+import { useEffect, useState } from "react";
 
 export default function StatusCell({
   getValue,
@@ -16,11 +17,16 @@ export default function StatusCell({
   const value = getValue() || "";
   const statuses = ["Upcoming", "Overdue", "Due Soon", "Valid", "Expired"];
   const { updateData } = table.options.meta;
+  const [isDark, setIsDark] = useState(false);
+
+  useEffect(() => {
+    setIsDark(document.body.classList.contains("dark"));
+  }, []);
   return (
     <MenuRoot>
       <MenuTrigger asChild>
         <Button
-          variant="ghost"
+          variant={isDark ? "solid" : "ghost"}
           size="sm"
           w="100%"
           height="100%"

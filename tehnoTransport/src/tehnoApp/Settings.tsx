@@ -1,5 +1,7 @@
+import { Button } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
-
+import { Icon, Switch } from "@chakra-ui/react";
+import { FaMoon, FaSun } from "react-icons/fa";
 export default function Settings() {
   // Set the initial theme based on localStorage, defaulting to "light" if not found
   const [theme, setTheme] = useState(
@@ -24,13 +26,17 @@ export default function Settings() {
 
   return (
     <div className="settings p-4">
-      <h1 className="text-xl font-bold mb-4">Settings</h1>
-      <button
-        onClick={toggleTheme}
-        className="px-4 py-2 bg-gray-300 dark:bg-gray-800 text-black dark:text-white rounded"
-      >
-        Toggle {theme === "light" ? "Dark" : "Light"} Mode
-      </button>
+      <h1 className="text-xl font-bold mb-4">Settings:</h1>
+      <Switch.Root colorPalette="blue" size="lg">
+        <Switch.HiddenInput />
+        <Switch.Control onClick={toggleTheme}>
+          <Switch.Thumb />
+          <Switch.Indicator fallback={<Icon as={FaMoon} color="gray.400" />}>
+            <Icon as={FaSun} color="yellow.400" />
+          </Switch.Indicator>
+        </Switch.Control>
+        <Switch.Label>Switch {theme} mode</Switch.Label>
+      </Switch.Root>
     </div>
   );
 }
