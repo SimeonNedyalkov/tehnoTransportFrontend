@@ -13,3 +13,5 @@
 # 5. make another table for customers to check and send to phone - X
 
 # 6. make an android app - X
+
+# 7. implement toast messages on react native app

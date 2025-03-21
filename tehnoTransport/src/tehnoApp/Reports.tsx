@@ -16,6 +16,8 @@ import useGetCustomer from "../hooks/useGetCustomer";
 import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
 import { Timestamp } from "firebase/firestore";
+import APIdueSoon from "../crud/APIdueSoon";
+import daysRemainingAndStatusCalc from "../tools/daysRemainingAndStatusCalc";
 
 interface Customer2 {
   id: string;
@@ -67,17 +69,29 @@ export default function Reports() {
     </Checkbox.Root>
   ));
 
-  console.log(values);
   const [count, setCount] = useState(0);
   useEffect(() => {
     if (DATA.length !== data.length) {
       setData(DATA);
     }
   }, [DATA]);
-  console.log(items);
 
   const handleSendToApp = () => {
     const checked = values.filter((x) => x.checked === true);
+    if (checked.length != 0) {
+      checked.map(async (customer) => {
+        try {
+          await APIdueSoon.deleteCustomer(customer.id);
+          const updatedCustomer = await APIdueSoon.createCustomer(customer);
+
+          console.log(updatedCustomer);
+          return updatedCustomer;
+        } catch (error) {
+          console.error("Error create customer data:", error);
+        }
+      });
+    }
+
     return console.log(checked);
   };
   return (
