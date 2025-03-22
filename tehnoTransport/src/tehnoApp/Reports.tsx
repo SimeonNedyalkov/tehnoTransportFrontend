@@ -17,7 +17,10 @@ import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
 import { Timestamp } from "firebase/firestore";
 import APIdueSoon from "../crud/APIdueSoon";
-import daysRemainingAndStatusCalc from "../tools/daysRemainingAndStatusCalc";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
+import React from "react";
+import { SnackbarCloseReason } from "@mui/material/Snackbar/Snackbar";
 
 interface Customer2 {
   id: string;
@@ -36,6 +39,33 @@ export default function Reports() {
   const DATA = useGetCustomer();
   const [data, setData] = useState<Customer[]>([]);
   const [values, setValues] = useState<Customer2[]>([]);
+  const [isSuccess, setIsSuccess] = useState(false);
+  const [isError, setError] = useState(false);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const [open, setOpen] = React.useState(false);
+
+  const handleClick = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (
+    event: React.SyntheticEvent | Event,
+    reason?: SnackbarCloseReason
+  ) => {
+    if (reason === "clickaway") {
+      return;
+    }
+
+    setOpen(false);
+  };
+  useEffect(() => {
+    if (isSuccess === true) {
+      setTimeout(() => {
+        setIsSuccess(false);
+      }, 2000);
+    }
+  }, [isSuccess, refreshKey]);
+
   useEffect(() => {
     const allDueSoon = data.filter((x) => x?.status === "Due Soon");
     const allDueSoon2 = allDueSoon.map((customer) => ({
@@ -76,24 +106,38 @@ export default function Reports() {
     }
   }, [DATA]);
 
-  const handleSendToApp = () => {
+  const handleSendToApp = async () => {
     const checked = values.filter((x) => x.checked === true);
-    if (checked.length != 0) {
-      checked.map(async (customer) => {
-        try {
-          await APIdueSoon.deleteCustomer(customer.id);
-          const updatedCustomer = await APIdueSoon.createCustomer(customer);
 
-          console.log(updatedCustomer);
-          return updatedCustomer;
-        } catch (error) {
-          console.error("Error create customer data:", error);
-        }
-      });
+    try {
+      await Promise.all(
+        data.map((customer) => APIdueSoon.deleteCustomer(customer.id))
+      );
+
+      if (checked.length !== 0) {
+        await Promise.all(
+          checked.map(async (customer) => {
+            const updatedCustomer = await APIdueSoon.createCustomer(customer);
+            console.log(updatedCustomer);
+            return updatedCustomer;
+          })
+        );
+
+        setIsSuccess(true);
+        setError(false);
+      } else {
+        setIsSuccess(false);
+        setError(true);
+      }
+    } catch (error) {
+      setIsSuccess(false);
+      setError(true);
+      console.error("Error creating customer data:", error);
     }
 
-    return console.log(checked);
+    setOpen(true);
   };
+
   return (
     <Stack width="full" gap="5" mt="10rem">
       <Stack align="flex-end">
@@ -118,6 +162,41 @@ export default function Reports() {
             <Checkbox.Label>Select All</Checkbox.Label>
           </Checkbox.Root>
         </HStack>
+        {isSuccess ? (
+          <Snackbar
+            open={open}
+            autoHideDuration={6000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          >
+            <Alert
+              onClose={handleClose}
+              severity="success"
+              variant="filled"
+              sx={{ width: "100%" }}
+            >
+              This is a success !!!
+            </Alert>
+          </Snackbar>
+        ) : isError ? (
+          <Snackbar
+            open={open}
+            autoHideDuration={6000}
+            onClose={handleClose}
+            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          >
+            <Alert
+              onClose={handleClose}
+              severity="error"
+              variant="filled"
+              sx={{ width: "100%" }}
+            >
+              There was an error !!!
+            </Alert>
+          </Snackbar>
+        ) : (
+          <></>
+        )}
         <Table.Root size="sm" variant="outline" striped>
           <Table.Header>
             <Table.Row>
@@ -162,6 +241,7 @@ export default function Reports() {
           </Table.Body>
         </Table.Root>
       </Stack>
+
       <PaginationRoot count={values.length} pageSize={5} page={1}>
         <HStack justifyContent="space-between">
           <HStack wrap="wrap">

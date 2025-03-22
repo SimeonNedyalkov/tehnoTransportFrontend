@@ -10,9 +10,8 @@ const createCustomer = async (customer: NewCustomer) => {
   const DBURL = "http://localhost:3000/due-soon-customers/";
   const authToken = getAuthTokenFromCookies();
   if (customer.dateOfTehnoTest) {
-    customer.dateOfTehnoTest = Timestamp.fromDate(
-      new Date(String(customer.dateOfTehnoTest))
-    );
+    const newDate = new Date(String(customer.dateOfTehnoTest));
+    customer.dateOfTehnoTest = Timestamp.fromDate(newDate);
   }
   console.log(customer.dateOfTehnoTest);
 
