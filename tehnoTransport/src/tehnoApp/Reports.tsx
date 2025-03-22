@@ -117,7 +117,13 @@ export default function Reports() {
       if (checked.length !== 0) {
         await Promise.all(
           checked.map(async (customer) => {
-            const updatedCustomer = await APIdueSoon.createCustomer(customer);
+            const updatedCustomer = await APIdueSoon.createCustomer({
+              ...customer,
+              dateOfTehnoTest:
+                customer.dateOfTehnoTest instanceof Date
+                  ? Timestamp.fromDate(customer.dateOfTehnoTest)
+                  : customer.dateOfTehnoTest,
+            });
             console.log(updatedCustomer);
             return updatedCustomer;
           })
