@@ -13,34 +13,12 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { useSettings } from "./SettingsProvider";
-import { useEffect, useState } from "react";
-
-interface User {
-  uid: string;
-  email: string;
-  emailVerified: boolean;
-  displayName?: string;
-}
 
 export default function Settings() {
   const { theme, toggleTheme, language, setLanguage } = useSettings();
-  const [user, setUser] = useState<User | null>(null);
-  const USERURL = "http://localhost:3000/user/getUser";
-
-  useEffect(() => {
-    const getUser = async () => {
-      const loggedUser = await fetch(USERURL, {
-        method: "GET",
-        credentials: "include",
-      });
-      const userData = await loggedUser.json();
-      setUser(userData);
-    };
-    getUser();
-  }, []);
 
   return (
-    <Flex h="100vh" justify="center" align="center">
+    <Flex h="100vh" justify="center" align="center" gap="10">
       <Box
         h="100%"
         maxW="400px"
@@ -93,38 +71,6 @@ export default function Settings() {
             </FormControl>
           </HStack>
         </VStack>
-      </Box>
-      <Box
-        maxW="400px"
-        p={6}
-        borderRadius="12px"
-        boxShadow="lg"
-        bg={theme === "dark" ? "gray.800" : "white"}
-        color={theme === "dark" ? "white" : "black"}
-        textAlign="center"
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-      >
-        <Heading size="lg" mb={6}>
-          User Settings
-        </Heading>
-
-        {user ? (
-          <>
-            <Text fontSize="xl">Welcome, {user.displayName || "User"}</Text>
-            <Text fontSize="lg" mb={4}>
-              Email: {user.email}
-            </Text>
-            <Text fontSize="sm" color="gray.500">
-              UID: {user.uid}
-            </Text>
-          </>
-        ) : (
-          <Text fontSize="xl" color="red.500">
-            No user signed in
-          </Text>
-        )}
       </Box>
     </Flex>
   );
