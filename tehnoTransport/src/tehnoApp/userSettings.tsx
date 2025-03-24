@@ -9,11 +9,21 @@ import {
   Input,
   FileUpload,
   Flex,
+  IconButton,
+  Icon,
+  HStack,
+  Stack,
 } from "@chakra-ui/react";
+import {
+  PasswordInput,
+  PasswordStrengthMeter,
+} from "../components/ui/password-input";
 
 import { useEffect, useState } from "react";
 
-import { LuFileImage, LuX } from "react-icons/lu";
+import { LuEye, LuEyeOff, LuFileImage, LuX } from "react-icons/lu";
+import { InputGroup } from "../components/ui/input-group";
+import { EyeClosed, LockKeyhole, UserCog } from "lucide-react";
 interface User {
   uid: string;
   email: string;
@@ -26,8 +36,17 @@ export default function UserSettings() {
   const [email, setEmail] = useState(user?.email || "");
   const [displayName, setDisplayName] = useState(user?.displayName || "");
   const [photoURL, setPhotoURL] = useState<File | null>(null);
+  const [newPassword, setNewPassword] = useState("");
+  const [repeatPassword, setRepeatPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [checkPasswordStrength, setCheckPasswordStrenght] = useState(0);
   const USERURL = "http://localhost:3000/user/getUser";
   const formData = new FormData();
+  useEffect(() => {
+    if (newPassword.length >= 5) {
+      setCheckPasswordStrenght((prev) => prev + 1);
+    }
+  }, [newPassword]);
 
   useEffect(() => {
     const getUser = async () => {
@@ -80,20 +99,6 @@ export default function UserSettings() {
     );
   };
 
-  //   const handleEmailChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     setEmail(event.target.value);
-  //     console.log(email);
-  //   };
-
-  //   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     setDisplayName(event.target.value);
-  //     console.log(displayName);
-  //   };
-
-  //   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //     event.preventDefault();
-  //   };
-
   const handleSubmit = async () => {
     console.log(email);
     console.log(displayName);
@@ -131,7 +136,10 @@ export default function UserSettings() {
         alignItems="center"
       >
         <Heading size="lg" mb={6}>
-          User Settings
+          <HStack>
+            <UserCog />
+            User Settings
+          </HStack>
         </Heading>
 
         {user ? (
@@ -180,6 +188,43 @@ export default function UserSettings() {
             No user signed in
           </Text>
         )}
+      </Box>
+      <Box
+        h="100%"
+        maxW="400px"
+        p={6}
+        borderRadius="12px"
+        boxShadow="lg"
+        textAlign="center"
+        display="flex"
+        flexDirection="column"
+        alignItems="center"
+      >
+        <Heading size="lg" mb={6}>
+          <HStack>
+            <LockKeyhole />
+            Change Password
+          </HStack>
+        </Heading>
+        <HStack>
+          <Text>New Password</Text>
+          <Stack maxW="300px">
+            <PasswordInput
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <PasswordStrengthMeter value={checkPasswordStrength} />
+          </Stack>
+        </HStack>
+        <HStack>
+          <Text>Repeat Password</Text>
+
+          <PasswordInput
+            value={repeatPassword}
+            onChange={(e) => setRepeatPassword(e.target.value)}
+          />
+        </HStack>
+        <Button>Change Password</Button>
       </Box>
     </Flex>
   );
