@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Home, Car, Users, FileText, Settings } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function Sidebar() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const menuItems = [
     { name: "Dashboard", icon: Home, path: "/app/dashboard" },
     { name: "Customers", icon: Users, path: "/app/customers" },
@@ -19,9 +21,9 @@ export default function Sidebar() {
     <div className="app-container">
       <div className="sidebar">
         <h2 className="sidebar-title">
-          <span>Tehno</span>
+          <span>{t("name").split(" ")[0]}</span>
           <br />
-          <span>Transport</span>
+          <span>{t("name").split(" ")[1]}</span>
         </h2>
         <nav>
           {menuItems.map((item) => (
