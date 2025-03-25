@@ -146,24 +146,31 @@ export default function UserSettings() {
               <Text fontSize="sm" color="gray.500" mb={3}>
                 UID: {user.uid}
               </Text>
-              <Field.Root required mb={3}>
-                <Field.Label>Email</Field.Label>
+              <Field.Root required mb={3} marginTop="2rem">
+                <Field.Label fontSize="md">Email</Field.Label>
                 <Input
                   placeholder={user.email}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </Field.Root>
-              <Field.Root mb={3}>
-                <Field.Label>Name</Field.Label>
+              <Field.Root mb={3} marginTop="2rem">
+                <Field.Label fontSize="md">Name</Field.Label>
                 <Input
                   placeholder={user.displayName || "Your Name"}
                   value={displayName}
                   onChange={(e) => setDisplayName(e.target.value)}
                 />
               </Field.Root>
-              <Field.Root mb={3}>
-                <Field.Label>Upload Image</Field.Label>
+              <Field.Root
+                mb={3}
+                alignItems="center"
+                display="flex"
+                justifyContent="center"
+                flexDirection="column"
+                marginTop="2rem"
+              >
+                <Field.Label fontSize="md">Upload Image</Field.Label>
                 <FileUpload.Root accept="image/*">
                   <FileUpload.HiddenInput />
                   <FileUpload.Trigger asChild>
@@ -174,7 +181,9 @@ export default function UserSettings() {
                   <FileUploadList />
                 </FileUpload.Root>
               </Field.Root>
-              <Button onClick={handleSubmit}>Update Profile</Button>
+              <Button marginTop="auto" onClick={handleSubmit}>
+                Update Profile
+              </Button>
             </>
           ) : (
             <Text fontSize="xl" color="red.500">

@@ -1,4 +1,12 @@
-import { Box, Button, Heading, HStack, Stack, Text } from "@chakra-ui/react";
+import {
+  Button,
+  HStack,
+  Stack,
+  Text,
+  Field,
+  Fieldset,
+  Flex,
+} from "@chakra-ui/react";
 import Snackbar from "@mui/material/Snackbar";
 import {
   PasswordInput,
@@ -77,26 +85,42 @@ export default function ChangePassword() {
   };
 
   return (
-    <>
-      <HStack>
-        <Text>New Password</Text>
-        <Stack maxW="300px">
-          <PasswordInput
-            value={newPassword}
-            onChange={(e) => setNewPassword(e.target.value)}
-          />
-          <PasswordStrengthMeter value={value} />
-        </Stack>
-      </HStack>
-      <HStack>
-        <Text>Repeat Password</Text>
+    <Flex
+      direction="column"
+      align="center"
+      justify="center"
+      height="100vh"
+      padding={4}
+    >
+      <Fieldset.Root size="lg">
+        <Fieldset.Content>
+          <Field.Root>
+            {/* <HStack> */}
+            <Field.Label fontSize="md">New Password</Field.Label>
+            <Stack>
+              <PasswordInput
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+                size="lg"
+              />
+              <PasswordStrengthMeter value={value} />
+            </Stack>
+            {/* </HStack> */}
+          </Field.Root>
+          <Field.Root>
+            <Field.Label fontSize="md">Repeat Password</Field.Label>
 
-        <PasswordInput
-          value={repeatPassword}
-          onChange={(e) => setRepeatPassword(e.target.value)}
-        />
-      </HStack>
-      <Button onClick={handleSubmit}>Change Password</Button>
+            <PasswordInput
+              value={repeatPassword}
+              onChange={(e) => setRepeatPassword(e.target.value)}
+              size="lg"
+            />
+          </Field.Root>
+        </Fieldset.Content>
+      </Fieldset.Root>
+      <Button marginTop="auto" onClick={handleSubmit}>
+        Change Password
+      </Button>
       {fail === false ? (
         <Snackbar
           open={open}
@@ -130,6 +154,6 @@ export default function ChangePassword() {
           </Alert>
         </Snackbar>
       )}
-    </>
+    </Flex>
   );
 }
