@@ -57,9 +57,26 @@ export default function ChangePassword() {
     });
   }, [checkPasswordStrength]);
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (newPassword === repeatPassword) {
       if (value >= 3) {
+        const response = await fetch(
+          "http://localhost:3000/user/updatePassword",
+          {
+            method: "PATCH",
+            body: JSON.stringify({ newPassword }),
+            headers: {
+              "Content-Type": "application/json",
+            },
+            credentials: "include",
+          }
+        );
+
+        if (response.ok) {
+          alert("Profile updated successfully!");
+        } else {
+          alert("Failed to update profile.");
+        }
         setFail(false);
         return setOpen(true);
       } else {
