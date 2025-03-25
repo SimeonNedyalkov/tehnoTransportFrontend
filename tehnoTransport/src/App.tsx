@@ -7,7 +7,7 @@ import Navigation from "./tehnoApp/Navigation";
 import Settings from "./tehnoApp/Settings";
 import Reports from "./tehnoApp/Reports";
 import useAuth from "./hooks/useAuth";
-import UserSettings from "./tehnoApp/userSettings";
+import UserSettings from "./tehnoApp/userSettings/UserSettingss";
 
 function Layout() {
   const { isAuthenticated } = useAuth();
