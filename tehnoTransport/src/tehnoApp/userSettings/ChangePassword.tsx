@@ -73,9 +73,9 @@ export default function ChangePassword() {
         );
 
         if (response.ok) {
-          alert("Profile updated successfully!");
+          console.log("Profile updated successfully!");
         } else {
-          alert("Failed to update profile.");
+          console.log("Failed to update profile.");
         }
         setFail(false);
         return setOpen(true);
