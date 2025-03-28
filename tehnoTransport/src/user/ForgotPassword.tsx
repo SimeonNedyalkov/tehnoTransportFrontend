@@ -25,7 +25,20 @@ export default function ForgotPassword() {
     formState: { errors },
   } = useForm<FormValues>();
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit(async (data) => {
+    const { email, password } = data;
+    const response = await fetch(
+      "http://localhost:3000/user/sendPasswordReset",
+      {
+        method: "POST",
+        body: JSON.stringify({ email }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      }
+    );
+  });
 
   return (
     <Flex
@@ -72,7 +85,7 @@ export default function ForgotPassword() {
               <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
             </Field.Root>
 
-            <Field.Root invalid={!!errors.password}>
+            {/* <Field.Root invalid={!!errors.password}>
               <Field.Label htmlFor="password">Password</Field.Label>
               <PasswordInput
                 id="password"
@@ -87,7 +100,7 @@ export default function ForgotPassword() {
                 })}
               />
               <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
-            </Field.Root>
+            </Field.Root> */}
 
             <Button
               type="submit"
