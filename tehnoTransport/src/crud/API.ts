@@ -9,6 +9,7 @@ function getAuthTokenFromCookies(): string | null {
 const updateCustomer = async (id: string, customer: NewCustomer) => {
   const DBURL = "http://localhost:3000/customers/";
   const authToken = getAuthTokenFromCookies();
+  console.log(customer.dateOfTehnoTest);
   if (customer.dateOfTehnoTest) {
     customer.dateOfTehnoTest = Timestamp.fromDate(
       new Date(String(customer.dateOfTehnoTest))
@@ -38,6 +39,7 @@ const updateCustomer = async (id: string, customer: NewCustomer) => {
 const createCustomer = async (customer: NewCustomer) => {
   const DBURL = "http://localhost:3000/customers/";
   const authToken = getAuthTokenFromCookies();
+  console.log(new Date(String(customer.dateOfTehnoTest)));
   if (customer.dateOfTehnoTest) {
     customer.dateOfTehnoTest = Timestamp.fromDate(
       new Date(String(customer.dateOfTehnoTest))

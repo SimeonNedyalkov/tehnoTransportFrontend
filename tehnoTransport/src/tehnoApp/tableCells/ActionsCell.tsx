@@ -40,6 +40,11 @@ export default function ActionsCell({
       setCustomer(updatedCustomer);
       Object.keys(updatedCustomer).forEach((key) => {
         if (key === "dateOfTehnoTest") {
+          table.options.meta.updateData(
+            row.index,
+            key,
+            updatedCustomer["dateOfTehnoTest"]
+          );
         }
         table.options.meta.updateData(row.index, key, updatedCustomer[key]);
       });

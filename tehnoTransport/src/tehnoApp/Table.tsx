@@ -23,6 +23,7 @@ import { useNavigate } from "react-router-dom";
 import ActionsCell from "./tableCells/ActionsCell";
 import { Timestamp } from "firebase/firestore";
 import React from "react";
+import daysRemainingAndStatusCalc from "../tools/daysRemainingAndStatusCalc";
 
 export default function Table() {
   const columns = useMemo(
@@ -115,8 +116,8 @@ export default function Table() {
           )
         ),
       removeRow: (rowIndex: number) => {
-        const setFilterFunc = (old: Customer[]) =>
-          old.filter((_row: Customer, index: number) => index !== rowIndex);
+        const setFilterFunc = (old: NewCustomer[]) =>
+          old.filter((_row: NewCustomer, index: number) => index !== rowIndex);
         setData(setFilterFunc);
       },
     },
@@ -146,82 +147,47 @@ export default function Table() {
       return updatedData;
     });
   };
-  // function getAuthTokenFromCookies(): string | null {
-  //   const match = document.cookie.match(/(^|;\s*)authToken=([^;]*)/);
-  //   return match ? decodeURIComponent(match[2]) : null;
-  // }
 
-  // Usage
-
-  // const updateCustomers = async (id: string, customer: NewCustomer) => {
-  //   const DBURL = "http://localhost:3000/customers/";
-  //   const authToken = getAuthTokenFromCookies();
-  //   if (customer.dateOfTehnoTest) {
-  //     customer.dateOfTehnoTest = Timestamp.fromDate(
-  //       new Date(`${customer.dateOfTehnoTest}T00:00:00Z`)
-  //     );
-  //   }
-
-  //   try {
-  //     const response = await fetch(DBURL + id, {
-  //       method: "PATCH",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //         Authorization: `Bearer ${authToken}`,
-  //       },
-  //       credentials: "include",
-  //       body: JSON.stringify(customer),
-  //     });
-  //     if (!response.ok && customer.brand != "") {
-  //       console.log("Error Update failed");
-  //     }
-  //     return response;
-  //   } catch (error) {
-  //     console.error("Error updating customer data:", error);
-  //   }
-  // };
   const updateAll = async () => {
-    for (const row of table.getRowModel().flatRows) {
-      const singleRow = row.original;
-      if (singleRow.id !== "") {
-        await API.updateCustomer(singleRow.id, singleRow);
+    const updatedData = [
+      ...table.getRowModel().flatRows.map((row) => row.original),
+    ];
+    const dataCopy = [...data];
+    for (const customer of updatedData) {
+      try {
+        if (customer.id) {
+          await API.updateCustomer(customer.id, customer);
+        } else {
+          const { id, ...newCustomerWithoutID } = customer;
+          const newCustomer = await API.createCustomer(newCustomerWithoutID);
+          const testDate = new Date(newCustomer.dateOfTehnoTest.seconds * 1000);
+          const timestamp = Timestamp.fromDate(testDate);
+          newCustomer.daysRemaining =
+            daysRemainingAndStatusCalc.calculateDaysRemaining(timestamp);
+          newCustomer.status = daysRemainingAndStatusCalc.getStatus(
+            newCustomer.daysRemaining
+          );
+
+          // setData((prev) =>
+          //   prev.map((row, index) =>
+          //     index === indexOfAddedRow ? newCustomer : row
+          //   )
+          // );
+          setData((prev) => {
+            const indexOfAddedRow = prev.findIndex(
+              (c) =>
+                c.firstName === customer.firstName && c.phone === customer.phone
+            );
+            prev.splice(indexOfAddedRow, 1);
+            const updatedData = [...prev, newCustomer];
+
+            return updatedData;
+          });
+        }
+      } catch (error) {
+        console.error("Error saving customer:", error);
       }
-    } // Perform async update for each row
-    //   } else {
-    //     const DBURL = "http://localhost:3000/customers/";
-    //     const authToken = getAuthTokenFromCookies();
-    //     const { id, ...customer } = row.original;
-
-    //     // Ensure that the conversion to `Timestamp` happens correctly
-    //     if (customer.dateOfTehnoTest) {
-    //       customer.dateOfTehnoTest = Timestamp.fromDate(
-    //         new Date(`${customer.dateOfTehnoTest}T00:00:00Z`)
-    //       );
-    //     }
-
-    //     try {
-    //       const response = await fetch(DBURL, {
-    //         method: "POST",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           Authorization: `Bearer ${authToken}`,
-    //         },
-    //         credentials: "include",
-    //         body: JSON.stringify(customer),
-    //       });
-    //       if (!response.ok) {
-    //         console.log("Create customer failed");
-    //       }
-    //       const updatedCustomer = await response.json();
-    //       Object.keys(updatedCustomer).forEach((key) => {
-    //         table.options.meta.updateData(row.index, key, updatedCustomer[key]);
-    //       });
-    //       return updatedCustomer;
-    //     } catch (error) {
-    //       console.error("Error create customer data:", error);
-    //     }
-    //   }
-    // }
+    }
   };
 
   return (

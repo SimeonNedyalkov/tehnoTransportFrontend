@@ -1,7 +1,7 @@
 import { Timestamp } from "firebase/firestore";
 
 export default interface NewCustomer {
-  id: string;
+  id?: string;
   brand: string | "Unknown Brand";
   dateOfTehnoTest: Timestamp | Date;
   createdAt?: Timestamp | Date;
