@@ -1,10 +1,16 @@
 import { Timestamp } from "firebase/firestore";
 
-function timestampToDateConverter(timestamp: Timestamp) {
-  // const date = new Date(timestamp.seconds * 1000);
-  // const localDate = new Date(
-  //   date.getTime() - date.getTimezoneOffset() * 60000
-  // );
+function timestampToDateStringConverter(timestamp: Timestamp) {
+  let date;
+  if (timestamp.seconds) {
+    date = new Date(timestamp.seconds * 1000);
+  } else {
+    date = new Date((timestamp as any)["_seconds"] * 1000);
+  }
+
+  const localDate = new Date(date.getTime() - date.getTimezoneOffset() * 60000);
+  localDate.toISOString().split("T")[0];
+  return localDate;
   // let testDate: Date;
   // if (timestamp instanceof Timestamp) {
   //   // If it's a Firebase Timestamp
@@ -18,3 +24,4 @@ function timestampToDateConverter(timestamp: Timestamp) {
   // }
   // const timestamp = Timestamp.fromDate(testDate);
 }
+export default timestampToDateStringConverter;

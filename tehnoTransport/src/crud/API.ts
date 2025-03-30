@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase/firestore";
-import NewCustomer from "../interfaces/newCustomer";
+import NewCustomer from "../interfaces/NewCustomerInterface";
 
 function getAuthTokenFromCookies(): string | null {
   const match = document.cookie.match(/(^|;\s*)authToken=([^;]*)/);
@@ -10,12 +10,12 @@ const updateCustomer = async (id: string, customer: NewCustomer) => {
   const DBURL = "http://localhost:3000/customers/";
   const authToken = getAuthTokenFromCookies();
   console.log(customer.dateOfTehnoTest);
-  if (customer.dateOfTehnoTest) {
-    customer.dateOfTehnoTest = Timestamp.fromDate(
-      new Date(String(customer.dateOfTehnoTest))
-    );
-  }
-  console.log(customer.dateOfTehnoTest);
+  // if (customer.dateOfTehnoTest) {
+  //   customer.dateOfTehnoTest = Timestamp.fromDate(
+  //     new Date(String(customer.dateOfTehnoTest))
+  //   );
+  // }
+  // console.log(customer.dateOfTehnoTest);
 
   try {
     const response = await fetch(DBURL + id, {
@@ -39,13 +39,13 @@ const updateCustomer = async (id: string, customer: NewCustomer) => {
 const createCustomer = async (customer: NewCustomer) => {
   const DBURL = "http://localhost:3000/customers/";
   const authToken = getAuthTokenFromCookies();
-  console.log(new Date(String(customer.dateOfTehnoTest)));
-  if (customer.dateOfTehnoTest) {
-    customer.dateOfTehnoTest = Timestamp.fromDate(
-      new Date(String(customer.dateOfTehnoTest))
-    );
-  }
-  console.log(customer.dateOfTehnoTest);
+  // console.log(new Date(String(customer.dateOfTehnoTest)));
+  // if (customer.dateOfTehnoTest) {
+  //   customer.dateOfTehnoTest = Timestamp.fromDate(
+  //     new Date(String(customer.dateOfTehnoTest))
+  //   );
+  // }
+  // console.log(customer.dateOfTehnoTest);
 
   try {
     const response = await fetch(DBURL, {

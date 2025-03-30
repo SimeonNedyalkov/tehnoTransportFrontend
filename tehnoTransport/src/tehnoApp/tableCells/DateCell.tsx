@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { forwardRef } from "react";
 import { Center, Box, Icon } from "@chakra-ui/react";
 import CalendarIcon from "../../components/ui/Icons/CalendarIcon";
+import timestampToDateStringConverter from "../../tools/DateOrTimestampConverter";
 
 const DateCustomInput = forwardRef<
   HTMLDivElement,
@@ -59,7 +60,11 @@ export default function DateCell({
   } else if (date instanceof Timestamp) {
     date = date.toDate();
   }
+  // if (typeof date == "object") {
+  //   date = timestampToDateStringConverter(date);
+  // }
   const { updateData } = table.options.meta;
+  console.log(date);
   return (
     <DatePicker
       wrapperClassName="date-wrapper"

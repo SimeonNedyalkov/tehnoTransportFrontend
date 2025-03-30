@@ -9,6 +9,7 @@ import { Tooltip } from "../../components/ui/tooltip";
 import API from "../../crud/API";
 import Customer from "../../interfaces/CustomerInterface";
 import daysRemainingAndStatusCalc from "../../tools/daysRemainingAndStatusCalc";
+import timestampToDateStringConverter from "../../tools/DateOrTimestampConverter";
 
 export default function ActionsCell({
   getValue,
@@ -30,14 +31,22 @@ export default function ActionsCell({
       // );
       // const newdate = localDate.toISOString().split("T")[0];
       // updatedCustomer.dateOfTehnoTest = newdate;
-      const testDate = new Date(updatedCustomer.dateOfTehnoTest.seconds * 1000);
+      // const testDate = new Date(updatedCustomer.dateOfTehnoTest.seconds * 1000);
+
+      const testDate = new Date(
+        updatedCustomer.dateOfTehnoTest._seconds * 1000
+      );
+
       const timestamp = Timestamp.fromDate(testDate);
+
       updatedCustomer.daysRemaining =
         daysRemainingAndStatusCalc.calculateDaysRemaining(timestamp);
       updatedCustomer.status = daysRemainingAndStatusCalc.getStatus(
         updatedCustomer.daysRemaining
       );
+
       setCustomer(updatedCustomer);
+
       Object.keys(updatedCustomer).forEach((key) => {
         if (key === "dateOfTehnoTest") {
           table.options.meta.updateData(
@@ -57,6 +66,7 @@ export default function ActionsCell({
   const handleUpdate = async (rowIndex: number) => {
     const customer = row.original;
     try {
+      console.log(customer);
       const updatedCustomer = await API.updateCustomer(customer.id, customer);
       const date = new Date(customer.dateOfTehnoTest.seconds * 1000);
       const localDate = new Date(

@@ -3,7 +3,7 @@ import { Timestamp } from "firebase/firestore";
 export default interface Customer {
   id: string;
   brand: string | "Unknown Brand";
-  createdAt?: Timestamp | Date;
+  createdAt?: Timestamp;
   dateOfTehnoTest: Timestamp;
   firstName: string;
   model: string;

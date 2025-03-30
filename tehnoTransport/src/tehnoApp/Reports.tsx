@@ -25,7 +25,7 @@ import { SnackbarCloseReason } from "@mui/material/Snackbar/Snackbar";
 interface Customer2 {
   id: string;
   brand: string | "Unknown Brand";
-  createdAt?: Timestamp | Date;
+  createdAt?: Timestamp;
   dateOfTehnoTest: Timestamp | Date;
   firstName: string;
   model: string;

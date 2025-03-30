@@ -17,7 +17,7 @@ import Filters from "./tableCells/Filters";
 import FilterPopover from "./tableCells/FilterPopover";
 import SortIcon from "../components/ui/Icons/SortIcon";
 import { Button } from "@chakra-ui/react";
-import NewCustomer from "../interfaces/newCustomer";
+import NewCustomer from "../interfaces/NewCustomerInterface";
 import API from "../crud/API";
 import { useNavigate } from "react-router-dom";
 import ActionsCell from "./tableCells/ActionsCell";
@@ -131,8 +131,7 @@ export default function Table() {
       regNumber: "",
       firstName: "",
       phone: 359,
-      // status: "",
-      dateOfTehnoTest: new Date(),
+      dateOfTehnoTest: new Date().toISOString().split("T")[0],
     };
     setData((prev) => {
       const updatedData = [...prev, newRow];

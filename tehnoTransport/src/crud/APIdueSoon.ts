@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase/firestore";
-import NewCustomer from "../interfaces/newCustomer";
+import NewCustomer from "../interfaces/NewCustomerInterface";
 
 function getAuthTokenFromCookies(): string | null {
   const match = document.cookie.match(/(^|;\s*)authToken=([^;]*)/);
