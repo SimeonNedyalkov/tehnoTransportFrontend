@@ -5,9 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
-
+interface User {
+  photoURL?: string;
+  name?: string;
+  email?: string;
+}
 export default function Navigation() {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState<User>({});
   const navigation = useNavigate();
   const USERURL = "http://localhost:3000/user/getUser";
   const LOGOUTURL = "http://localhost:3000/user/logout";
