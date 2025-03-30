@@ -70,7 +70,6 @@ export default function ActionsCell({
   const handleUpdate = async (rowIndex: number) => {
     const customer = row.original;
     try {
-      console.log(customer);
       const updatedCustomer = await API.updateCustomer(customer.id, customer);
       const testDate = new Date(
         updatedCustomer.dateOfTehnoTest._seconds * 1000

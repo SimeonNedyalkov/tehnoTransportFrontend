@@ -64,7 +64,6 @@ export default function DateCell({
   //   date = timestampToDateStringConverter(date);
   // }
   const { updateData } = table.options.meta;
-  console.log(date);
   return (
     <DatePicker
       wrapperClassName="date-wrapper"
