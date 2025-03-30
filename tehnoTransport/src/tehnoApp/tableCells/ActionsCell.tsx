@@ -44,7 +44,11 @@ export default function ActionsCell({
       updatedCustomer.status = daysRemainingAndStatusCalc.getStatus(
         updatedCustomer.daysRemaining
       );
-
+      updatedCustomer.dateOfTehnoTest = timestampToDateStringConverter(
+        updatedCustomer.dateOfTehnoTest
+      )
+        .toISOString()
+        .split("T")[0];
       setCustomer(updatedCustomer);
 
       Object.keys(updatedCustomer).forEach((key) => {
