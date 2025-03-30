@@ -72,20 +72,22 @@ export default function ActionsCell({
     try {
       console.log(customer);
       const updatedCustomer = await API.updateCustomer(customer.id, customer);
-      const date = new Date(customer.dateOfTehnoTest.seconds * 1000);
-      const localDate = new Date(
-        date.getTime() - date.getTimezoneOffset() * 60000
+      const testDate = new Date(
+        updatedCustomer.dateOfTehnoTest._seconds * 1000
       );
-      const newdate = localDate.toISOString().split("T")[0];
-      updatedCustomer.dateOfTehnoTest = newdate;
-      const testDate = new Date(updatedCustomer.dateOfTehnoTest);
+
       const timestamp = Timestamp.fromDate(testDate);
+
       updatedCustomer.daysRemaining =
         daysRemainingAndStatusCalc.calculateDaysRemaining(timestamp);
       updatedCustomer.status = daysRemainingAndStatusCalc.getStatus(
         updatedCustomer.daysRemaining
       );
-
+      updatedCustomer.dateOfTehnoTest = timestampToDateStringConverter(
+        updatedCustomer.dateOfTehnoTest
+      )
+        .toISOString()
+        .split("T")[0];
       setCustomer(updatedCustomer);
       Object.keys(updatedCustomer).forEach((key) => {
         table.options.meta.updateData(row.index, key, updatedCustomer[key]);

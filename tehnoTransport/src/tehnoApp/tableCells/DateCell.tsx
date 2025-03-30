@@ -70,7 +70,9 @@ export default function DateCell({
       wrapperClassName="date-wrapper"
       dateFormat="yyyy MMM d"
       selected={date}
-      onChange={(newDate) => updateData(row.index, column.id, newDate)}
+      onChange={(newDate) =>
+        updateData(row.index, column.id, newDate?.toISOString().split("T")[0])
+      }
       isClearable
       customInput={
         <DateCustomInput
