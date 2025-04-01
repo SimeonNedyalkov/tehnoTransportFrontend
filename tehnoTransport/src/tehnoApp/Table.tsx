@@ -25,6 +25,7 @@ import { Timestamp } from "firebase/firestore";
 import React from "react";
 import daysRemainingAndStatusCalc from "../tools/daysRemainingAndStatusCalc";
 import timestampToDateStringConverter from "../tools/DateOrTimestampConverter";
+import CarLoader from "../loaders/CarLoader";
 
 export default function Table() {
   const columns = useMemo(
@@ -77,6 +78,7 @@ export default function Table() {
   const DATA = useGetCustomer();
   const [data, setData] = useState<NewCustomer[]>(DATA);
   const [refreshData, setRefreshData] = useState(false);
+
   const [columnFilters, setColumnFilters] = useState([]);
   const [pagination, setPagination] = useState({
     pageIndex: 0,

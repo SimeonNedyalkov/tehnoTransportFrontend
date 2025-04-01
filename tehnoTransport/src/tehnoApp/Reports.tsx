@@ -21,6 +21,7 @@ import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import React from "react";
 import { SnackbarCloseReason } from "@mui/material/Snackbar/Snackbar";
+import CarLoader from "../loaders/CarLoader";
 
 interface Customer2 {
   id: string;
@@ -43,6 +44,7 @@ export default function Reports() {
   const [isError, setError] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [open, setOpen] = React.useState(false);
+  const [loaded, setLoaded] = useState(false);
 
   const handleClick = () => {
     setOpen(true);
@@ -106,6 +108,13 @@ export default function Reports() {
     }
   }, [DATA]);
 
+  useEffect(() => {
+    setLoaded(true);
+    setTimeout(() => {
+      setLoaded(false);
+    }, 2000);
+  }, []);
+
   const handleSendToApp = async () => {
     const checked = values.filter((x) => x.checked === true);
 
@@ -143,90 +152,100 @@ export default function Reports() {
   };
 
   return (
-    <Stack width="full" gap="5" mt="10rem">
-      <Stack align="flex-end">
-        <HStack justifyContent="space-between" w="100%" paddingBottom="1rem">
-          <Heading size="xl" marginLeft="4rem">
-            Tehno Transport
-          </Heading>
-          <Checkbox.Root
-            colorPalette="cyan"
-            marginRight="4rem"
-            checked={indeterminate ? "indeterminate" : allChecked}
-            onCheckedChange={(e) => {
-              setValues((current) =>
-                current.map((value) => ({ ...value, checked: !!e.checked }))
-              );
-            }}
-          >
-            <Checkbox.HiddenInput />
-            <Checkbox.Control>
-              <Checkbox.Indicator />
-            </Checkbox.Control>
-            <Checkbox.Label>Select All</Checkbox.Label>
-          </Checkbox.Root>
-        </HStack>
-        {isSuccess ? (
-          <Snackbar
-            open={open}
-            autoHideDuration={6000}
-            onClose={handleClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          >
-            <Alert
-              onClose={handleClose}
-              severity="success"
-              variant="filled"
-              sx={{ width: "100%" }}
+    <>
+      {loaded ? (
+        <CarLoader />
+      ) : (
+        <Stack width="full" gap="5" mt="10rem">
+          <Stack align="flex-end">
+            <HStack
+              justifyContent="space-between"
+              w="100%"
+              paddingBottom="1rem"
             >
-              This is a success !!!
-            </Alert>
-          </Snackbar>
-        ) : isError ? (
-          <Snackbar
-            open={open}
-            autoHideDuration={6000}
-            onClose={handleClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-          >
-            <Alert
-              onClose={handleClose}
-              severity="error"
-              variant="filled"
-              sx={{ width: "100%" }}
-            >
-              There was an error !!!
-            </Alert>
-          </Snackbar>
-        ) : (
-          <></>
-        )}
-        <Table.Root size="sm" variant="outline" striped>
-          <Table.Header>
-            <Table.Row>
-              <Table.ColumnHeader>Name</Table.ColumnHeader>
-              <Table.ColumnHeader>Reg number</Table.ColumnHeader>
-              <Table.ColumnHeader>Category</Table.ColumnHeader>
-              <Table.ColumnHeader>Model</Table.ColumnHeader>
-              <Table.ColumnHeader>Phone</Table.ColumnHeader>
-              <Table.ColumnHeader>Date</Table.ColumnHeader>
-              <Table.ColumnHeader>People to send sms</Table.ColumnHeader>
-            </Table.Row>
-          </Table.Header>
-          <Table.Body>
-            {values.map((customer) =>
-              customer.status === "Due Soon" ? (
-                <Table.Row key={customer.id}>
-                  <Table.Cell>{customer.firstName}</Table.Cell>
-                  <Table.Cell>{customer.regNumber}</Table.Cell>
-                  <Table.Cell>{customer.brand}</Table.Cell>
-                  <Table.Cell>{customer.model}</Table.Cell>
-                  <Table.Cell>{customer.phone}</Table.Cell>
-                  <Table.Cell>{String(customer.dateOfTehnoTest)}</Table.Cell>
-                  <Table.Cell>
-                    {items.filter((x) => x.key === customer.id)}
-                  </Table.Cell>
-                  {/* <Checkbox.Root>
+              <Heading size="xl" marginLeft="4rem">
+                Tehno Transport
+              </Heading>
+              <Checkbox.Root
+                colorPalette="cyan"
+                marginRight="4rem"
+                checked={indeterminate ? "indeterminate" : allChecked}
+                onCheckedChange={(e) => {
+                  setValues((current) =>
+                    current.map((value) => ({ ...value, checked: !!e.checked }))
+                  );
+                }}
+              >
+                <Checkbox.HiddenInput />
+                <Checkbox.Control>
+                  <Checkbox.Indicator />
+                </Checkbox.Control>
+                <Checkbox.Label>Select All</Checkbox.Label>
+              </Checkbox.Root>
+            </HStack>
+            {isSuccess ? (
+              <Snackbar
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              >
+                <Alert
+                  onClose={handleClose}
+                  severity="success"
+                  variant="filled"
+                  sx={{ width: "100%" }}
+                >
+                  This is a success !!!
+                </Alert>
+              </Snackbar>
+            ) : isError ? (
+              <Snackbar
+                open={open}
+                autoHideDuration={6000}
+                onClose={handleClose}
+                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+              >
+                <Alert
+                  onClose={handleClose}
+                  severity="error"
+                  variant="filled"
+                  sx={{ width: "100%" }}
+                >
+                  There was an error !!!
+                </Alert>
+              </Snackbar>
+            ) : (
+              <></>
+            )}
+            <Table.Root size="sm" variant="outline" striped>
+              <Table.Header>
+                <Table.Row>
+                  <Table.ColumnHeader>Name</Table.ColumnHeader>
+                  <Table.ColumnHeader>Reg number</Table.ColumnHeader>
+                  <Table.ColumnHeader>Category</Table.ColumnHeader>
+                  <Table.ColumnHeader>Model</Table.ColumnHeader>
+                  <Table.ColumnHeader>Phone</Table.ColumnHeader>
+                  <Table.ColumnHeader>Date</Table.ColumnHeader>
+                  <Table.ColumnHeader>People to send sms</Table.ColumnHeader>
+                </Table.Row>
+              </Table.Header>
+              <Table.Body>
+                {values.map((customer) =>
+                  customer.status === "Due Soon" ? (
+                    <Table.Row key={customer.id}>
+                      <Table.Cell>{customer.firstName}</Table.Cell>
+                      <Table.Cell>{customer.regNumber}</Table.Cell>
+                      <Table.Cell>{customer.brand}</Table.Cell>
+                      <Table.Cell>{customer.model}</Table.Cell>
+                      <Table.Cell>{customer.phone}</Table.Cell>
+                      <Table.Cell>
+                        {String(customer.dateOfTehnoTest)}
+                      </Table.Cell>
+                      <Table.Cell>
+                        {items.filter((x) => x.key === customer.id)}
+                      </Table.Cell>
+                      {/* <Checkbox.Root>
                   <Checkbox.HiddenInput />
                   <Checkbox.Control
                     sx={{
@@ -237,25 +256,27 @@ export default function Reports() {
                     }}
                   />
                 </Checkbox.Root> */}
-                </Table.Row>
-              ) : (
-                <></>
-              )
-            )}
-          </Table.Body>
-        </Table.Root>
-      </Stack>
+                    </Table.Row>
+                  ) : (
+                    <></>
+                  )
+                )}
+              </Table.Body>
+            </Table.Root>
+          </Stack>
 
-      <PaginationRoot count={values.length} pageSize={5} page={1}>
-        <HStack justifyContent="space-between">
-          <HStack wrap="wrap">
-            <PaginationPrevTrigger />
-            <PaginationItems />
-            <PaginationNextTrigger />
-          </HStack>
-          <Button onClick={handleSendToApp}>Send to app</Button>
-        </HStack>
-      </PaginationRoot>
-    </Stack>
+          <PaginationRoot count={values.length} pageSize={5} page={1}>
+            <HStack justifyContent="space-between">
+              <HStack wrap="wrap">
+                <PaginationPrevTrigger />
+                <PaginationItems />
+                <PaginationNextTrigger />
+              </HStack>
+              <Button onClick={handleSendToApp}>Send to app</Button>
+            </HStack>
+          </PaginationRoot>
+        </Stack>
+      )}
+    </>
   );
 }
