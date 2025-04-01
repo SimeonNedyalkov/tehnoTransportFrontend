@@ -110,9 +110,7 @@ export default function Reports() {
     const checked = values.filter((x) => x.checked === true);
 
     try {
-      await Promise.all(
-        data.map((customer) => APIdueSoon.deleteCustomer(customer.id))
-      );
+      await APIdueSoon.deleteCustomer();
 
       if (checked.length !== 0) {
         await Promise.all(

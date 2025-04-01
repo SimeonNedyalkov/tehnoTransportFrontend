@@ -33,11 +33,11 @@ const createCustomer = async (customer: NewCustomer) => {
     console.error("Error updating customer data:", error);
   }
 };
-const deleteCustomer = async (id: string) => {
+const deleteCustomer = async () => {
   const DBURL = "http://localhost:3000/due-soon-customers/";
   const authToken = getAuthTokenFromCookies();
   try {
-    const response = await fetch(DBURL + id, {
+    const response = await fetch(DBURL, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -45,7 +45,7 @@ const deleteCustomer = async (id: string) => {
       },
       credentials: "include",
     });
-    if (!response.ok && id != "") {
+    if (!response.ok) {
       console.log("Delete failed");
     }
 
