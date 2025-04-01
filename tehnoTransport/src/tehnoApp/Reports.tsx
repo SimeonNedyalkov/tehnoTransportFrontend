@@ -156,7 +156,7 @@ export default function Reports() {
       {loaded ? (
         <CarLoader />
       ) : (
-        <Stack width="full" gap="5" mt="10rem">
+        <Stack width="full" gap="5" mt="10rem" pl="1rem" pr="1rem">
           <Stack align="flex-end">
             <HStack
               justifyContent="space-between"

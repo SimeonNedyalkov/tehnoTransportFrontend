@@ -23,6 +23,7 @@ export default function Customers() {
           fontSize="sm"
           padding="0"
           margin="6"
+          marginBottom="0"
           // pt="24"
         >
           <Heading mb={10}>Tehno Transport</Heading>
