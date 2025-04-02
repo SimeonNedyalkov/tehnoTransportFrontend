@@ -25,16 +25,9 @@ export default function ActionsCell({
 
     try {
       const updatedCustomer = await API.createCustomer(customer);
-      // const date = new Date(customer.dateOfTehnoTest.seconds * 1000);
-      // const localDate = new Date(
-      //   date.getTime() - date.getTimezoneOffset() * 60000
-      // );
-      // const newdate = localDate.toISOString().split("T")[0];
-      // updatedCustomer.dateOfTehnoTest = newdate;
-      // const testDate = new Date(updatedCustomer.dateOfTehnoTest.seconds * 1000);
 
       const testDate = new Date(
-        updatedCustomer.dateOfTehnoTest._seconds * 1000
+        updatedCustomer.dateOfLastTehnoTest._seconds * 1000
       );
 
       const timestamp = Timestamp.fromDate(testDate);
@@ -44,19 +37,19 @@ export default function ActionsCell({
       updatedCustomer.status = daysRemainingAndStatusCalc.getStatus(
         updatedCustomer.daysRemaining
       );
-      updatedCustomer.dateOfTehnoTest = timestampToDateStringConverter(
-        updatedCustomer.dateOfTehnoTest
+      updatedCustomer.dateOfLastTehnoTest = timestampToDateStringConverter(
+        updatedCustomer.dateOfLastTehnoTest
       )
         .toISOString()
         .split("T")[0];
       setCustomer(updatedCustomer);
 
       Object.keys(updatedCustomer).forEach((key) => {
-        if (key === "dateOfTehnoTest") {
+        if (key === "dateOfLastTehnoTest") {
           table.options.meta.updateData(
             row.index,
             key,
-            updatedCustomer["dateOfTehnoTest"]
+            updatedCustomer["dateOfLastTehnoTest"]
           );
         }
         table.options.meta.updateData(row.index, key, updatedCustomer[key]);
@@ -72,7 +65,7 @@ export default function ActionsCell({
     try {
       const updatedCustomer = await API.updateCustomer(customer.id, customer);
       const testDate = new Date(
-        updatedCustomer.dateOfTehnoTest._seconds * 1000
+        updatedCustomer.dateOfLastTehnoTest._seconds * 1000
       );
 
       const timestamp = Timestamp.fromDate(testDate);
@@ -82,8 +75,8 @@ export default function ActionsCell({
       updatedCustomer.status = daysRemainingAndStatusCalc.getStatus(
         updatedCustomer.daysRemaining
       );
-      updatedCustomer.dateOfTehnoTest = timestampToDateStringConverter(
-        updatedCustomer.dateOfTehnoTest
+      updatedCustomer.dateOfLastTehnoTest = timestampToDateStringConverter(
+        updatedCustomer.dateOfLastTehnoTest
       )
         .toISOString()
         .split("T")[0];

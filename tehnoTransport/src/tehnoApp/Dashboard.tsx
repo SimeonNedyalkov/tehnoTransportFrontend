@@ -175,7 +175,7 @@ export default function Dashboard() {
                 {customer.status}
               </Text>
               <Text flex={1} textAlign="right">
-                {String(customer.dateOfTehnoTest)}
+                {String(customer.dateOfLastTehnoTest)}
               </Text>
             </HStack>
           ))}

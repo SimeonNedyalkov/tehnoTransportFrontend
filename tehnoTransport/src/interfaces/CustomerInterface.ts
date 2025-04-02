@@ -4,7 +4,7 @@ export default interface Customer {
   id: string;
   brand: string | "Unknown Brand";
   createdAt?: Timestamp;
-  dateOfTehnoTest: Timestamp;
+  dateOfLastTehnoTest: Timestamp;
   firstName: string;
   model: string;
   phone: number;

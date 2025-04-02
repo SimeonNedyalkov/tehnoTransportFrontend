@@ -43,20 +43,20 @@ export default function useGetDueSoonCustomers() {
         const data = await response.json();
 
         const filteredData: Customer[] = data.map((customer: any) => {
-          const date = new Date(customer.dateOfTehnoTest.seconds * 1000);
+          const date = new Date(customer.dateOfLastTehnoTest.seconds * 1000);
           const localDate = new Date(
             date.getTime() - date.getTimezoneOffset() * 60000
           );
           let testDate: Date;
-          if (customer.dateOfTehnoTest instanceof Timestamp) {
+          if (customer.dateOfLastTehnoTest instanceof Timestamp) {
             // If it's a Firebase Timestamp
-            testDate = customer.dateOfTehnoTest.toDate();
-          } else if (customer.dateOfTehnoTest instanceof Date) {
+            testDate = customer.dateOfLastTehnoTest.toDate();
+          } else if (customer.dateOfLastTehnoTest instanceof Date) {
             // If it's already a Date object
-            testDate = customer.dateOfTehnoTest;
+            testDate = customer.dateOfLastTehnoTest;
           } else {
             // If it's an object with seconds and nanoseconds (common in Firestore documents)
-            testDate = new Date(customer.dateOfTehnoTest.seconds * 1000);
+            testDate = new Date(customer.dateOfLastTehnoTest.seconds * 1000);
           }
           const timestamp = Timestamp.fromDate(testDate);
           const daysRemaining =
@@ -66,7 +66,7 @@ export default function useGetDueSoonCustomers() {
             id: customer.id,
             brand: customer.brand,
             createdAt: customer.createdAt,
-            dateOfTehnoTest: localDate.toISOString().split("T")[0],
+            dateOfLastTehnoTest: localDate.toISOString().split("T")[0],
             firstName: customer.firstName,
             model: customer.model,
             phone: String(customer.phone),

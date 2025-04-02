@@ -62,7 +62,7 @@ export default function Table() {
         cell: StatusCell,
       },
       {
-        accessorKey: "dateOfTehnoTest",
+        accessorKey: "dateOfLastTehnoTest",
         header: "Last tehno test",
         cell: DateCell,
       },
@@ -134,7 +134,7 @@ export default function Table() {
       regNumber: "",
       firstName: "",
       phone: 359,
-      dateOfTehnoTest: new Date().toISOString().split("T")[0],
+      dateOfLastTehnoTest: new Date().toISOString().split("T")[0],
     };
     setData((prev) => {
       const updatedData = [...prev, newRow];
@@ -163,10 +163,12 @@ export default function Table() {
           console.log(customer);
           const newCustomer = await API.createCustomer(newCustomerWithoutID);
           console.log(
-            `NewCustomer date:${Object.entries(newCustomer.dateOfTehnoTest)}`
+            `NewCustomer date:${Object.entries(
+              newCustomer.dateOfLastTehnoTest
+            )}`
           );
           const testDate = new Date(
-            newCustomer.dateOfTehnoTest._seconds * 1000
+            newCustomer.dateOfLastTehnoTest._seconds * 1000
           );
           console.log(`Test date : ${testDate}`);
           const timestamp = Timestamp.fromDate(testDate);
@@ -176,8 +178,8 @@ export default function Table() {
           newCustomer.status = daysRemainingAndStatusCalc.getStatus(
             newCustomer.daysRemaining
           );
-          newCustomer.dateOfTehnoTest = timestampToDateStringConverter(
-            newCustomer.dateOfTehnoTest
+          newCustomer.dateOfLastTehnoTest = timestampToDateStringConverter(
+            newCustomer.dateOfLastTehnoTest
           )
             .toISOString()
             .split("T")[0];

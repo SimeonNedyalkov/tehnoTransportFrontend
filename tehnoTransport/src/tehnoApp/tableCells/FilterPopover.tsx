@@ -15,7 +15,7 @@ const filterKeys = [
   "firstName",
   "phone",
   "status",
-  "dateOfTehnoTest",
+  "dateOfLastTehnoTest",
 ];
 
 function KeyItem({

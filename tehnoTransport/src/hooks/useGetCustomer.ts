@@ -43,7 +43,7 @@ export default function useGetCustomer() {
         const data = await response.json();
 
         const filteredData: Customer[] = data.map((customer: any) => {
-          const date = new Date(customer.dateOfTehnoTest._seconds * 1000);
+          const date = new Date(customer.dateOfLastTehnoTest._seconds * 1000);
 
           const localDate = new Date(
             date.getTime() - date.getTimezoneOffset() * 60000
@@ -58,7 +58,7 @@ export default function useGetCustomer() {
             id: customer.id,
             brand: customer.brand,
             createdAt: customer.createdAt,
-            dateOfTehnoTest: localDate.toISOString().split("T")[0],
+            dateOfLastTehnoTest: localDate.toISOString().split("T")[0],
             firstName: customer.firstName,
             model: customer.model,
             phone: String(customer.phone),

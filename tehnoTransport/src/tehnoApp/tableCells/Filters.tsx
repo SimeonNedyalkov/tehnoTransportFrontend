@@ -12,7 +12,7 @@ export default function Filters({ columnFilters, setColumnFilters }: any) {
   useEffect(() => {
     const handler = setTimeout(() => {
       onFilterChange(selectedFilter, searchValue);
-    }, 500); // Delay execution by 500ms
+    }, 500);
 
     return () => clearTimeout(handler);
   }, [searchValue]);
@@ -21,13 +21,6 @@ export default function Filters({ columnFilters, setColumnFilters }: any) {
     setColumnFilters((prev: any) => {
       const existingFilter = prev.find((f: any) => f.id === id);
       console.log(existingFilter);
-      // if (id === "dateOfTehnoTest") {
-      //   const selectedDate = new Date(value);
-      //   value = {
-      //     seconds: Math.floor(selectedDate.getTime() / 1000),
-      //     nanoseconds: 0,
-      //   };
-      // }
 
       if (existingFilter?.value === value) return prev;
       return prev

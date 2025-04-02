@@ -27,7 +27,7 @@ interface Customer2 {
   id: string;
   brand: string | "Unknown Brand";
   createdAt?: Timestamp;
-  dateOfTehnoTest: Timestamp | Date;
+  dateOfLastTehnoTest: Timestamp | Date;
   firstName: string;
   model: string;
   phone: number;
@@ -126,10 +126,10 @@ export default function Reports() {
           checked.map(async (customer) => {
             const updatedCustomer = await APIdueSoon.createCustomer({
               ...customer,
-              dateOfTehnoTest:
-                customer.dateOfTehnoTest instanceof Date
-                  ? Timestamp.fromDate(customer.dateOfTehnoTest)
-                  : customer.dateOfTehnoTest,
+              dateOfLastTehnoTest:
+                customer.dateOfLastTehnoTest instanceof Date
+                  ? Timestamp.fromDate(customer.dateOfLastTehnoTest)
+                  : customer.dateOfLastTehnoTest,
             });
             console.log(updatedCustomer);
             return updatedCustomer;
@@ -240,7 +240,7 @@ export default function Reports() {
                       <Table.Cell>{customer.model}</Table.Cell>
                       <Table.Cell>{customer.phone}</Table.Cell>
                       <Table.Cell>
-                        {String(customer.dateOfTehnoTest)}
+                        {String(customer.dateOfLastTehnoTest)}
                       </Table.Cell>
                       <Table.Cell>
                         {items.filter((x) => x.key === customer.id)}
