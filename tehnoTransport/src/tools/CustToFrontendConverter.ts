@@ -3,12 +3,20 @@ import daysRemainingAndStatusCalc from "./daysRemainingAndStatusCalc";
 import Customer from "../interfaces/CustomerInterface";
 
 const CustToFrontendFormater = (customer: Customer) => {
-  const { brand, model, regNumber, firstName, phone, dateOfLastTehnoTest } =
-    customer;
+  const {
+    brand,
+    model,
+    regNumber,
+    firstName,
+    phone,
+    dateOfLastTehnoTest,
+    dateOfNextTehnoTest,
+    isSmsSent,
+  } = customer;
 
   // Calculate days remaining and status
   const daysRemaining =
-    daysRemainingAndStatusCalc.calculateDaysRemaining(dateOfLastTehnoTest);
+    daysRemainingAndStatusCalc.calculateDaysRemaining(dateOfNextTehnoTest);
   const status = daysRemainingAndStatusCalc.getStatus(daysRemaining);
 
   // Return the formatted customer data
@@ -20,6 +28,7 @@ const CustToFrontendFormater = (customer: Customer) => {
     phone,
     daysRemaining,
     status,
+    isSmsSent,
   };
 };
 

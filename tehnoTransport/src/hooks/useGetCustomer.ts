@@ -43,7 +43,7 @@ export default function useGetCustomer() {
         const data = await response.json();
 
         const filteredData: Customer[] = data.map((customer: any) => {
-          const date = new Date(customer.dateOfLastTehnoTest._seconds * 1000);
+          const date = new Date(customer.dateOfNextTehnoTest._seconds * 1000);
 
           const localDate = new Date(
             date.getTime() - date.getTimezoneOffset() * 60000
@@ -53,7 +53,7 @@ export default function useGetCustomer() {
           const daysRemaining =
             daysRemainingAndStatusCalc.calculateDaysRemaining(timestamp);
           const status = daysRemainingAndStatusCalc.getStatus(daysRemaining);
-
+          console.log(daysRemaining);
           return {
             id: customer.id,
             brand: customer.brand,

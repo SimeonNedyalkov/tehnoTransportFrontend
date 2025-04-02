@@ -30,7 +30,7 @@ export default function ActionsCell({
       });
 
       const testDate = new Date(
-        updatedCustomer.dateOfLastTehnoTest._seconds * 1000
+        updatedCustomer.dateOfNextTehnoTest._seconds * 1000
       );
 
       const timestamp = Timestamp.fromDate(testDate);
@@ -68,7 +68,7 @@ export default function ActionsCell({
     try {
       const updatedCustomer = await API.updateCustomer(customer.id, customer);
       const testDate = new Date(
-        updatedCustomer.dateOfLastTehnoTest._seconds * 1000
+        updatedCustomer.dateOfNextTehnoTest._seconds * 1000
       );
 
       const timestamp = Timestamp.fromDate(testDate);

@@ -164,11 +164,11 @@ export default function Table() {
           const newCustomer = await API.createCustomer(newCustomerWithoutID);
           console.log(
             `NewCustomer date:${Object.entries(
-              newCustomer.dateOfLastTehnoTest
+              newCustomer.dateOfNextTehnoTest
             )}`
           );
           const testDate = new Date(
-            newCustomer.dateOfLastTehnoTest._seconds * 1000
+            newCustomer.dateOfNextTehnoTest._seconds * 1000
           );
           console.log(`Test date : ${testDate}`);
           const timestamp = Timestamp.fromDate(testDate);

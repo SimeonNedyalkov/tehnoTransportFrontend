@@ -43,20 +43,20 @@ export default function useGetDueSoonCustomers() {
         const data = await response.json();
 
         const filteredData: Customer[] = data.map((customer: any) => {
-          const date = new Date(customer.dateOfLastTehnoTest.seconds * 1000);
+          const date = new Date(customer.dateOfNextTehnoTest.seconds * 1000);
           const localDate = new Date(
             date.getTime() - date.getTimezoneOffset() * 60000
           );
           let testDate: Date;
-          if (customer.dateOfLastTehnoTest instanceof Timestamp) {
+          if (customer.dateOfNextTehnoTest instanceof Timestamp) {
             // If it's a Firebase Timestamp
-            testDate = customer.dateOfLastTehnoTest.toDate();
-          } else if (customer.dateOfLastTehnoTest instanceof Date) {
+            testDate = customer.dateOfNextTehnoTest.toDate();
+          } else if (customer.dateOfNextTehnoTest instanceof Date) {
             // If it's already a Date object
-            testDate = customer.dateOfLastTehnoTest;
+            testDate = customer.dateOfNextTehnoTest;
           } else {
             // If it's an object with seconds and nanoseconds (common in Firestore documents)
-            testDate = new Date(customer.dateOfLastTehnoTest.seconds * 1000);
+            testDate = new Date(customer.dateOfNextTehnoTest.seconds * 1000);
           }
           const timestamp = Timestamp.fromDate(testDate);
           const daysRemaining =
@@ -73,6 +73,7 @@ export default function useGetDueSoonCustomers() {
             regNumber: customer.regNumber,
             status: status,
             daysRemaining: daysRemaining,
+            isSmsSent: customer.isSmsSent,
           };
         });
 
