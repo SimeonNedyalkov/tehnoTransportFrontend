@@ -24,7 +24,10 @@ export default function ActionsCell({
     const { id, ...customer } = row.original;
 
     try {
-      const updatedCustomer = await API.createCustomer(customer);
+      const updatedCustomer = await API.createCustomer({
+        ...customer,
+        isSmsSent: false,
+      });
 
       const testDate = new Date(
         updatedCustomer.dateOfLastTehnoTest._seconds * 1000

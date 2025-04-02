@@ -30,7 +30,7 @@ interface Customer2 {
   dateOfLastTehnoTest: Timestamp | Date;
   firstName: string;
   model: string;
-  phone: number;
+  phone: string;
   regNumber: string;
   status?: string;
   daysRemaining?: number;

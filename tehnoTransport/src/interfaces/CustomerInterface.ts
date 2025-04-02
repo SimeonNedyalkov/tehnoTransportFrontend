@@ -7,7 +7,7 @@ export default interface Customer {
   dateOfLastTehnoTest: Timestamp;
   firstName: string;
   model: string;
-  phone: number;
+  phone: string;
   regNumber: string;
   status?: string;
   daysRemaining?: number;

@@ -133,7 +133,7 @@ export default function Table() {
       model: "",
       regNumber: "",
       firstName: "",
-      phone: 359,
+      phone: "",
       dateOfLastTehnoTest: new Date().toISOString().split("T")[0],
     };
     setData((prev) => {
