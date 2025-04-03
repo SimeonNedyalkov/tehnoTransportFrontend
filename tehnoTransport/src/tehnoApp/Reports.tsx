@@ -5,6 +5,7 @@ import {
   HStack,
   Checkbox,
   Button,
+  Text,
 } from "@chakra-ui/react";
 import {
   PaginationItems,
@@ -23,6 +24,7 @@ import React from "react";
 import { SnackbarCloseReason } from "@mui/material/Snackbar/Snackbar";
 import CarLoader from "../loaders/CarLoader";
 import API from "../crud/API";
+import { BicepsFlexed } from "lucide-react";
 
 // interface Customer2 {
 //   id: string;
@@ -72,7 +74,9 @@ export default function Reports() {
   }, [isSuccess, refreshKey]);
 
   useEffect(() => {
-    const allDueSoon = data.filter((x) => x?.status === "Due Soon");
+    const allDueSoon = data.filter(
+      (x) => x?.status === "Due Soon" && x?.isSentToApp != true
+    );
     const allDueSoon2 = allDueSoon.map((customer) => ({
       ...customer,
       checked: false,
@@ -118,10 +122,10 @@ export default function Reports() {
   }, []);
 
   const handleSendToApp = async () => {
-    DATA.map(async (c) => {
-      const customerToUpdate = { ...c, isSentToApp: false };
-      const response = await API.updateCustomer(c.id, customerToUpdate);
-    });
+    // DATA.map(async (c) => {
+    //   const customerToUpdate = { ...c, isSentToApp: false };
+    //   const response = await API.updateCustomer(c.id, customerToUpdate);
+    // });
     const checked = values.filter((x) => x.checked === true);
     console.log(checked);
     try {
@@ -129,7 +133,11 @@ export default function Reports() {
         checked.map(async (c) => {
           const customerToUpdate = { ...c, isSentToApp: true };
           await API.updateCustomer(c.id, customerToUpdate);
-
+          setData((prevValues) =>
+            prevValues.map((value) =>
+              value.id === c.id ? { ...value, isSentToApp: true } : value
+            )
+          );
           setIsSuccess(true);
           setError(false);
         });
@@ -151,126 +159,158 @@ export default function Reports() {
       {loaded ? (
         <CarLoader />
       ) : (
-        <Stack width="full" gap="5" mt="10rem" pl="1rem" pr="1rem">
-          <Stack align="flex-end">
-            <HStack
-              justifyContent="space-between"
-              w="100%"
-              paddingBottom="1rem"
+        <>
+          {values.length === 0 ? (
+            <Stack
+              align="center"
+              justify="center"
+              h="full"
+              textAlign="center"
+              borderRadius="lg"
+              boxShadow="md"
+              p={8}
             >
-              <Heading size="xl" marginLeft="4rem">
-                Tehno Transport
+              <Heading size="lg" color="teal.500" mb={4}>
+                <HStack>
+                  <BicepsFlexed />
+                  No Customers with status " Due Soon " !
+                  <BicepsFlexed />
+                </HStack>
               </Heading>
-              <Checkbox.Root
-                colorPalette="cyan"
-                marginRight="4rem"
-                checked={indeterminate ? "indeterminate" : allChecked}
-                onCheckedChange={(e) => {
-                  setValues((current) =>
-                    current.map((value) => ({ ...value, checked: !!e.checked }))
-                  );
-                }}
-              >
-                <Checkbox.HiddenInput />
-                <Checkbox.Control>
-                  <Checkbox.Indicator />
-                </Checkbox.Control>
-                <Checkbox.Label>Select All</Checkbox.Label>
-              </Checkbox.Root>
-            </HStack>
-            {isSuccess ? (
-              <Snackbar
-                open={open}
-                autoHideDuration={6000}
-                onClose={handleClose}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-              >
-                <Alert
-                  onClose={handleClose}
-                  severity="success"
-                  variant="filled"
-                  sx={{ width: "100%" }}
+              <Text fontSize="lg" color="gray.600" mb={6}>
+                It looks like there are no customers with due soon dates at the
+                moment. Check back later or refresh to get the latest updates.
+              </Text>
+            </Stack>
+          ) : (
+            <Stack width="full" gap="5" mt="10rem" pl="1rem" pr="1rem">
+              <Stack align="flex-end">
+                <HStack
+                  justifyContent="space-between"
+                  w="100%"
+                  paddingBottom="1rem"
                 >
-                  This is a success !!!
-                </Alert>
-              </Snackbar>
-            ) : isError ? (
-              <Snackbar
-                open={open}
-                autoHideDuration={6000}
-                onClose={handleClose}
-                anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-              >
-                <Alert
-                  onClose={handleClose}
-                  severity="error"
-                  variant="filled"
-                  sx={{ width: "100%" }}
-                >
-                  There was an error !!!
-                </Alert>
-              </Snackbar>
-            ) : (
-              <></>
-            )}
-            <Table.Root size="sm" variant="outline" striped>
-              <Table.Header>
-                <Table.Row>
-                  <Table.ColumnHeader>Name</Table.ColumnHeader>
-                  <Table.ColumnHeader>Reg number</Table.ColumnHeader>
-                  <Table.ColumnHeader>Category</Table.ColumnHeader>
-                  <Table.ColumnHeader>Model</Table.ColumnHeader>
-                  <Table.ColumnHeader>Phone</Table.ColumnHeader>
-                  <Table.ColumnHeader>Date</Table.ColumnHeader>
-                  <Table.ColumnHeader>People to send sms</Table.ColumnHeader>
-                </Table.Row>
-              </Table.Header>
-              <Table.Body>
-                {values.map((customer) =>
-                  customer.status === "Due Soon" ? (
-                    <Table.Row key={customer.id}>
-                      <Table.Cell>{customer.firstName}</Table.Cell>
-                      <Table.Cell>{customer.regNumber}</Table.Cell>
-                      <Table.Cell>{customer.brand}</Table.Cell>
-                      <Table.Cell>{customer.model}</Table.Cell>
-                      <Table.Cell>{customer.phone}</Table.Cell>
-                      <Table.Cell>
-                        {String(customer.dateOfLastTehnoTest)}
-                      </Table.Cell>
-                      <Table.Cell>
-                        {items.filter((x) => x.key === customer.id)}
-                      </Table.Cell>
-                      {/* <Checkbox.Root>
-                  <Checkbox.HiddenInput />
-                  <Checkbox.Control
-                    sx={{
-                      bg: "white",
-                      borderColor: "black",
-                      _checked: { bg: "black", borderColor: "black" },
-                      _hover: { bg: "gray.200" },
-                    }}
-                  />
-                </Checkbox.Root> */}
-                    </Table.Row>
-                  ) : (
-                    <></>
-                  )
-                )}
-              </Table.Body>
-            </Table.Root>
-          </Stack>
+                  <Heading size="xl" marginLeft="4rem">
+                    Tehno Transport
+                  </Heading>
 
-          <PaginationRoot count={values.length} pageSize={5} page={1}>
-            <HStack justifyContent="space-between">
-              <HStack wrap="wrap">
-                <PaginationPrevTrigger />
-                <PaginationItems />
-                <PaginationNextTrigger />
-              </HStack>
-              <Button onClick={handleSendToApp}>Send to app</Button>
-            </HStack>
-          </PaginationRoot>
-        </Stack>
+                  <Checkbox.Root
+                    colorPalette="cyan"
+                    marginRight="4rem"
+                    checked={indeterminate ? "indeterminate" : allChecked}
+                    onCheckedChange={(e) => {
+                      setValues((current) =>
+                        current.map((value) => ({
+                          ...value,
+                          checked: !!e.checked,
+                        }))
+                      );
+                    }}
+                  >
+                    <Checkbox.HiddenInput />
+                    <Checkbox.Control>
+                      <Checkbox.Indicator />
+                    </Checkbox.Control>
+                    <Checkbox.Label>Select All</Checkbox.Label>
+                  </Checkbox.Root>
+                </HStack>
+                {isSuccess ? (
+                  <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                  >
+                    <Alert
+                      onClose={handleClose}
+                      severity="success"
+                      variant="filled"
+                      sx={{ width: "100%" }}
+                    >
+                      This is a success !!!
+                    </Alert>
+                  </Snackbar>
+                ) : isError ? (
+                  <Snackbar
+                    open={open}
+                    autoHideDuration={6000}
+                    onClose={handleClose}
+                    anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+                  >
+                    <Alert
+                      onClose={handleClose}
+                      severity="error"
+                      variant="filled"
+                      sx={{ width: "100%" }}
+                    >
+                      There was an error !!!
+                    </Alert>
+                  </Snackbar>
+                ) : (
+                  <></>
+                )}
+                <Table.Root size="sm" variant="outline" striped>
+                  <Table.Header>
+                    <Table.Row>
+                      <Table.ColumnHeader>Name</Table.ColumnHeader>
+                      <Table.ColumnHeader>Reg number</Table.ColumnHeader>
+                      <Table.ColumnHeader>Category</Table.ColumnHeader>
+                      <Table.ColumnHeader>Model</Table.ColumnHeader>
+                      <Table.ColumnHeader>Phone</Table.ColumnHeader>
+                      <Table.ColumnHeader>Date</Table.ColumnHeader>
+                      <Table.ColumnHeader>
+                        People to send sms
+                      </Table.ColumnHeader>
+                    </Table.Row>
+                  </Table.Header>
+                  <Table.Body>
+                    {values.map((customer) =>
+                      customer.status === "Due Soon" ? (
+                        <Table.Row key={customer.id}>
+                          <Table.Cell>{customer.firstName}</Table.Cell>
+                          <Table.Cell>{customer.regNumber}</Table.Cell>
+                          <Table.Cell>{customer.brand}</Table.Cell>
+                          <Table.Cell>{customer.model}</Table.Cell>
+                          <Table.Cell>{customer.phone}</Table.Cell>
+                          <Table.Cell>
+                            {String(customer.dateOfLastTehnoTest)}
+                          </Table.Cell>
+                          <Table.Cell>
+                            {items.filter((x) => x.key === customer.id)}
+                          </Table.Cell>
+                          {/* <Checkbox.Root>
+                <Checkbox.HiddenInput />
+                <Checkbox.Control
+                  sx={{
+                    bg: "white",
+                    borderColor: "black",
+                    _checked: { bg: "black", borderColor: "black" },
+                    _hover: { bg: "gray.200" },
+                  }}
+                />
+              </Checkbox.Root> */}
+                        </Table.Row>
+                      ) : (
+                        <></>
+                      )
+                    )}
+                  </Table.Body>
+                </Table.Root>
+              </Stack>
+
+              <PaginationRoot count={values.length} pageSize={5} page={1}>
+                <HStack justifyContent="space-between">
+                  <HStack wrap="wrap">
+                    <PaginationPrevTrigger />
+                    <PaginationItems />
+                    <PaginationNextTrigger />
+                  </HStack>
+                  <Button onClick={handleSendToApp}>Send to app</Button>
+                </HStack>
+              </PaginationRoot>
+            </Stack>
+          )}
+        </>
       )}
     </>
   );
