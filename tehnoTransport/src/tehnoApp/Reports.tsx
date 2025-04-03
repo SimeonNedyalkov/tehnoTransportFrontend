@@ -16,30 +16,33 @@ import useGetCustomer from "../hooks/useGetCustomer";
 import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
 import { Timestamp } from "firebase/firestore";
-import APIdueSoon from "../crud/APIdueSoon";
+// import APIdueSoon from "../crud/APIdueSoon";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import React from "react";
 import { SnackbarCloseReason } from "@mui/material/Snackbar/Snackbar";
 import CarLoader from "../loaders/CarLoader";
+import API from "../crud/API";
 
-interface Customer2 {
-  id: string;
-  brand: string | "Unknown Brand";
-  createdAt?: Timestamp;
-  dateOfLastTehnoTest: Timestamp | Date;
-  firstName: string;
-  model: string;
-  phone: string;
-  regNumber: string;
-  status?: string;
-  daysRemaining?: number;
-  checked?: boolean;
-}
+// interface Customer2 {
+//   id: string;
+//   brand: string | "Unknown Brand";
+//   createdAt?: Timestamp;
+//   dateOfLastTehnoTest: Timestamp | Date;
+//   firstName: string;
+//   model: string;
+//   phone: string;
+//   regNumber: string;
+//   status?: string;
+//   daysRemaining?: number;
+//   checked?: boolean;
+// }
 export default function Reports() {
   const DATA = useGetCustomer();
+
   const [data, setData] = useState<Customer[]>([]);
-  const [values, setValues] = useState<Customer2[]>([]);
+  const [values, setValues] = useState<Customer[]>([]);
+
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setError] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -101,7 +104,6 @@ export default function Reports() {
     </Checkbox.Root>
   ));
 
-  const [count, setCount] = useState(0);
   useEffect(() => {
     if (DATA.length !== data.length) {
       setData(DATA);
@@ -116,28 +118,21 @@ export default function Reports() {
   }, []);
 
   const handleSendToApp = async () => {
+    DATA.map(async (c) => {
+      const customerToUpdate = { ...c, isSentToApp: false };
+      const response = await API.updateCustomer(c.id, customerToUpdate);
+    });
     const checked = values.filter((x) => x.checked === true);
-
+    console.log(checked);
     try {
-      await APIdueSoon.deleteCustomer();
-
       if (checked.length !== 0) {
-        await Promise.all(
-          checked.map(async (customer) => {
-            const updatedCustomer = await APIdueSoon.createCustomer({
-              ...customer,
-              dateOfLastTehnoTest:
-                customer.dateOfLastTehnoTest instanceof Date
-                  ? Timestamp.fromDate(customer.dateOfLastTehnoTest)
-                  : customer.dateOfLastTehnoTest,
-            });
-            console.log(updatedCustomer);
-            return updatedCustomer;
-          })
-        );
+        checked.map(async (c) => {
+          const customerToUpdate = { ...c, isSentToApp: true };
+          await API.updateCustomer(c.id, customerToUpdate);
 
-        setIsSuccess(true);
-        setError(false);
+          setIsSuccess(true);
+          setError(false);
+        });
       } else {
         setIsSuccess(false);
         setError(true);

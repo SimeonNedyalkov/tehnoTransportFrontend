@@ -13,5 +13,6 @@ export default interface Customer {
   isSmsSent: boolean;
   status?: string;
   daysRemaining?: number;
-  checked?: false;
+  isSentToApp?: boolean;
+  checked?: boolean;
 }

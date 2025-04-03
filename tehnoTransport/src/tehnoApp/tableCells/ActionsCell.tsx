@@ -19,7 +19,33 @@ export default function ActionsCell({
 }: CellPropsInterface) {
   const [customer, setCustomer] = useState<any>({});
   const [tableState, setTableState] = useState(false);
-
+  const [oldCustomer, setOldCustomer] = useState<Customer>({
+    id: "",
+    brand: "Unknown Brand",
+    createdAt: undefined,
+    dateOfLastTehnoTest: Timestamp.now(),
+    dateOfNextTehnoTest: Timestamp.now(),
+    firstName: "",
+    model: "",
+    phone: "",
+    regNumber: "",
+    isSmsSent: false,
+    status: "",
+    daysRemaining: 0,
+    isSentToApp: false,
+  });
+  useEffect(() => {
+    const DBURL = "http://localhost:3000/customers/";
+    const getCustomer = async () => {
+      let response = await fetch(DBURL + customer.id, {
+        method: "GET",
+        credentials: "include",
+      });
+      if (response.ok) {
+        setOldCustomer(await response.json());
+      }
+    };
+  }, []);
   const handleCreate = async (rowIndex: number) => {
     const { id, ...customer } = row.original;
 
@@ -27,6 +53,7 @@ export default function ActionsCell({
       const updatedCustomer = await API.createCustomer({
         ...customer,
         isSmsSent: false,
+        isSentToApp: false,
       });
 
       const testDate = new Date(
@@ -66,7 +93,20 @@ export default function ActionsCell({
   const handleUpdate = async (rowIndex: number) => {
     const customer = row.original;
     try {
-      const updatedCustomer = await API.updateCustomer(customer.id, customer);
+      let updatedCustomer;
+      if (
+        oldCustomer &&
+        oldCustomer.dateOfLastTehnoTest !== customer.dateOfLastTehnoTest
+      ) {
+        updatedCustomer = await API.updateCustomer(customer.id, {
+          ...customer,
+          isSmsSent: false,
+        });
+      } else {
+        updatedCustomer = await API.updateCustomer(customer.id, customer);
+      }
+      console.log(customer);
+      updatedCustomer = await API.updateCustomer(customer.id, customer);
       const testDate = new Date(
         updatedCustomer.dateOfNextTehnoTest._seconds * 1000
       );
@@ -80,6 +120,11 @@ export default function ActionsCell({
       );
       updatedCustomer.dateOfLastTehnoTest = timestampToDateStringConverter(
         updatedCustomer.dateOfLastTehnoTest
+      )
+        .toISOString()
+        .split("T")[0];
+      updatedCustomer.dateOfNextTehnoTest = timestampToDateStringConverter(
+        updatedCustomer.dateOfNextTehnoTest
       )
         .toISOString()
         .split("T")[0];

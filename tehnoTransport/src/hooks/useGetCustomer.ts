@@ -43,28 +43,40 @@ export default function useGetCustomer() {
         const data = await response.json();
 
         const filteredData: Customer[] = data.map((customer: any) => {
-          const date = new Date(customer.dateOfNextTehnoTest._seconds * 1000);
-
-          const localDate = new Date(
-            date.getTime() - date.getTimezoneOffset() * 60000
+          const lastTehnodate = new Date(
+            customer.dateOfLastTehnoTest._seconds * 1000
+          );
+          const nextTehnoDate = new Date(
+            customer.dateOfNextTehnoTest._seconds * 1000
           );
 
-          const timestamp = Timestamp.fromDate(date);
+          const localDateLast = new Date(
+            lastTehnodate.getTime() - lastTehnodate.getTimezoneOffset() * 60000
+          );
+          const localDateNext = new Date(
+            nextTehnoDate.getTime() - nextTehnoDate.getTimezoneOffset() * 60000
+          );
+
+          const timestampLast = Timestamp.fromDate(localDateLast);
+          const timestampNext = Timestamp.fromDate(localDateNext);
+
           const daysRemaining =
-            daysRemainingAndStatusCalc.calculateDaysRemaining(timestamp);
+            daysRemainingAndStatusCalc.calculateDaysRemaining(timestampNext);
           const status = daysRemainingAndStatusCalc.getStatus(daysRemaining);
-          console.log(daysRemaining);
           return {
             id: customer.id,
             brand: customer.brand,
             createdAt: customer.createdAt,
-            dateOfLastTehnoTest: localDate.toISOString().split("T")[0],
+            dateOfLastTehnoTest: localDateLast.toISOString().split("T")[0],
+            dateOfNextTehnoTest: localDateNext.toISOString().split("T")[0],
             firstName: customer.firstName,
             model: customer.model,
             phone: String(customer.phone),
             regNumber: customer.regNumber,
             status: status,
             daysRemaining: daysRemaining,
+            isSmsSent: customer.isSmsSent,
+            isSentToApp: customer.isSentToApp,
           };
         });
 
