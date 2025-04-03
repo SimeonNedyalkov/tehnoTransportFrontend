@@ -9,8 +9,8 @@ export default function Sidebar() {
   const menuItems = [
     { name: "Dashboard", icon: Home, path: "/app/dashboard" },
     { name: "Customers", icon: Users, path: "/app/customers" },
-    { name: "Reports", icon: FileText, path: "/app/reports" },
-    { name: "Vehicles", icon: Car, path: "/app/vehicles" },
+    { name: "Reports", icon: Car, path: "/app/reports" },
+    { name: "Sms Logs", icon: FileText, path: "/app/sms_logs" },
     { name: "Settings", icon: Settings, path: "/app/settings" },
   ];
   function goTo(p: string) {

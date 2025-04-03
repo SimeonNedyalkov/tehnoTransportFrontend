@@ -9,6 +9,7 @@ import Reports from "./tehnoApp/Reports";
 import useAuth from "./hooks/useAuth";
 import UserSettings from "./tehnoApp/userSettings/UserSettingss";
 import ForgotPassword from "./user/ForgotPassword";
+import SmsLogs from "./tehnoApp/SmsLogs";
 
 function Layout() {
   const { isAuthenticated } = useAuth();
@@ -35,6 +36,10 @@ function Layout() {
           <Route
             path="settings"
             element={isAuthenticated ? <Settings /> : <Login />}
+          />
+          <Route
+            path="sms_logs"
+            element={isAuthenticated ? <SmsLogs /> : <Login />}
           />
           <Route
             path="userSettings"
