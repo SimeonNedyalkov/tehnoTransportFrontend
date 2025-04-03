@@ -17,7 +17,6 @@ import useGetCustomer from "../hooks/useGetCustomer";
 import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
 import { Timestamp } from "firebase/firestore";
-// import APIdueSoon from "../crud/APIdueSoon";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import React from "react";
@@ -26,19 +25,6 @@ import CarLoader from "../loaders/CarLoader";
 import API from "../crud/API";
 import { BicepsFlexed } from "lucide-react";
 
-// interface Customer2 {
-//   id: string;
-//   brand: string | "Unknown Brand";
-//   createdAt?: Timestamp;
-//   dateOfLastTehnoTest: Timestamp | Date;
-//   firstName: string;
-//   model: string;
-//   phone: string;
-//   regNumber: string;
-//   status?: string;
-//   daysRemaining?: number;
-//   checked?: boolean;
-// }
 export default function Reports() {
   const DATA = useGetCustomer();
 
@@ -122,10 +108,6 @@ export default function Reports() {
   }, []);
 
   const handleSendToApp = async () => {
-    // DATA.map(async (c) => {
-    //   const customerToUpdate = { ...c, isSentToApp: false };
-    //   const response = await API.updateCustomer(c.id, customerToUpdate);
-    // });
     const checked = values.filter((x) => x.checked === true);
     console.log(checked);
     try {
