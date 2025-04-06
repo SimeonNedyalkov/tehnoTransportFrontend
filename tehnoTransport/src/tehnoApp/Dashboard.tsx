@@ -73,15 +73,19 @@ export default function Dashboard() {
   }
 
   const chartData = [
-    { name: "Due Soon", value: statusCounts.dueSoon, color: "#E53E3E" }, // Red
-    { name: "Upcoming", value: statusCounts.upcoming, color: "#3182CE" }, // Blue
+    { name: t("statusDueSoon"), value: statusCounts.dueSoon, color: "#E53E3E" }, // Red
     {
-      name: "Valid",
+      name: t("statusUpcoming"),
+      value: statusCounts.upcoming,
+      color: "#3182CE",
+    }, // Blue
+    {
+      name: t("statusValid"),
       value: statusCounts.valid,
       color: "#48BB78",
     }, // Green
-    { name: "Overdue", value: statusCounts.overdue, color: "#8B4513" }, // Brown
-    { name: "Expired", value: statusCounts.expired, color: "#161112" }, // Black
+    { name: t("statusOverdue"), value: statusCounts.overdue, color: "#8B4513" }, // Brown
+    { name: t("statusExpired"), value: statusCounts.expired, color: "#161112" }, // Black
   ];
 
   return (
