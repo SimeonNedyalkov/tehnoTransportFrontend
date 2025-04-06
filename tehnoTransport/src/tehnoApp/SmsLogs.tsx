@@ -1,6 +1,7 @@
 import {
   Avatar,
   Badge,
+  Box,
   Card,
   Flex,
   HStack,
@@ -29,10 +30,22 @@ export default function SmsLogs() {
   return (
     <Stack gap="4" direction="row" wrap="wrap" mt="10">
       <VStack>
-        <HStack>
+        <Box
+          display="flex"
+          justifyContent="center"
+          width="100%"
+          minWidth="500px"
+          maxWidth="500px"
+          p={4}
+          borderRadius="lg"
+          boxShadow="sm"
+          border="1px solid"
+          borderColor="gray.200"
+          bg="white"
+        >
           <CustomFilter smses={smses} onFiltered={setFilteredSmses} />
-        </HStack>
-        <Flex wrap="wrap" gap={4}>
+        </Box>
+        <Flex wrap="wrap" gap={4} pt="2">
           {filteredSmses.map((sms, index) => (
             <Card.Root width="320px" variant="elevated" key={index}>
               <Card.Body gap="2">

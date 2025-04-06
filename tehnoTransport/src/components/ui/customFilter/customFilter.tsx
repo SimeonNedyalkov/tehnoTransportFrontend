@@ -57,6 +57,7 @@ export default function CustomFilter({ smses, onFiltered }: CustomFilterProps) {
           placeholder={`Search by ${selectedFilter}`}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
+          variant="flushed"
         />
         <Demo
           selectedFilter={selectedFilter}
@@ -94,7 +95,10 @@ const Demo = ({
       positioning={{ sameWidth: false }}
       collection={frameworks}
       size="sm"
-      width="320px"
+      width="120px"
+      m="0"
+      p="0"
+      ml="5"
       value={[selectedFilter]}
       onValueChange={(val) => setSelectedFilter(val.value[0])}
     >
