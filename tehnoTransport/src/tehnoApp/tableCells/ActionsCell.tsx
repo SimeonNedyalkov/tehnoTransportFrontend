@@ -10,6 +10,7 @@ import API from "../../crud/API";
 import Customer from "../../interfaces/CustomerInterface";
 import daysRemainingAndStatusCalc from "../../tools/daysRemainingAndStatusCalc";
 import timestampToDateStringConverter from "../../tools/DateOrTimestampConverter";
+import { useTranslation } from "react-i18next";
 
 export default function ActionsCell({
   getValue,
@@ -19,6 +20,7 @@ export default function ActionsCell({
 }: CellPropsInterface) {
   const [customer, setCustomer] = useState<any>({});
   const [tableState, setTableState] = useState(false);
+  const { t } = useTranslation();
   const [oldCustomer, setOldCustomer] = useState<Customer>({
     id: "",
     brand: "Unknown Brand",
@@ -152,7 +154,11 @@ export default function ActionsCell({
 
   return (
     <Box>
-      <Tooltip showArrow content="Add" positioning={{ placement: "top-end" }}>
+      <Tooltip
+        showArrow
+        content={t("add")}
+        positioning={{ placement: "top-end" }}
+      >
         <Button
           size="md"
           onClick={() => handleCreate(row.index)}
@@ -164,7 +170,7 @@ export default function ActionsCell({
       </Tooltip>
       <Tooltip
         showArrow
-        content="Update"
+        content={t("update")}
         positioning={{ placement: "top-end" }}
       >
         <Button
@@ -179,7 +185,7 @@ export default function ActionsCell({
       </Tooltip>
       <Tooltip
         showArrow
-        content="Delete"
+        content={t("delete")}
         positioning={{ placement: "top-end" }}
       >
         <Button

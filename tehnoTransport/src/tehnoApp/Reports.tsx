@@ -6,6 +6,7 @@ import {
   Checkbox,
   Button,
   Text,
+  Flex,
 } from "@chakra-ui/react";
 import {
   PaginationItems,
@@ -141,7 +142,14 @@ export default function Reports() {
   return (
     <>
       {loaded ? (
-        <CarLoader />
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          width="100%"
+          height="100vh" // or any height that fits your design
+        >
+          <CarLoader />
+        </Flex>
       ) : (
         <>
           {values.length === 0 ? (

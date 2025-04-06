@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Table from "./Table";
-import { Box, Heading } from "@chakra-ui/react";
+import { Box, Flex, Heading } from "@chakra-ui/react";
 import CarLoader from "../loaders/CarLoader";
 import { useTranslation } from "react-i18next";
 
@@ -16,7 +16,14 @@ export default function Customers() {
   return (
     <>
       {loaded ? (
-        <CarLoader />
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          width="100%"
+          height="100vh" // or any height that fits your design
+        >
+          <CarLoader />
+        </Flex>
       ) : (
         <Box
           maxW={1000}

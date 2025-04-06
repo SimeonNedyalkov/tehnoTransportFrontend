@@ -7,6 +7,7 @@ import {
 import { Button } from "@chakra-ui/react";
 import CellPropsInterface from "../../interfaces/CellPropsInterface.ts";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function StatusCell({
   getValue,
@@ -18,6 +19,7 @@ export default function StatusCell({
   const statuses = ["Upcoming", "Overdue", "Due Soon", "Valid", "Expired"];
   const { updateData } = table.options.meta;
   const [isDark, setIsDark] = useState(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     setIsDark(document.body.classList.contains("dark"));
@@ -34,7 +36,7 @@ export default function StatusCell({
           whiteSpace="nowrap"
           disabled
         >
-          {value}
+          {t(`status${value.replace(/\s/g, "")}`)}
         </Button>
       </MenuTrigger>
       <MenuContent>
