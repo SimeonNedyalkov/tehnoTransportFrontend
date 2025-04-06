@@ -195,7 +195,7 @@ export default function Reports() {
                     <Checkbox.Control>
                       <Checkbox.Indicator />
                     </Checkbox.Control>
-                    <Checkbox.Label>Select All</Checkbox.Label>
+                    <Checkbox.Label>{t("selectAll")}</Checkbox.Label>
                   </Checkbox.Root>
                 </HStack>
                 {isSuccess ? (
@@ -301,7 +301,7 @@ export default function Reports() {
                     <PaginationItems />
                     <PaginationNextTrigger />
                   </HStack>
-                  <Button onClick={handleSendToApp}>Send to app</Button>
+                  <Button onClick={handleSendToApp}>{t("sendToAppBTN")}</Button>
                 </HStack>
               </PaginationRoot>
             </Stack>

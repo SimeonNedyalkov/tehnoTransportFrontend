@@ -47,6 +47,8 @@ i18n
           tHeaderLastTehnoTest: "Last tehno test",
           tHeaderActions: "Actions",
           tPeopleToSendSms: "People to send sms",
+          selectAll: "Select All",
+          sendToAppBTN: "Send To App",
         },
       },
       bg: {
@@ -87,6 +89,8 @@ i18n
           tHeaderLastTehnoTest: "Последен ГТП",
           tHeaderActions: "Действия",
           tPeopleToSendSms: "Хора за изпращане на sms",
+          selectAll: "Избери всички",
+          sendToAppBTN: "Изпрати в приложение",
         },
       },
     },
