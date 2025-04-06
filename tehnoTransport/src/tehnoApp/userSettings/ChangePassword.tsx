@@ -15,6 +15,7 @@ import {
 import { useEffect, useState } from "react";
 import { SnackbarCloseReason } from "@mui/material/Snackbar/Snackbar";
 import Alert from "@mui/material/Alert";
+import { useTranslation } from "react-i18next";
 export default function ChangePassword() {
   const [newPassword, setNewPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
@@ -23,6 +24,7 @@ export default function ChangePassword() {
   const [open, setOpen] = useState(false);
   const [fail, setFail] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const { t } = useTranslation();
   const [checkPasswordStrength, setCheckPasswordStrength] = useState({
     passLength: 0,
     passIncludesSymbol: 0,
@@ -113,7 +115,7 @@ export default function ChangePassword() {
         <Fieldset.Content>
           <Field.Root>
             {/* <HStack> */}
-            <Field.Label fontSize="md">New Password</Field.Label>
+            <Field.Label fontSize="md">{t("usNewPassword")}</Field.Label>
             <Stack>
               <PasswordInput
                 value={newPassword}
@@ -125,7 +127,7 @@ export default function ChangePassword() {
             {/* </HStack> */}
           </Field.Root>
           <Field.Root>
-            <Field.Label fontSize="md">Repeat Password</Field.Label>
+            <Field.Label fontSize="md">{t("usRepeatPassword")}</Field.Label>
 
             <PasswordInput
               value={repeatPassword}
@@ -136,7 +138,7 @@ export default function ChangePassword() {
         </Fieldset.Content>
       </Fieldset.Root>
       <Button marginTop="auto" onClick={handleSubmit}>
-        Change Password
+        {t("usChangePassword")}
       </Button>
       {fail === false ? (
         <Snackbar
@@ -151,7 +153,7 @@ export default function ChangePassword() {
             variant="filled"
             sx={{ width: "100%" }}
           >
-            Password updated successfully !!!
+            {t("usSuccess")}
           </Alert>
         </Snackbar>
       ) : (

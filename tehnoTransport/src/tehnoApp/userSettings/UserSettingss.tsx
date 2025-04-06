@@ -32,6 +32,7 @@ import {
 } from "lucide-react";
 import FileUploadItemGroup from "./FileUpload";
 import ChangePassword from "./ChangePassword";
+import { useTranslation } from "react-i18next";
 interface User {
   uid: string;
   email: string;
@@ -44,6 +45,7 @@ export default function UserSettings() {
   const [email, setEmail] = useState(user?.email || "");
   const [displayName, setDisplayName] = useState(user?.displayName || "");
   const [photoURL, setPhotoURL] = useState<File | null>(null);
+  const { t } = useTranslation();
   const USERURL = "http://localhost:3000/user/getUser";
   const [page, setPage] = useState(0);
 
@@ -122,7 +124,9 @@ export default function UserSettings() {
           <Heading size="lg">
             <HStack>
               {page === 0 ? <UserCog /> : <LockKeyhole />}{" "}
-              {page === 0 ? "User Settings" : "Change Password"}
+              {page === 0
+                ? t("usUserSettingsTitle")
+                : t("usChangePasswordTitle")}
             </HStack>
           </Heading>
 
@@ -139,15 +143,19 @@ export default function UserSettings() {
         {page === 0 ? (
           user ? (
             <>
-              <Text fontSize="xl">Welcome, {user.displayName || "User"}</Text>
+              <Text fontSize="xl">
+                {t("usWelcome")}
+                {user.displayName || "User"}
+              </Text>
               <Text fontSize="lg" mb={4}>
-                Email: {user.email}
+                {t("usEmail")}
+                {user.email}
               </Text>
               <Text fontSize="sm" color="gray.500" mb={3}>
                 UID: {user.uid}
               </Text>
               <Field.Root required mb={3} marginTop="2rem">
-                <Field.Label fontSize="md">Email</Field.Label>
+                <Field.Label fontSize="md">{t("usEmail1")}</Field.Label>
                 <Input
                   placeholder={user.email}
                   value={email}
@@ -155,7 +163,7 @@ export default function UserSettings() {
                 />
               </Field.Root>
               <Field.Root mb={3} marginTop="2rem">
-                <Field.Label fontSize="md">Name</Field.Label>
+                <Field.Label fontSize="md">{t("dName")}</Field.Label>
                 <Input
                   placeholder={user.displayName || "Your Name"}
                   value={displayName}
@@ -170,24 +178,25 @@ export default function UserSettings() {
                 flexDirection="column"
                 marginTop="2rem"
               >
-                <Field.Label fontSize="md">Upload Image</Field.Label>
+                <Field.Label fontSize="md">{t("usUploadImage")}</Field.Label>
                 <FileUpload.Root accept="image/*">
                   <FileUpload.HiddenInput />
                   <FileUpload.Trigger asChild>
-                    <Button variant="outline" size="sm">
-                      <LuFileImage /> Upload Image
+                    <Button variant="outline" size="sm" mt="3">
+                      <LuFileImage />
+                      {t("usUploadImageHere")}
                     </Button>
                   </FileUpload.Trigger>
                   <FileUploadList />
                 </FileUpload.Root>
               </Field.Root>
               <Button marginTop="auto" onClick={handleSubmit}>
-                Update Profile
+                {t("usUpdateProfile")}
               </Button>
             </>
           ) : (
             <Text fontSize="xl" color="red.500">
-              No user signed in
+              {t("usNoUser")}
             </Text>
           )
         ) : (

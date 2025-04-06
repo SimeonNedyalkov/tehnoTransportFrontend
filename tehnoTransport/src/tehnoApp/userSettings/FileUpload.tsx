@@ -1,7 +1,9 @@
 import { Box, FileUpload, Float } from "@chakra-ui/react";
+import { useTranslation } from "react-i18next";
 import { LuX } from "react-icons/lu";
 
 export default function FileUploadItemGroup({ files }: any) {
+  const { t } = useTranslation();
   return (
     <FileUpload.ItemGroup>
       {files.map((file: any) => (
@@ -20,7 +22,7 @@ export default function FileUploadItemGroup({ files }: any) {
             fontSize="sm"
             fontWeight="bold"
           >
-            Picture name: {file.name}
+            {t("usPictureName")} {file.name}
           </FileUpload.ItemContent>
 
           <Float placement="top-end">
