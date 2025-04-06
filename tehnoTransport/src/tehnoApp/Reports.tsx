@@ -24,6 +24,7 @@ import { SnackbarCloseReason } from "@mui/material/Snackbar/Snackbar";
 import CarLoader from "../loaders/CarLoader";
 import API from "../crud/API";
 import { BicepsFlexed } from "lucide-react";
+import { useTranslation } from "react-i18next";
 
 export default function Reports() {
   const DATA = useGetCustomer();
@@ -36,6 +37,7 @@ export default function Reports() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [open, setOpen] = React.useState(false);
   const [loaded, setLoaded] = useState(false);
+  const { t } = useTranslation();
 
   const handleClick = () => {
     setOpen(true);
@@ -173,7 +175,7 @@ export default function Reports() {
                   paddingBottom="1rem"
                 >
                   <Heading size="xl" marginLeft="4rem">
-                    Tehno Transport
+                    {t("name")}
                   </Heading>
 
                   <Checkbox.Root
@@ -234,14 +236,26 @@ export default function Reports() {
                 <Table.Root size="sm" variant="outline" striped>
                   <Table.Header>
                     <Table.Row>
-                      <Table.ColumnHeader>Name</Table.ColumnHeader>
-                      <Table.ColumnHeader>Reg number</Table.ColumnHeader>
-                      <Table.ColumnHeader>Category</Table.ColumnHeader>
-                      <Table.ColumnHeader>Model</Table.ColumnHeader>
-                      <Table.ColumnHeader>Phone</Table.ColumnHeader>
-                      <Table.ColumnHeader>Date</Table.ColumnHeader>
                       <Table.ColumnHeader>
-                        People to send sms
+                        {t("tHeaderFirstName")}
+                      </Table.ColumnHeader>
+                      <Table.ColumnHeader>
+                        {t("tHeaderRegNumb")}
+                      </Table.ColumnHeader>
+                      <Table.ColumnHeader>
+                        {t("tHeaderBrand")}
+                      </Table.ColumnHeader>
+                      <Table.ColumnHeader>
+                        {t("tHeaderModel")}
+                      </Table.ColumnHeader>
+                      <Table.ColumnHeader>
+                        {t("tHeaderPhoneNumber")}
+                      </Table.ColumnHeader>
+                      <Table.ColumnHeader>
+                        {t("tHeaderLastTehnoTest")}
+                      </Table.ColumnHeader>
+                      <Table.ColumnHeader>
+                        {t("tPeopleToSendSms")}
                       </Table.ColumnHeader>
                     </Table.Row>
                   </Table.Header>

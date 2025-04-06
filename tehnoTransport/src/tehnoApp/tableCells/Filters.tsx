@@ -2,12 +2,14 @@ import { Box, HStack, Input } from "@chakra-ui/react";
 import { InputGroup } from "../../components/ui/input-group";
 import { LuSearch } from "react-icons/lu";
 import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 
 export default function Filters({ columnFilters, setColumnFilters }: any) {
   const selectedFilter = columnFilters[columnFilters.length - 1]?.id || "brand";
   const taskName =
     columnFilters.find((f: any) => f.id === selectedFilter)?.value || "";
   const [searchValue, setSearchValue] = useState(taskName);
+  const { t } = useTranslation();
 
   useEffect(() => {
     const handler = setTimeout(() => {
@@ -34,7 +36,7 @@ export default function Filters({ columnFilters, setColumnFilters }: any) {
       <HStack gap="10" width="full">
         <InputGroup flex="1" maxW="12rem" startElement={<LuSearch />}>
           <Input
-            placeholder="Search"
+            placeholder={t("searchPlaceholder")}
             type="text"
             variant="outline"
             borderRadius={5}

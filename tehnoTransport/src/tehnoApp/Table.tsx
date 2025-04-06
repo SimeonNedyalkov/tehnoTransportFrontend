@@ -26,49 +26,51 @@ import React from "react";
 import daysRemainingAndStatusCalc from "../tools/daysRemainingAndStatusCalc";
 import timestampToDateStringConverter from "../tools/DateOrTimestampConverter";
 import CarLoader from "../loaders/CarLoader";
+import { useTranslation } from "react-i18next";
 
 export default function Table() {
+  const { t } = useTranslation();
   const columns = useMemo(
     () => [
       {
         accessorKey: "brand",
-        header: "Brand",
+        header: t("tHeaderBrand"),
         cell: EditableCell,
       },
       {
         accessorKey: "model",
-        header: "Model",
+        header: t("tHeaderModel"),
         cell: EditableCell,
         size: 100,
       },
       {
         accessorKey: "regNumber",
-        header: "Registration Number",
+        header: t("tHeaderRegNumb"),
         cell: EditableCell,
       },
       {
         accessorKey: "firstName",
-        header: "First Name",
+        header: t("tHeaderFirstName"),
         cell: EditableCell,
       },
       {
         accessorKey: "phone",
-        header: "Phone Number",
+        header: t("tHeaderPhoneNumber"),
         cell: EditableCell,
       },
       {
         accessorKey: "status",
-        header: "Status",
+        header: t("tHeaderStatus"),
         cell: StatusCell,
       },
       {
         accessorKey: "dateOfLastTehnoTest",
-        header: "Last tehno test",
+        header: t("tHeaderLastTehnoTest"),
         cell: DateCell,
       },
       {
         id: "actions",
-        header: "Actions",
+        header: t("tHeaderActions"),
         cell: ActionsCell,
         size: 120,
       },
@@ -214,7 +216,7 @@ export default function Table() {
           />
         </HStack>
         <Button size="sm" onClick={updateAll}>
-          Save all
+          {t("saveAllBTN")}
         </Button>
         {/* <Button size="sm" onClick={() => setRefreshData((prev) => !prev)}>
           Refresh page
@@ -269,7 +271,7 @@ export default function Table() {
       <HStack justifyContent="space-between" w="100%" mt={4}>
         <VStack>
           <Text mb={2}>
-            Page {table.getState().pagination.pageIndex + 1} of{" "}
+            {t("page")} {table.getState().pagination.pageIndex + 1} {t("of")}{" "}
             {table.getPageCount()}
           </Text>
           <ButtonGroup size="sm" variant="outline">
@@ -287,7 +289,7 @@ export default function Table() {
             </Button>
           </ButtonGroup>
         </VStack>
-        <Button onClick={addNewRow}>Add new</Button>
+        <Button onClick={addNewRow}>{t("addNewBTN")}</Button>
       </HStack>
     </Box>
   );

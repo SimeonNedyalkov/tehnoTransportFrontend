@@ -2,9 +2,11 @@ import { useEffect, useState } from "react";
 import Table from "./Table";
 import { Box, Heading } from "@chakra-ui/react";
 import CarLoader from "../loaders/CarLoader";
+import { useTranslation } from "react-i18next";
 
 export default function Customers() {
   const [loaded, setLoaded] = useState(false);
+  const { t } = useTranslation();
   useEffect(() => {
     setLoaded(true);
     setTimeout(() => {
@@ -26,7 +28,7 @@ export default function Customers() {
           marginBottom="0"
           // pt="24"
         >
-          <Heading mb={10}>Tehno Transport</Heading>
+          <Heading mb={10}>{t("name")}</Heading>
           <Table />
         </Box>
       )}

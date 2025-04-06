@@ -8,6 +8,7 @@ import {
 } from "../../components/ui/popover";
 import { useState } from "react";
 import FilterIcon from "../../components/ui/Icons/FilterIcon";
+import { useTranslation } from "react-i18next";
 const filterKeys = [
   "brand",
   "model",
@@ -24,6 +25,7 @@ function KeyItem({
   selectedItem,
   setSelectedItem,
 }: any) {
+  const { t } = useTranslation();
   return (
     <Flex
       align="center"
@@ -59,19 +61,20 @@ export default function FilterPopover({
 }: any) {
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
+  const { t } = useTranslation();
   return (
     <PopoverRoot open={open} onOpenChange={(e) => setOpen(e.open)}>
       <PopoverTrigger asChild>
         <Button size="sm" variant="outline">
           <FilterIcon />
-          Filters
+          {t("filters")}
         </Button>
       </PopoverTrigger>
       <PopoverContent>
         <PopoverArrow />
         <PopoverBody>
           <Text fontSize="md" fontWeight="bold" mb={4}>
-            Filter By:
+            {t("filterBy")}
           </Text>
           <VStack align="flex-start" wordSpacing={1}>
             {filterKeys.map((filteredItem, index) => (
