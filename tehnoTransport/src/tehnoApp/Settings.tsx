@@ -13,15 +13,17 @@ import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import { useSettings } from "./SettingsProvider";
+import { useTranslation } from "react-i18next";
 
 export default function Settings() {
   const { theme, toggleTheme, language, setLanguage } = useSettings();
-
+  const { t } = useTranslation();
   return (
     <Flex h="100vh" justify="center" align="center" gap="10">
       <Box
         h="100%"
-        maxW="400px"
+        maxW="500px"
+        minWidth="500px"
         p={6}
         borderRadius="12px"
         boxShadow="lg"
@@ -34,14 +36,14 @@ export default function Settings() {
       >
         {/* Ensure Heading is always at the top */}
         <Heading size="lg" mb={100}>
-          ⚙️ Settings
+          ⚙️ {t("settings")}
         </Heading>
 
         {/* Settings Container */}
         <VStack w="100%" align="center">
           {/* Dark Mode Toggle */}
           <HStack justify="space-between" w="100%">
-            <Text>Choose theme: </Text>
+            <Text>{t("choseTheme")} </Text>
             <Switch.Root colorPalette="blue" size="lg">
               <Switch.HiddenInput />
               <Switch.Control onClick={toggleTheme}>
@@ -52,21 +54,31 @@ export default function Settings() {
                   <Icon as={FaSun} color="yellow.400" />
                 </Switch.Indicator>
               </Switch.Control>
-              <Switch.Label>Switch {theme} mode</Switch.Label>
+              <Switch.Label>
+                {t("switchLabel", {
+                  theme: t(
+                    `theme${theme.charAt(0).toUpperCase() + theme.slice(1)}`
+                  ),
+                })}
+              </Switch.Label>
             </Switch.Root>
           </HStack>
 
           {/* Language Selector */}
           <HStack justify="space-between" w="100%">
-            <Text>Change Language:</Text>
+            <Text>{t("choseLanguage")}</Text>
             <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>
               <Select
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
                 label="Language"
+                sx={{
+                  backgroundColor: theme === "dark" ? "gray.800" : "white",
+                  color: theme === "dark" ? "white" : "black",
+                }}
               >
-                <MenuItem value={"bg"}>Bulgarian</MenuItem>
-                <MenuItem value={"en"}>English</MenuItem>
+                <MenuItem value={"bg"}>{t("bulgarian")}</MenuItem>
+                <MenuItem value={"en"}>{t("english")}</MenuItem>
               </Select>
             </FormControl>
           </HStack>

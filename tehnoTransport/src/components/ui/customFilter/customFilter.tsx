@@ -19,6 +19,7 @@ import {
 import { MdDateRange } from "react-icons/md";
 import { useEffect, useState } from "react";
 import timestampToDateStringConverter from "../../../tools/DateOrTimestampConverter";
+import { useTranslation } from "react-i18next";
 
 interface CustomFilterProps {
   smses: SmsInterface[];
@@ -28,6 +29,7 @@ interface CustomFilterProps {
 export default function CustomFilter({ smses, onFiltered }: CustomFilterProps) {
   const [selectedFilter, setSelectedFilter] = useState<string>("senderName");
   const [searchValue, setSearchValue] = useState<string>("");
+  const { t } = useTranslation();
 
   const filteredSmses = smses.filter((sms) => {
     const filterField = sms[selectedFilter as keyof SmsInterface];
@@ -54,7 +56,7 @@ export default function CustomFilter({ smses, onFiltered }: CustomFilterProps) {
     <VStack align="stretch">
       <HStack>
         <Input
-          placeholder={`Search by ${selectedFilter}`}
+          placeholder={`${t("searchHere")}`}
           value={searchValue}
           onChange={(e) => setSearchValue(e.target.value)}
           variant="flushed"
@@ -90,6 +92,18 @@ const Demo = ({
   selectedFilter: string;
   setSelectedFilter: (val: string) => void;
 }) => {
+  const { t } = useTranslation();
+  const frameworks = createListCollection({
+    items: [
+      { label: t("hSender"), value: "senderName", icon: <RiUserSharedLine /> },
+      {
+        label: t("hReceiver"),
+        value: "receiverName",
+        icon: <RiUserReceivedLine />,
+      },
+      { label: t("hDateofSms"), value: "sentAt", icon: <MdDateRange /> },
+    ],
+  });
   return (
     <Select.Root
       positioning={{ sameWidth: false }}
@@ -124,14 +138,6 @@ const Demo = ({
     </Select.Root>
   );
 };
-
-const frameworks = createListCollection({
-  items: [
-    { label: "Sender", value: "senderName", icon: <RiUserSharedLine /> },
-    { label: "Receiver", value: "receiverName", icon: <RiUserReceivedLine /> },
-    { label: "Date of Sms", value: "sentAt", icon: <MdDateRange /> },
-  ],
-});
 
 interface Framework {
   label: string;
