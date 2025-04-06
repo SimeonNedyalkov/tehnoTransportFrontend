@@ -13,10 +13,12 @@ import {
 } from "@chakra-ui/react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
 import { Timestamp } from "firebase/firestore";
+import { useTranslation } from "react-i18next";
 
 export default function Dashboard() {
   const [refreshData, setRefreshData] = useState(false);
   const customers = useGetCustomer();
+  const { t } = useTranslation();
   const [customersState, setCustomersState] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -87,31 +89,31 @@ export default function Dashboard() {
       {/* KPI Cards */}
       <StatGroup w="80%" justifyContent="space-between">
         <Stat.Root>
-          <StatLabel>Due Soon</StatLabel>
+          <StatLabel>{t("dueSoon")}</StatLabel>
           <Stat.ValueText color="red.500">
             {statusCounts.dueSoon}
           </Stat.ValueText>
         </Stat.Root>
         <Stat.Root>
-          <Stat.Label>Upcoming Tests</Stat.Label>
+          <Stat.Label>{t("upcoming")}</Stat.Label>
           <Stat.ValueText color="blue.500">
             {statusCounts.upcoming}
           </Stat.ValueText>
         </Stat.Root>
         <Stat.Root>
-          <StatLabel>Have Tehno Test</StatLabel>
+          <StatLabel>{t("valid")}</StatLabel>
           <Stat.ValueText color="green.500">
             {statusCounts.valid}
           </Stat.ValueText>
         </Stat.Root>
         <Stat.Root>
-          <StatLabel>Overdue</StatLabel>
+          <StatLabel>{t("overdue")}</StatLabel>
           <Stat.ValueText color="#8B4513">
             {statusCounts.overdue}
           </Stat.ValueText>
         </Stat.Root>
         <Stat.Root>
-          <StatLabel>Expired</StatLabel>
+          <StatLabel>{t("expired")}</StatLabel>
           <Stat.ValueText color="#161112">
             {statusCounts.expired}
           </Stat.ValueText>
@@ -135,13 +137,13 @@ export default function Dashboard() {
       {/* Recent Tests List */}
       <Box w="80%">
         <Text fontSize="xl" fontWeight="bold" mb={4}>
-          Customers with Upcoming Tests
+          {t("dashboardText")}
         </Text>
         <HStack justifyContent="space-between" w="100%" fontWeight="bold">
-          <Text flex={2}>Name</Text>
-          <Text flex={1}>Status</Text>
+          <Text flex={2}>{t("dName")}</Text>
+          <Text flex={1}>{t("dStatus")}</Text>
           <Text flex={1} textAlign="right">
-            Next Test Date
+            {t("dNextTehnoDate")}
           </Text>
         </HStack>
         {customersState
@@ -172,7 +174,7 @@ export default function Dashboard() {
                 flex={1}
                 color={customer.status === "Due Soon" ? "red.500" : "blue.500"}
               >
-                {customer.status}
+                {t(`status${customer.status?.replace(" ", "") ?? "Unknown"}`)}
               </Text>
               <Text flex={1} textAlign="right">
                 {String(customer.dateOfLastTehnoTest)}

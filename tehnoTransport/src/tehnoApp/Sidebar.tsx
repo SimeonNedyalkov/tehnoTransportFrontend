@@ -7,11 +7,11 @@ export default function Sidebar() {
   const navigate = useNavigate();
   const { t } = useTranslation();
   const menuItems = [
-    { name: "Dashboard", icon: Home, path: "/app/dashboard" },
-    { name: "Customers", icon: Users, path: "/app/customers" },
-    { name: "Reports", icon: Car, path: "/app/reports" },
-    { name: "Sms Logs", icon: FileText, path: "/app/sms_logs" },
-    { name: "Settings", icon: Settings, path: "/app/settings" },
+    { name: t("dashboard"), icon: Home, path: "/app/dashboard" },
+    { name: t("customers"), icon: Users, path: "/app/customers" },
+    { name: t("reports"), icon: Car, path: "/app/reports" },
+    { name: t("sms_logs"), icon: FileText, path: "/app/sms_logs" },
+    { name: t("settings"), icon: Settings, path: "/app/settings" },
   ];
   function goTo(p: string) {
     navigate(p);
