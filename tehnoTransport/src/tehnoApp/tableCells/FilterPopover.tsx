@@ -1,4 +1,4 @@
-import { Button, Text, VStack, Flex } from "@chakra-ui/react";
+import { Button, Text, VStack, Flex, Box } from "@chakra-ui/react";
 import {
   PopoverArrow,
   PopoverBody,
@@ -50,7 +50,7 @@ function KeyItem({
         }
       }}
     >
-      {filteredItem}
+      <Box>{t(filteredItem)}</Box>
     </Flex>
   );
 }

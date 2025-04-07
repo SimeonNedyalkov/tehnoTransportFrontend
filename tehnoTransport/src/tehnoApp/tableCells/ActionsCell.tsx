@@ -110,9 +110,12 @@ export default function ActionsCell({
         oldCustomer &&
         oldCustomer.dateOfLastTehnoTest !== customer.dateOfLastTehnoTest
       ) {
+        customer.isSmsSent = false;
+        customer.isSentToApp = false;
         updatedCustomer = await API.updateCustomer(customer.id, {
           ...customer,
           isSmsSent: false,
+          isSentToApp: false,
         });
       } else {
         updatedCustomer = await API.updateCustomer(customer.id, customer);

@@ -85,6 +85,15 @@ i18n
             "This action cannot be undone. Please confirm if you'd like to proceed with the deletion of this customer.",
           agree: "Agree",
           disagree: "Disagree",
+          noCust: 'No Customers with status " Due Soon " !',
+          noCust1:
+            "It looks like there are no customers with due soon dates at the moment.<br/> Check back later or refresh to get the latest updates.",
+          brand: "Brand",
+          model: "Model",
+          regNumber: "Reg. number",
+          firstName: "Name",
+          phone: "Phone",
+          dateOfLastTehnoTest: "Последен техн. преглед",
         },
       },
       bg: {
@@ -163,6 +172,17 @@ i18n
             "Това действие не може да бъде отменено. Моля, потвърдете дали искате да продължите с изтриването на този клиент.",
           agree: "Съгласен съм",
           disagree: "Не съм съгласен",
+          noCust: 'Няма клиенти със статут : " Очаква се скоро "',
+          noCust1:
+            "Изглежда, че в момента няма клиенти с падежни дати.<br/>Проверете отново по-късно или опреснете, за да получите най-новите актуализации.",
+
+          brand: "Марка",
+          model: "Модел",
+          regNumber: "Рег. номер",
+          firstName: "Име",
+          phone: "Телефон",
+
+          dateOfLastTehnoTest: "Последен техн. преглед",
         },
       },
     },

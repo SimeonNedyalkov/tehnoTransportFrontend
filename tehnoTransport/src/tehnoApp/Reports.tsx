@@ -165,14 +165,16 @@ export default function Reports() {
               <Heading size="lg" color="teal.500" mb={4}>
                 <HStack>
                   <BicepsFlexed />
-                  No Customers with status " Due Soon " !
+                  {t("noCust")}
                   <BicepsFlexed />
                 </HStack>
               </Heading>
-              <Text fontSize="lg" color="gray.600" mb={6}>
-                It looks like there are no customers with due soon dates at the
-                moment. Check back later or refresh to get the latest updates.
-              </Text>
+              <Text
+                fontSize="lg"
+                color="gray.600"
+                mb={6}
+                dangerouslySetInnerHTML={{ __html: t("noCust1") }}
+              ></Text>
             </Stack>
           ) : (
             <Stack width="full" gap="5" mt="10rem" pl="1rem" pr="1rem">

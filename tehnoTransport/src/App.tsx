@@ -10,6 +10,7 @@ import useAuth from "./hooks/useAuth";
 import UserSettings from "./tehnoApp/userSettings/UserSettingss";
 import ForgotPassword from "./user/ForgotPassword";
 import SmsLogs from "./tehnoApp/SmsLogs";
+import UserProfile from "./tehnoApp/userSettings/UserProfile";
 
 function Layout() {
   const { isAuthenticated } = useAuth();
@@ -44,6 +45,10 @@ function Layout() {
           <Route
             path="userSettings"
             element={isAuthenticated ? <UserSettings /> : <Login />}
+          />
+          <Route
+            path="userProfile"
+            element={isAuthenticated ? <UserProfile /> : <Login />}
           />
         </Routes>
       </div>
