@@ -80,6 +80,11 @@ i18n
           usUserSettingsTitle: "User Settings",
           usChangePasswordTitle: "Change Password",
           status: "Status",
+          aYs: "Are you sure you want to delete this customer?",
+          tAcBu:
+            "This action cannot be undone. Please confirm if you'd like to proceed with the deletion of this customer.",
+          agree: "Agree",
+          disagree: "Disagree",
         },
       },
       bg: {
@@ -153,6 +158,11 @@ i18n
           usUserSettingsTitle: "Настройки на потребителя",
           usChangePasswordTitle: "Промяна на парола",
           status: "Статус",
+          aYs: "Сигурни ли сте, че искате да изтриете този клиент?",
+          tAcBu:
+            "Това действие не може да бъде отменено. Моля, потвърдете дали искате да продължите с изтриването на този клиент.",
+          agree: "Съгласен съм",
+          disagree: "Не съм съгласен",
         },
       },
     },

@@ -11,6 +11,13 @@ import Customer from "../../interfaces/CustomerInterface";
 import daysRemainingAndStatusCalc from "../../tools/daysRemainingAndStatusCalc";
 import timestampToDateStringConverter from "../../tools/DateOrTimestampConverter";
 import { useTranslation } from "react-i18next";
+import AlertDialog from "../../components/ui/deleteModal";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import { useTheme } from "@mui/material/styles";
 
 export default function ActionsCell({
   getValue,
@@ -20,6 +27,9 @@ export default function ActionsCell({
 }: CellPropsInterface) {
   const [customer, setCustomer] = useState<any>({});
   const [tableState, setTableState] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const theme = useTheme();
+  const [open, setOpen] = useState(true);
   const { t } = useTranslation();
   const [oldCustomer, setOldCustomer] = useState<Customer>({
     id: "",
@@ -146,12 +156,15 @@ export default function ActionsCell({
       const deletedCustomer = await API.deleteCustomer(customer.id);
       setCustomer(deletedCustomer);
       table.options.meta.removeRow(row.index);
+      setIsModalOpen(false);
       return deletedCustomer;
     } catch (error) {
       console.error("Error updating customer data:", error);
     }
   };
-
+  const handleClose = () => {
+    setIsModalOpen(false);
+  };
   return (
     <Box>
       <Tooltip
@@ -192,12 +205,53 @@ export default function ActionsCell({
           size="sm"
           colorScheme="red"
           bg="transparent"
-          onClick={() => handleDelete(row.index)}
+          // onClick={() => handleDelete(row.index)}
+          onClick={() => setIsModalOpen((prev) => !prev)}
           padding="8px"
         >
           <FaTrashAlt color="red" size="8" />
         </Button>
       </Tooltip>
+      {isModalOpen && (
+        <Dialog
+          open={isModalOpen}
+          onClose={handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+          maxWidth="sm"
+          fullWidth
+        >
+          <DialogTitle
+            id="alert-dialog-title"
+            sx={{ fontWeight: "bold", color: theme.palette.primary.main }}
+          >
+            {`${t("aYs")}`}
+          </DialogTitle>
+
+          <DialogContent>
+            <DialogContentText
+              id="alert-dialog-description"
+              sx={{ color: theme.palette.text.secondary }}
+            >
+              {t("tAcBu")}
+            </DialogContentText>
+          </DialogContent>
+
+          <DialogActions sx={{ padding: theme.spacing(2) }}>
+            <Button onClick={handleClose} colorPalette="red" variant="surface">
+              {t("disagree")}
+            </Button>
+            <Button
+              onClick={() => handleDelete(row.index)}
+              autoFocus
+              colorPalette="green"
+              variant="surface"
+            >
+              {t("agree")}
+            </Button>
+          </DialogActions>
+        </Dialog>
+      )}
     </Box>
   );
 }
