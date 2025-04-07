@@ -1,9 +1,12 @@
 import { Checkbox, Field, Label } from "@headlessui/react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "../tools/UserContext"; // import this at top
+
 import "firebase/auth";
 
 export default function Login() {
+  const { setUser } = useUser();
   const [enabled, setEnabled] = useState(false);
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");

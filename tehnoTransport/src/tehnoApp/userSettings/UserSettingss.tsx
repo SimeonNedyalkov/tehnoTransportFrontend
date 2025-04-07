@@ -20,7 +20,7 @@ import {
 } from "../../components/ui/password-input";
 
 import { useEffect, useState } from "react";
-
+import { useUser } from "../../tools/UserContext";
 import { LuEye, LuEyeOff, LuFileImage, LuX } from "react-icons/lu";
 import { InputGroup } from "../../components/ui/input-group";
 import {
@@ -41,27 +41,27 @@ interface User {
 }
 
 export default function UserSettings() {
-  const [user, setUser] = useState<User | null>(null);
+  // const [user, setUser] = useState<User | null>(null);
+  const { user, loading } = useUser();
   const [email, setEmail] = useState(user?.email || "");
   const [displayName, setDisplayName] = useState(user?.displayName || "");
   const [photoURL, setPhotoURL] = useState<File | null>(null);
   const { t } = useTranslation();
-  const USERURL = "http://localhost:3000/user/getUser";
+  // const USERURL = "http://localhost:3000/user/getUser";
   const [page, setPage] = useState(0);
-
-  useEffect(() => {
-    const getUser = async () => {
-      const loggedUser = await fetch(USERURL, {
-        method: "GET",
-        credentials: "include",
-      });
-      const userData = await loggedUser.json();
-      setUser(userData);
-      setEmail(userData.email);
-      setDisplayName(userData.displayName || "");
-    };
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     const loggedUser = await fetch(USERURL, {
+  //       method: "GET",
+  //       credentials: "include",
+  //     });
+  //     const userData = await loggedUser.json();
+  //     setUser(userData);
+  //     setEmail(userData.email);
+  //     setDisplayName(userData.displayName || "");
+  //   };
+  //   getUser();
+  // }, []);
 
   const FileUploadList = () => {
     const fileUpload = useFileUploadContext();

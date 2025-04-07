@@ -1,6 +1,7 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useUser } from "../tools/UserContext";
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
@@ -11,7 +12,8 @@ interface User {
   email?: string;
 }
 export default function Navigation() {
-  const [user, setUser] = useState<User>({});
+  // const [user, setUser] = useState<User>({});
+  const { user, loading } = useUser();
   const navigation = useNavigate();
   const USERURL = "http://localhost:3000/user/getUser";
   const LOGOUTURL = "http://localhost:3000/user/logout";
@@ -32,17 +34,17 @@ export default function Navigation() {
       console.error("Logout failed:", error);
     }
   };
-  useEffect(() => {
-    const getUser = async () => {
-      const loggedUser = await fetch(USERURL, {
-        method: "GET",
-        credentials: "include",
-      });
-      const userData = await loggedUser.json();
-      setUser(userData);
-    };
-    getUser();
-  }, []);
+  // useEffect(() => {
+  //   const getUser = async () => {
+  //     const loggedUser = await fetch(USERURL, {
+  //       method: "GET",
+  //       credentials: "include",
+  //     });
+  //     const userData = await loggedUser.json();
+  //     setUser(userData);
+  //   };
+  //   getUser();
+  // }, []);
   console.log(user);
   return (
     <Menu as="div" className="relative ml-3">

@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import Spinner from "../loaders/Spinner";
 
 // Define the context shape
 interface SettingsContextType {

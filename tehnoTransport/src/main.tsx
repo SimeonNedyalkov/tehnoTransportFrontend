@@ -5,13 +5,16 @@ import { BrowserRouter } from "react-router-dom";
 import { ChakraProvider, defaultSystem } from "@chakra-ui/react";
 import { SettingsProvider } from "./tehnoApp/SettingsProvider.tsx";
 import "./i18n.ts";
+import { UserProvider } from "./tools/UserContext.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   // <React.StrictMode>
   <BrowserRouter>
     <ChakraProvider value={defaultSystem}>
       <SettingsProvider>
-        <App />
+        <UserProvider>
+          <App />
+        </UserProvider>
       </SettingsProvider>
     </ChakraProvider>
   </BrowserRouter>
