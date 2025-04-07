@@ -79,6 +79,7 @@ i18n
           usSuccess: "Password updated successfully !!!",
           usUserSettingsTitle: "User Settings",
           usChangePasswordTitle: "Change Password",
+          status: "Status",
         },
       },
       bg: {
@@ -151,6 +152,7 @@ i18n
           usSuccess: "Паролата е актуализирана успешно !!!",
           usUserSettingsTitle: "Настройки на потребителя",
           usChangePasswordTitle: "Промяна на парола",
+          status: "Статус",
         },
       },
     },
