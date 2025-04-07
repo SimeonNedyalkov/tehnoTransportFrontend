@@ -33,23 +33,22 @@ export default function Sidebar() {
     setIsOpen(!isOpen);
   };
 
-  // Animation hooks using react-spring
   const sidebarAnimation = useSpring({
-    width: isOpen ? "15vw" : "1vw", // Sidebar width animation
+    width: isOpen ? "15vw" : "1vw",
   });
 
   const textAnimation = useSpring({
-    opacity: isOpen ? 1 : 0, // Text opacity animation
+    opacity: isOpen ? 1 : 0,
     delay: 300,
   });
 
   const menuItemAnimation = useSpring({
-    opacity: isOpen ? 1 : 0, // Menu items opacity animation
+    opacity: isOpen ? 1 : 0,
     delay: 300,
   });
 
   const buttonRotation = useSpring({
-    transform: isOpen ? "rotate(0deg)" : "rotate(360deg)", // Toggle button rotation
+    transform: isOpen ? "rotate(0deg)" : "rotate(360deg)",
   });
 
   return (
