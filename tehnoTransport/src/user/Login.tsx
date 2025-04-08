@@ -31,7 +31,18 @@ export default function Login() {
       }
 
       const data = await response.json();
+      const userRes = await fetch("http://localhost:3000/user/getUser", {
+        method: "GET",
+        credentials: "include",
+        headers: {
+          Authorization: `Bearer ${data.idToken}`,
+        },
+      });
 
+      if (!userRes.ok) throw new Error("Failed to fetch user after login");
+
+      const userData = await userRes.json();
+      setUser(userData);
       console.log("User logged in successfully!", data);
       navigation("/app/dashboard");
     } catch (err) {
