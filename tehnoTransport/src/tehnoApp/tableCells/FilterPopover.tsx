@@ -1,4 +1,4 @@
-import { Button, Text, VStack, Flex, Box } from "@chakra-ui/react";
+import { Button, Text, VStack, Flex, Box, HStack } from "@chakra-ui/react";
 import {
   PopoverArrow,
   PopoverBody,
@@ -9,6 +9,15 @@ import {
 import { useState } from "react";
 import FilterIcon from "../../components/ui/Icons/FilterIcon";
 import { useTranslation } from "react-i18next";
+import {
+  Car,
+  Tag,
+  Hash,
+  User,
+  Phone,
+  CheckCircle,
+  ClipboardCheck,
+} from "lucide-react";
 const filterKeys = [
   "brand",
   "model",
@@ -18,7 +27,23 @@ const filterKeys = [
   "status",
   "dateOfLastTehnoTest",
 ];
-
+const icons = {
+  brand: <Car />,
+  model: <Tag />,
+  regNumber: <Hash />,
+  firstName: <User />,
+  phone: <Phone />,
+  status: <CheckCircle />,
+  dateOfLastTehnoTest: <ClipboardCheck />,
+};
+type FilterKey =
+  | "brand"
+  | "model"
+  | "regNumber"
+  | "firstName"
+  | "phone"
+  | "status"
+  | "dateOfLastTehnoTest";
 function KeyItem({
   filteredItem,
   setColumnFilters,
@@ -50,7 +75,12 @@ function KeyItem({
         }
       }}
     >
-      <Box>{t(filteredItem)}</Box>
+      <Box fontSize="1rem">
+        <HStack>
+          {icons[filteredItem as FilterKey]}
+          {t(filteredItem)}
+        </HStack>
+      </Box>
     </Flex>
   );
 }

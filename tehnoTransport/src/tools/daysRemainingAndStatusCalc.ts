@@ -32,7 +32,7 @@ const getStatus = (daysRemaining: number) => {
     return "Due Soon";
   } else if (daysRemaining <= 14) {
     return "Upcoming";
-  } else if (daysRemaining <= 365) {
+  } else if (daysRemaining <= 366) {
     return "Valid";
   } else {
     return "Expired";
