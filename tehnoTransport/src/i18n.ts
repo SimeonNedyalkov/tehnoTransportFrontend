@@ -93,7 +93,7 @@ i18n
           regNumber: "Reg. number",
           firstName: "Name",
           phone: "Phone",
-          dateOfLastTehnoTest: "Последен техн. преглед",
+          dateOfLastTehnoTest: "Last tehno date",
         },
       },
       bg: {
