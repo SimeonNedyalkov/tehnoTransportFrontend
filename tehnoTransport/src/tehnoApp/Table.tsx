@@ -78,7 +78,6 @@ export default function Table({ DATA }: CustomersProps) {
   );
   const [data, setData] = useState<NewCustomer[]>(DATA);
   const [refreshData, setRefreshData] = useState(false);
-
   const [columnFilters, setColumnFilters] = useState([]);
   const [pagination, setPagination] = useState({
     pageIndex: 0,

@@ -18,7 +18,7 @@ export default function useAuth() {
       } catch (error) {
         console.error("Token refresh error:", error);
       }
-    }, 50 * 60 * 1000); // Refresh every 50 minutes
+    }, 1 * 60 * 1000); // Refresh every 1 minutes
 
     return () => clearInterval(refreshTokenInterval);
   }, [navigate]);

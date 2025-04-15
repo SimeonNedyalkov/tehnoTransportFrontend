@@ -68,9 +68,13 @@ export default function ActionsCell({
         isSentToApp: false,
       });
 
-      const testDate = new Date(
-        updatedCustomer.dateOfNextTehnoTest._seconds * 1000
-      );
+      const rawTimestamp = updatedCustomer.dateOfNextTehnoTest;
+      const seconds =
+        rawTimestamp?.seconds ??
+        rawTimestamp?._seconds ??
+        rawTimestamp?.toDate?.().getTime() / 1000 ??
+        Date.now() / 1000;
+      const testDate = new Date(seconds * 1000);
 
       const timestamp = Timestamp.fromDate(testDate);
 
