@@ -66,7 +66,7 @@ export default function DateCell({
   return (
     <DatePicker
       wrapperClassName="date-wrapper"
-      dateFormat="yyyy MMM d"
+      dateFormat="dd.MM.yyyy"
       selected={date}
       onChange={(newDate) => updateData(row.index, column.id, newDate)}
       isClearable
