@@ -1,4 +1,0 @@
-Hello Chat, 
-I am making a web app with React, Firebase, NestJs. 
-Its called Tehno Transport and it has a database with customers and those customers make a Vehicle Test here in Bulgaria every year, so this app is getting the date of the last tehno test and gets how much more days till the next tehno test. 
-I am also making a React-native app so the users which will 2 - The Tehno Transport workers can then get those customers from the webapp and through the react native app send SMSes to the customers with their vehicle inspection date.

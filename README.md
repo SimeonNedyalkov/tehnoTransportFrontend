@@ -10,8 +10,8 @@
 
 # 4. Fix save all method to update all and create if not updated - X
 
-# 5. make another table for customers to check and send to phone - X
+# 5. Make another table for customers to check and send to phone - ✓
 
-# 6. make an android app - X
+# 6. Make an android app - ✓
 
-# 7. implement toast messages on react native app
+# 7. Implement toast messages on react native app - ✓
