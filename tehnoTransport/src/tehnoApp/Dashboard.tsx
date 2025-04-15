@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
-import useGetCustomer from "../hooks/useGetCustomer";
 import {
   Box,
   Text,
@@ -12,12 +11,12 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from "recharts";
-import { Timestamp } from "firebase/firestore";
 import { useTranslation } from "react-i18next";
-
-export default function Dashboard() {
+type DashboardProps = {
+  customers: Customer[];
+};
+export default function Dashboard({ customers }: DashboardProps) {
   const [refreshData, setRefreshData] = useState(false);
-  const customers = useGetCustomer();
   const { t } = useTranslation();
   const [customersState, setCustomersState] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);

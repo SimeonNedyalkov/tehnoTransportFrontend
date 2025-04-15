@@ -3,8 +3,11 @@ import Table from "./Table";
 import { Box, Flex, Heading } from "@chakra-ui/react";
 import CarLoader from "../loaders/CarLoader";
 import { useTranslation } from "react-i18next";
-
-export default function Customers() {
+import Customer from "../interfaces/CustomerInterface";
+type CustomersProps = {
+  DATA: Customer[];
+};
+export default function Customers({ DATA }: CustomersProps) {
   const [loaded, setLoaded] = useState(false);
   const { t } = useTranslation();
   useEffect(() => {
@@ -36,7 +39,7 @@ export default function Customers() {
           // pt="24"
         >
           <Heading mb={10}>{t("name")}</Heading>
-          <Table />
+          <Table DATA={DATA} />
         </Box>
       )}
     </>

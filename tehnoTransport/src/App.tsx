@@ -11,9 +11,11 @@ import UserSettings from "./tehnoApp/userSettings/UserSettingss";
 import ForgotPassword from "./user/ForgotPassword";
 import SmsLogs from "./tehnoApp/SmsLogs";
 import UserProfile from "./tehnoApp/userSettings/UserProfile";
+import useGetCustomer from "./hooks/useGetCustomer";
 
 function Layout() {
   const { isAuthenticated } = useAuth();
+  const customers = useGetCustomer();
   return (
     <div className="flex flex-row">
       <Sidebar />
@@ -24,15 +26,19 @@ function Layout() {
         <Routes>
           <Route
             path="dashboard"
-            element={isAuthenticated ? <Dashboard /> : <Login />}
+            element={
+              isAuthenticated ? <Dashboard customers={customers} /> : <Login />
+            }
           />
           <Route
             path="customers"
-            element={isAuthenticated ? <Customers /> : <Login />}
+            element={
+              isAuthenticated ? <Customers DATA={customers} /> : <Login />
+            }
           />
           <Route
             path="reports"
-            element={isAuthenticated ? <Reports /> : <Login />}
+            element={isAuthenticated ? <Reports DATA={customers} /> : <Login />}
           />
           <Route
             path="settings"

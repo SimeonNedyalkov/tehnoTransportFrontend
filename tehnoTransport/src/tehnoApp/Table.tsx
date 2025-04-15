@@ -6,7 +6,6 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import useGetCustomer from "../hooks/useGetCustomer";
 import { Box, ButtonGroup, HStack, Icon, Text, VStack } from "@chakra-ui/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
@@ -22,13 +21,13 @@ import API from "../crud/API";
 import { useNavigate } from "react-router-dom";
 import ActionsCell from "./tableCells/ActionsCell";
 import { Timestamp } from "firebase/firestore";
-import React from "react";
 import daysRemainingAndStatusCalc from "../tools/daysRemainingAndStatusCalc";
 import timestampToDateStringConverter from "../tools/DateOrTimestampConverter";
-import CarLoader from "../loaders/CarLoader";
 import { useTranslation } from "react-i18next";
-
-export default function Table() {
+type CustomersProps = {
+  DATA: Customer[];
+};
+export default function Table({ DATA }: CustomersProps) {
   const { t } = useTranslation();
   const columns = useMemo(
     () => [
@@ -77,7 +76,6 @@ export default function Table() {
     ],
     []
   );
-  const DATA = useGetCustomer();
   const [data, setData] = useState<NewCustomer[]>(DATA);
   const [refreshData, setRefreshData] = useState(false);
 

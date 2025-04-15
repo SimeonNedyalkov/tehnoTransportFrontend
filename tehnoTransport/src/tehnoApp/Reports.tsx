@@ -14,10 +14,8 @@ import {
   PaginationPrevTrigger,
   PaginationRoot,
 } from "../components/ui/pagination";
-import useGetCustomer from "../hooks/useGetCustomer";
 import { useEffect, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
-import { Timestamp } from "firebase/firestore";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 import React from "react";
@@ -26,13 +24,12 @@ import CarLoader from "../loaders/CarLoader";
 import API from "../crud/API";
 import { BicepsFlexed } from "lucide-react";
 import { useTranslation } from "react-i18next";
-
-export default function Reports() {
-  const DATA = useGetCustomer();
-
+type ReposrtsProps = {
+  DATA: Customer[];
+};
+export default function Reports({ DATA }: ReposrtsProps) {
   const [data, setData] = useState<Customer[]>([]);
   const [values, setValues] = useState<Customer[]>([]);
-
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setError] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
