@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Home,
@@ -16,6 +16,10 @@ export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [isDark, setIsDark] = useState(false);
+  useEffect(() => {
+    setIsDark(document.body.classList.contains("dark"));
+  }, []);
 
   const menuItems = [
     { name: t("dashboard"), icon: Home, path: "/app/dashboard" },
@@ -88,7 +92,11 @@ export default function Sidebar() {
           onClick={toggleSidebar}
           style={buttonRotation}
         >
-          {isOpen ? <ArrowBigLeft /> : <ArrowBigRight />}
+          {isOpen ? (
+            <ArrowBigLeft color={isDark ? "gray" : "black"} />
+          ) : (
+            <ArrowBigRight color={isDark ? "gray" : "black"} />
+          )}
         </animated.button>
       </animated.div>
     </div>

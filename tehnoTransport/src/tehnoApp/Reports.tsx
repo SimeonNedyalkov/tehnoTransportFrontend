@@ -35,6 +35,7 @@ export default function Reports({ DATA }: ReposrtsProps) {
   const [refreshKey, setRefreshKey] = useState(0);
   const [open, setOpen] = React.useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [isDark, setIsDark] = useState(false);
   const { t } = useTranslation();
 
   const handleClick = () => {
@@ -135,7 +136,9 @@ export default function Reports({ DATA }: ReposrtsProps) {
 
     setOpen(true);
   };
-
+  useEffect(() => {
+    setIsDark(document.body.classList.contains("dark"));
+  }, []);
   return (
     <>
       {loaded ? (
@@ -143,7 +146,7 @@ export default function Reports({ DATA }: ReposrtsProps) {
           alignItems="center"
           justifyContent="center"
           width="100%"
-          height="100vh" // or any height that fits your design
+          height="100vh"
         >
           <CarLoader />
         </Flex>
@@ -304,9 +307,9 @@ export default function Reports({ DATA }: ReposrtsProps) {
               <PaginationRoot count={values.length} pageSize={5} page={1}>
                 <HStack justifyContent="space-between">
                   <HStack wrap="wrap">
-                    <PaginationPrevTrigger />
-                    <PaginationItems />
-                    <PaginationNextTrigger />
+                    <PaginationPrevTrigger color={isDark ? "gray" : "black"} />
+                    <PaginationItems color={isDark ? "gray" : "black"} />
+                    <PaginationNextTrigger color={isDark ? "gray" : "black"} />
                   </HStack>
                   <Button onClick={handleSendToApp}>{t("sendToAppBTN")}</Button>
                 </HStack>

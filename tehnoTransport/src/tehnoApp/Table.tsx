@@ -6,7 +6,15 @@ import {
   getSortedRowModel,
   useReactTable,
 } from "@tanstack/react-table";
-import { Box, ButtonGroup, HStack, Icon, Text, VStack } from "@chakra-ui/react";
+import {
+  Box,
+  ButtonGroup,
+  HStack,
+  Icon,
+  Text,
+  VStack,
+  Button,
+} from "@chakra-ui/react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
 import EditableCell from "./tableCells/EditableCell";
@@ -15,7 +23,6 @@ import DateCell from "./tableCells/DateCell";
 import Filters from "./tableCells/Filters";
 import FilterPopover from "./tableCells/FilterPopover";
 import SortIcon from "../components/ui/Icons/SortIcon";
-import { Button } from "@chakra-ui/react";
 import NewCustomer from "../interfaces/NewCustomerInterface";
 import API from "../crud/API";
 import { useNavigate } from "react-router-dom";
@@ -79,6 +86,7 @@ export default function Table({ DATA }: CustomersProps) {
   const [data, setData] = useState<NewCustomer[]>(DATA);
   const [refreshData, setRefreshData] = useState(false);
   const [columnFilters, setColumnFilters] = useState([]);
+  const [isDark, setIsDark] = useState(false);
   const [pagination, setPagination] = useState({
     pageIndex: 0,
     pageSize: 10,
@@ -87,7 +95,9 @@ export default function Table({ DATA }: CustomersProps) {
   useEffect(() => {
     setData(DATA);
   }, [DATA]);
-  console.log(data);
+  useEffect(() => {
+    setIsDark(document.body.classList.contains("dark"));
+  }, []);
   const table = useReactTable({
     data,
     columns,
@@ -212,9 +222,9 @@ export default function Table({ DATA }: CustomersProps) {
             setColumnFilters={setColumnFilters}
           />
         </HStack>
-        <Button size="sm" onClick={updateAll}>
+        {/* <Button size="sm" onClick={updateAll}>
           {t("saveAllBTN")}
-        </Button>
+        </Button> */}
         {/* <Button size="sm" onClick={() => setRefreshData((prev) => !prev)}>
           Refresh page
         </Button> */}
@@ -275,18 +285,26 @@ export default function Table({ DATA }: CustomersProps) {
             <Button
               onClick={() => table.previousPage()}
               disabled={!table.getCanPreviousPage()}
+              colorPalette={isDark ? "gray" : ""}
             >
               {"<"}
             </Button>
             <Button
               onClick={() => table.nextPage()}
               disabled={!table.getCanNextPage()}
+              colorPalette={isDark ? "gray" : ""}
             >
               {">"}
             </Button>
           </ButtonGroup>
         </VStack>
-        <Button onClick={addNewRow}>{t("addNewBTN")}</Button>
+        <Button
+          onClick={addNewRow}
+          colorPalette={isDark ? "gray" : ""}
+          variant="outline"
+        >
+          {t("addNewBTN")}
+        </Button>
       </HStack>
     </Box>
   );

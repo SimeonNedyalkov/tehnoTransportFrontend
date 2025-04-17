@@ -6,7 +6,7 @@ import {
   PopoverRoot,
   PopoverTrigger,
 } from "../../components/ui/popover";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FilterIcon from "../../components/ui/Icons/FilterIcon";
 import { useTranslation } from "react-i18next";
 import {
@@ -92,9 +92,13 @@ export default function FilterPopover({
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
   const { t } = useTranslation();
+  const [isDark, setIsDark] = useState(false);
+  useEffect(() => {
+    setIsDark(document.body.classList.contains("dark"));
+  }, []);
   return (
     <PopoverRoot open={open} onOpenChange={(e) => setOpen(e.open)}>
-      <PopoverTrigger asChild>
+      <PopoverTrigger asChild colorPalette={isDark ? "gray" : ""}>
         <Button size="sm" variant="outline">
           <FilterIcon />
           {t("filters")}

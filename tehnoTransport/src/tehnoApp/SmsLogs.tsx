@@ -2,6 +2,7 @@ import {
   Avatar,
   Badge,
   Box,
+  Button,
   Card,
   Flex,
   HStack,
@@ -23,30 +24,49 @@ export default function SmsLogs() {
   const [smses, setSmses] = useState<SmsInterface[]>([]);
   const [filteredSmses, setFilteredSmses] = useState<SmsInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const pageSize = 5; // Customize as needed
   const { t } = useTranslation();
   const { user, loading } = useUser();
+
   useEffect(() => {
     if (DATA.length !== 0) {
       setSmses(DATA);
-      setFilteredSmses(DATA); // Show all initially
+      setFilteredSmses(DATA);
     }
   }, [DATA]);
+
   useEffect(() => {
     setIsLoading(false);
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setIsLoading(true);
-    }, 2000);
-    setIsLoading(false);
+    }, 1000);
+    return () => clearTimeout(timeout);
   }, []);
+
+  // Pagination logic
+  const totalPages = Math.ceil(filteredSmses.length / pageSize);
+  const paginatedSmses = filteredSmses.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
+  );
+
+  const handlePageChange = (direction: "next" | "prev") => {
+    setCurrentPage((prev) =>
+      direction === "next"
+        ? Math.min(prev + 1, totalPages)
+        : Math.max(prev - 1, 1)
+    );
+  };
 
   return (
     <>
-      {isLoading === false ? (
+      {!isLoading ? (
         <Flex
           alignItems="center"
           justifyContent="center"
           width="100%"
-          height="100vh" // or any height that fits your design
+          height="100vh"
         >
           <CarLoader />
         </Flex>
@@ -66,10 +86,16 @@ export default function SmsLogs() {
               borderColor="gray.200"
               bg="white"
             >
-              <CustomFilter smses={smses} onFiltered={setFilteredSmses} />
+              <CustomFilter
+                smses={smses}
+                onFiltered={(filtered) => {
+                  setFilteredSmses(filtered);
+                  setCurrentPage(1); // Reset to page 1 when filtering
+                }}
+              />
             </Box>
             <Flex wrap="wrap" gap={4} pt="2">
-              {filteredSmses.map((sms, index) => (
+              {paginatedSmses.map((sms, index) => (
                 <Card.Root width="320px" variant="elevated" key={index}>
                   <Card.Body gap="2">
                     <Flex justify="space-between" align="center">
@@ -100,7 +126,6 @@ export default function SmsLogs() {
                             .split("T")[0]
                         )}
                       </Text>
-
                       <Text
                         color={
                           sms.response === "success" ? "green.600" : "red.600"
@@ -132,6 +157,25 @@ export default function SmsLogs() {
                 </Card.Root>
               ))}
             </Flex>
+
+            {/* Pagination Controls */}
+            <HStack mt={4}>
+              <Button
+                onClick={() => handlePageChange("prev")}
+                disabled={currentPage === 1}
+              >
+                {t("Previous")}
+              </Button>
+              <Text>
+                {t("Page")} {currentPage} {t("of")} {totalPages}
+              </Text>
+              <Button
+                onClick={() => handlePageChange("next")}
+                disabled={currentPage === totalPages}
+              >
+                {t("Next")}
+              </Button>
+            </HStack>
           </VStack>
         </Stack>
       )}
