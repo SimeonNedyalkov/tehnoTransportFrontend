@@ -1,18 +1,17 @@
-import { Checkbox, Field, Label } from "@headlessui/react";
+import { Field } from "@headlessui/react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from "../tools/UserContext"; // import this at top
+import { useUser } from "../tools/UserContext";
 
 import "firebase/auth";
 
 export default function Login() {
   const { setUser } = useUser();
-  const [enabled, setEnabled] = useState(false);
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigation = useNavigate();
-  const LOGINURL = "http://localhost:3000/user/login";
+  const LOGINURL = "https://tehno-transport-b.onrender.com/user/login";
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
@@ -93,24 +92,6 @@ export default function Login() {
 
             <div className="rememberMeForgotPassword mb-3 mt-3 flex flex-row items-center justify-between">
               <Field className="flex items-center gap-2">
-                {/* <Checkbox
-                  checked={enabled}
-                  onChange={setEnabled}
-                  className="group block size-4 rounded border bg-white data-[checked]:bg-blue-500"
-                >
-                  <svg
-                    className="stroke-white opacity-0 group-data-[checked]:opacity-100"
-                    viewBox="0 0 14 14"
-                    fill="none"
-                  >
-                    <path
-                      d="M3 8L6 11L11 3.5"
-                      strokeWidth={2}
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </Checkbox> */}
                 <Link to="register">Don't have an account?</Link>
               </Field>
               <p className="forgot-password text-right">

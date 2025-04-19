@@ -11,7 +11,6 @@ import Customer from "../../interfaces/CustomerInterface";
 import daysRemainingAndStatusCalc from "../../tools/daysRemainingAndStatusCalc";
 import timestampToDateStringConverter from "../../tools/DateOrTimestampConverter";
 import { useTranslation } from "react-i18next";
-import AlertDialog from "../../components/ui/deleteModal";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -26,10 +25,8 @@ export default function ActionsCell({
   table,
 }: CellPropsInterface) {
   const [customer, setCustomer] = useState<any>({});
-  const [tableState, setTableState] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const theme = useTheme();
-  const [open, setOpen] = useState(true);
   const { t } = useTranslation();
   const [oldCustomer, setOldCustomer] = useState<Customer>({
     id: "",
@@ -46,18 +43,7 @@ export default function ActionsCell({
     daysRemaining: 0,
     isSentToApp: false,
   });
-  useEffect(() => {
-    const DBURL = "http://localhost:3000/customers/";
-    const getCustomer = async () => {
-      let response = await fetch(DBURL + customer.id, {
-        method: "GET",
-        credentials: "include",
-      });
-      if (response.ok) {
-        setOldCustomer(await response.json());
-      }
-    };
-  }, []);
+
   const handleCreate = async (rowIndex: number) => {
     const { id, ...customer } = row.original;
 
@@ -212,7 +198,6 @@ export default function ActionsCell({
           size="sm"
           colorScheme="red"
           bg="transparent"
-          // onClick={() => handleDelete(row.index)}
           onClick={() => setIsModalOpen((prev) => !prev)}
           padding="8px"
         >

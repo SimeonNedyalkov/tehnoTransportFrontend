@@ -1,4 +1,4 @@
-import { Box, FileUpload, Float } from "@chakra-ui/react";
+import { FileUpload, Float } from "@chakra-ui/react";
 import { useTranslation } from "react-i18next";
 import { LuX } from "react-icons/lu";
 

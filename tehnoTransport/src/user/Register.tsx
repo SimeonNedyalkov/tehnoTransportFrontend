@@ -1,18 +1,16 @@
-import { Checkbox, Field, Label } from "@headlessui/react";
+import { Field } from "@headlessui/react";
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useUser } from "../tools/UserContext";
 
 import "firebase/auth";
 
 export default function Login() {
-  const { setUser } = useUser();
   const [error, setError] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const navigation = useNavigate();
-  const LOGINURL = "http://localhost:3000/user/register";
+  const LOGINURL = "https://tehno-transport-b.onrender.com/user/register";
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     setError("");

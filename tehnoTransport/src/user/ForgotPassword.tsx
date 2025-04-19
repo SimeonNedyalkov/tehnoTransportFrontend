@@ -7,12 +7,10 @@ import {
   Heading,
   Flex,
 } from "@chakra-ui/react";
-import {
-  PasswordInput,
-  PasswordStrengthMeter,
-} from "./../components/ui/password-input";
+
 import { useForm } from "react-hook-form";
-const FORGOT_PASSWORD_URL = "http://localhost:3000/user/sendPasswordReset";
+const FORGOT_PASSWORD_URL =
+  "https://tehno-transport-b.onrender.com/user/sendPasswordReset";
 interface FormValues {
   email: string;
   password: string;
@@ -26,18 +24,16 @@ export default function ForgotPassword() {
   } = useForm<FormValues>();
 
   const onSubmit = handleSubmit(async (data) => {
-    const { email, password } = data;
-    const response = await fetch(
-      "http://localhost:3000/user/sendPasswordReset",
-      {
-        method: "POST",
-        body: JSON.stringify({ email }),
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      }
-    );
+    const { email } = data;
+    const response = await fetch(FORGOT_PASSWORD_URL, {
+      method: "POST",
+      body: JSON.stringify({ email }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+    });
+    return response;
   });
 
   return (
@@ -84,23 +80,6 @@ export default function ForgotPassword() {
               />
               <Field.ErrorText>{errors.email?.message}</Field.ErrorText>
             </Field.Root>
-
-            {/* <Field.Root invalid={!!errors.password}>
-              <Field.Label htmlFor="password">Password</Field.Label>
-              <PasswordInput
-                id="password"
-                placeholder="Enter new password"
-                size="lg"
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 6,
-                    message: "Password must be at least 6 characters long",
-                  },
-                })}
-              />
-              <Field.ErrorText>{errors.password?.message}</Field.ErrorText>
-            </Field.Root> */}
 
             <Button
               type="submit"

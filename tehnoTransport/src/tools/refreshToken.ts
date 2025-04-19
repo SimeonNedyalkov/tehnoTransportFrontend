@@ -1,4 +1,4 @@
-const REFRESHURL = "http://localhost:3000/user/refresh-auth";
+const REFRESHURL = "https://tehno-transport-b.onrender.com/user/refresh-auth";
 
 export default async function refreshAuthToken() {
   try {

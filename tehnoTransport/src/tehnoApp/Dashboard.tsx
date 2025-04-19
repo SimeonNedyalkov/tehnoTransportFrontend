@@ -89,7 +89,6 @@ export default function Dashboard({ customers }: DashboardProps) {
 
   return (
     <VStack wordSpacing={6} w="100%" marginTop="10">
-      {/* KPI Cards */}
       <StatGroup w="80%" justifyContent="space-between">
         <Stat.Root>
           <StatLabel>{t("dueSoon")}</StatLabel>
@@ -123,7 +122,6 @@ export default function Dashboard({ customers }: DashboardProps) {
         </Stat.Root>
       </StatGroup>
 
-      {/* Pie Chart */}
       <Box w="50%" h="300px">
         <ResponsiveContainer>
           <PieChart>
@@ -137,7 +135,6 @@ export default function Dashboard({ customers }: DashboardProps) {
         </ResponsiveContainer>
       </Box>
 
-      {/* Recent Tests List */}
       <Box w="80%">
         <Text fontSize="xl" fontWeight="bold" mb={4}>
           {t("dashboardText")}

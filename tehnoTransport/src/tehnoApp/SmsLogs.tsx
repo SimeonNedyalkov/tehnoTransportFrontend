@@ -25,7 +25,7 @@ export default function SmsLogs() {
   const [filteredSmses, setFilteredSmses] = useState<SmsInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 5; // Customize as needed
+  const pageSize = 5;
   const { t } = useTranslation();
   const { user, loading } = useUser();
 
@@ -44,7 +44,6 @@ export default function SmsLogs() {
     return () => clearTimeout(timeout);
   }, []);
 
-  // Pagination logic
   const totalPages = Math.ceil(filteredSmses.length / pageSize);
   const paginatedSmses = filteredSmses.slice(
     (currentPage - 1) * pageSize,
@@ -90,7 +89,7 @@ export default function SmsLogs() {
                 smses={smses}
                 onFiltered={(filtered) => {
                   setFilteredSmses(filtered);
-                  setCurrentPage(1); // Reset to page 1 when filtering
+                  setCurrentPage(1);
                 }}
               />
             </Box>
@@ -158,7 +157,6 @@ export default function SmsLogs() {
               ))}
             </Flex>
 
-            {/* Pagination Controls */}
             <HStack mt={4}>
               <Button
                 onClick={() => handlePageChange("prev")}

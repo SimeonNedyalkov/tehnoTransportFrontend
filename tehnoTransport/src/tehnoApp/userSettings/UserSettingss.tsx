@@ -4,7 +4,6 @@ import {
   Heading,
   Button,
   useFileUploadContext,
-  Float,
   Field,
   Input,
   FileUpload,
@@ -12,56 +11,23 @@ import {
   IconButton,
   Icon,
   HStack,
-  Stack,
 } from "@chakra-ui/react";
-import {
-  PasswordInput,
-  PasswordStrengthMeter,
-} from "../../components/ui/password-input";
 
 import { useEffect, useState } from "react";
 import { useUser } from "../../tools/UserContext";
-import { LuEye, LuEyeOff, LuFileImage, LuX } from "react-icons/lu";
-import { InputGroup } from "../../components/ui/input-group";
-import {
-  ChevronLeft,
-  ChevronRight,
-  EyeClosed,
-  LockKeyhole,
-  UserCog,
-} from "lucide-react";
+import { LuFileImage } from "react-icons/lu";
+import { ChevronLeft, ChevronRight, LockKeyhole, UserCog } from "lucide-react";
 import FileUploadItemGroup from "./FileUpload";
 import ChangePassword from "./ChangePassword";
 import { useTranslation } from "react-i18next";
-interface User {
-  uid: string;
-  email: string;
-  emailVerified: boolean;
-  displayName?: string;
-}
 
 export default function UserSettings() {
-  // const [user, setUser] = useState<User | null>(null);
   const { user, loading } = useUser();
   const [email, setEmail] = useState(user?.email || "");
   const [displayName, setDisplayName] = useState(user?.displayName || "");
   const [photoURL, setPhotoURL] = useState<File | null>(null);
   const { t } = useTranslation();
-  // const USERURL = "http://localhost:3000/user/getUser";
   const [page, setPage] = useState(0);
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     const loggedUser = await fetch(USERURL, {
-  //       method: "GET",
-  //       credentials: "include",
-  //     });
-  //     const userData = await loggedUser.json();
-  //     setUser(userData);
-  //     setEmail(userData.email);
-  //     setDisplayName(userData.displayName || "");
-  //   };
-  //   getUser();
-  // }, []);
 
   const FileUploadList = () => {
     const fileUpload = useFileUploadContext();

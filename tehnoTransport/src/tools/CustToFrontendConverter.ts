@@ -1,4 +1,3 @@
-import { Timestamp } from "firebase/firestore";
 import daysRemainingAndStatusCalc from "./daysRemainingAndStatusCalc";
 import Customer from "../interfaces/CustomerInterface";
 
@@ -14,12 +13,10 @@ const CustToFrontendFormater = (customer: Customer) => {
     isSmsSent,
   } = customer;
 
-  // Calculate days remaining and status
   const daysRemaining =
     daysRemainingAndStatusCalc.calculateDaysRemaining(dateOfNextTehnoTest);
   const status = daysRemainingAndStatusCalc.getStatus(daysRemaining);
 
-  // Return the formatted customer data
   return {
     brand,
     model,

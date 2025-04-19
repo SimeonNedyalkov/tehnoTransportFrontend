@@ -1,7 +1,6 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 
-// Define the context shape
 interface SettingsContextType {
   theme: string;
   toggleTheme: () => void;
@@ -9,12 +8,10 @@ interface SettingsContextType {
   setLanguage: (lang: string) => void;
 }
 
-// Create Context
 const SettingsContext = createContext<SettingsContextType | undefined>(
   undefined
 );
 
-// Create Provider Component
 export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -26,19 +23,16 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
     () => localStorage.getItem("language") || "bg"
   );
 
-  // Apply theme changes
   useEffect(() => {
     document.body.classList.toggle("dark", theme === "dark");
     localStorage.setItem("theme", theme);
   }, [theme]);
 
-  // Apply language changes
   useEffect(() => {
     i18n.changeLanguage(language);
     localStorage.setItem("language", language);
   }, [language, i18n]);
 
-  // Toggle theme function
   const toggleTheme = () => {
     setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
@@ -52,7 +46,6 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
-// Custom hook to use SettingsContext
 export const useSettings = () => {
   const context = useContext(SettingsContext);
   if (!context)

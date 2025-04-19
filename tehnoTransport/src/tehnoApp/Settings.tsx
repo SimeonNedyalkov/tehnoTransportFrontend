@@ -34,14 +34,11 @@ export default function Settings() {
         flexDirection="column"
         alignItems="center"
       >
-        {/* Ensure Heading is always at the top */}
         <Heading size="lg" mb={100}>
           ⚙️ {t("settings")}
         </Heading>
 
-        {/* Settings Container */}
         <VStack w="100%" align="center">
-          {/* Dark Mode Toggle */}
           <HStack justify="space-between" w="100%">
             <Text>{t("choseTheme")} </Text>
             <Switch.Root colorPalette="blue" size="lg">
@@ -64,7 +61,6 @@ export default function Settings() {
             </Switch.Root>
           </HStack>
 
-          {/* Language Selector */}
           <HStack justify="space-between" w="100%">
             <Text>{t("choseLanguage")}</Text>
             <FormControl variant="standard" sx={{ m: 1, minWidth: 120 }}>

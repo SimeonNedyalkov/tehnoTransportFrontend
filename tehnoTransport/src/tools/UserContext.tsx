@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 
-const USERURL = "http://localhost:3000/user/getUser";
+const USERURL = "https://tehno-transport-b.onrender.com/user/getUser";
 
 export const UserContext = createContext<any>(null);
 

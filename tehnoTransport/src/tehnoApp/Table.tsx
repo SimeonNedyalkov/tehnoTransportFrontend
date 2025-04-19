@@ -15,7 +15,7 @@ import {
   VStack,
   Button,
 } from "@chakra-ui/react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Customer from "../interfaces/CustomerInterface";
 import EditableCell from "./tableCells/EditableCell";
 import StatusCell from "./tableCells/StatusCell";
@@ -84,7 +84,6 @@ export default function Table({ DATA }: CustomersProps) {
     []
   );
   const [data, setData] = useState<NewCustomer[]>(DATA);
-  const [refreshData, setRefreshData] = useState(false);
   const [columnFilters, setColumnFilters] = useState([]);
   const [isDark, setIsDark] = useState(false);
   const [pagination, setPagination] = useState({
@@ -222,12 +221,6 @@ export default function Table({ DATA }: CustomersProps) {
             setColumnFilters={setColumnFilters}
           />
         </HStack>
-        {/* <Button size="sm" onClick={updateAll}>
-          {t("saveAllBTN")}
-        </Button> */}
-        {/* <Button size="sm" onClick={() => setRefreshData((prev) => !prev)}>
-          Refresh page
-        </Button> */}
       </HStack>
       <Box className="table" w={table.getTotalSize()}>
         {table.getHeaderGroups().map((headerGroup) => (

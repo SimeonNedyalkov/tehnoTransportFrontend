@@ -2,15 +2,14 @@ import { Timestamp } from "firebase/firestore";
 
 const calculateDaysRemaining = (testDate: Timestamp) => {
   const newTestDate = new Date(testDate.seconds * 1000);
-  // newTestDate.setFullYear(newTestDate.getFullYear() + 1);
   const nextTehnoDate = newTestDate.toISOString().split("T")[0];
 
   const today = new Date();
-  const dd = String(today.getDate()).padStart(2, "0");
-  const mm = String(today.getMonth() + 1).padStart(2, "0");
-  const yyyy = today.getFullYear();
+  // const dd = String(today.getDate()).padStart(2, "0");
+  // const mm = String(today.getMonth() + 1).padStart(2, "0");
+  // const yyyy = today.getFullYear();
 
-  const todaysDate = yyyy + "-" + mm + "-" + dd;
+  // const todaysDate = yyyy + "-" + mm + "-" + dd;
 
   const nextTehnoDateObj: any = new Date(nextTehnoDate);
   const todayObj: any = new Date(today);

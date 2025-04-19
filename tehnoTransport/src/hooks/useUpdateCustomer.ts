@@ -31,25 +31,3 @@ export default function useUpdateCustomer(id: string, customer: Customer) {
     return oldCustomer;
   }, [oldCustomer]);
 }
-
-// const DBURL = "http://localhost:3000/customers/";
-// const navigation = useNavigate();
-
-// export const updateCustomer = async (id: string, dataToUpdate: Customer) => {
-//   try {
-//     const response = await fetch(DBURL + id, {
-//       method: "POST",
-//       credentials: "include",
-//       body: JSON.stringify(dataToUpdate),
-//     });
-
-//     if (!response.ok) {
-//       navigation("/");
-//       throw new Error("Failed to fetch customer data");
-//     }
-
-//     return dataToUpdate;
-//   } catch (error) {
-//     console.error("Error fetching customer data:", error);
-//   }
-// };

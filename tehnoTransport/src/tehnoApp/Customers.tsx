@@ -23,7 +23,7 @@ export default function Customers({ DATA }: CustomersProps) {
           alignItems="center"
           justifyContent="center"
           width="100%"
-          height="100vh" // or any height that fits your design
+          height="100vh"
         >
           <CarLoader />
         </Flex>
@@ -36,7 +36,6 @@ export default function Customers({ DATA }: CustomersProps) {
           padding="0"
           margin="6"
           marginBottom="0"
-          // pt="24"
         >
           <Heading mb={10}>{t("name")}</Heading>
           <Table DATA={DATA} />

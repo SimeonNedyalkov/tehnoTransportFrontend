@@ -11,22 +11,10 @@ import {
 import { useUser } from "../../tools/UserContext";
 import { useNavigate } from "react-router-dom";
 
-interface User {
-  uid: string;
-  email: string;
-  emailVerified: boolean;
-  displayName?: string;
-  photoURL?: string;
-}
-
-interface UserProfileProps {
-  user: User;
-}
-
 export default function UserProfile() {
   const { user, loading } = useUser();
   const navigation = useNavigate();
-  const LOGOUTURL = "http://localhost:3000/user/logout";
+  const LOGOUTURL = "https://tehno-transport-b.onrender.com/user/logout";
   const handleLogout = async () => {
     try {
       const response = await fetch(LOGOUTURL, {

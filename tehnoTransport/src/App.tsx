@@ -67,14 +67,10 @@ function App() {
   return (
     <>
       <Routes>
-        {/* user routes*/}
         <Route path="/" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="forgotPassword" element={<ForgotPassword />} />
-        {/* app routes  */}
         <Route path="app/*" element={<Layout />} />
-
-        {/* Redirect unknown routes to login */}
         <Route path="*" element={<Navigate to="dashboard" />} />
       </Routes>
     </>

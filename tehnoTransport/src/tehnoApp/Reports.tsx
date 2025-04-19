@@ -284,17 +284,6 @@ export default function Reports({ DATA }: ReposrtsProps) {
                           <Table.Cell>
                             {items.filter((x) => x.key === customer.id)}
                           </Table.Cell>
-                          {/* <Checkbox.Root>
-                <Checkbox.HiddenInput />
-                <Checkbox.Control
-                  sx={{
-                    bg: "white",
-                    borderColor: "black",
-                    _checked: { bg: "black", borderColor: "black" },
-                    _hover: { bg: "gray.200" },
-                  }}
-                />
-              </Checkbox.Root> */}
                         </Table.Row>
                       ) : (
                         <></>

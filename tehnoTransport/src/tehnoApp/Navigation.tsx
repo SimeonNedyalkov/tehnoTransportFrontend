@@ -1,5 +1,4 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../tools/UserContext";
 import { useTranslation } from "react-i18next";
@@ -7,28 +6,22 @@ import { useTranslation } from "react-i18next";
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
 }
-interface User {
-  photoURL?: string;
-  name?: string;
-  email?: string;
-}
+
 export default function Navigation() {
-  // const [user, setUser] = useState<User>({});
   const { user, loading } = useUser();
   const navigation = useNavigate();
-  const USERURL = "http://localhost:3000/user/getUser";
-  const LOGOUTURL = "http://localhost:3000/user/logout";
+  const LOGOUTURL = "https://tehno-transport-b.onrender.com/user/logout";
   const { t } = useTranslation();
   const handleLogout = async () => {
     try {
       const response = await fetch(LOGOUTURL, {
         method: "POST",
-        credentials: "include", // Ensures cookies are sent
+        credentials: "include",
       });
 
       if (response.status == 200) {
         console.log("User logged out successfully!");
-        navigation("/"); // Redirect to login page
+        navigation("/");
       } else {
         console.log(`${response.status} -- Logout failed`);
       }
