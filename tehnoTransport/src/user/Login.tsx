@@ -35,9 +35,9 @@ export default function Login() {
         {
           method: "GET",
           credentials: "include",
-          headers: {
-            Authorization: `Bearer ${data.idToken}`,
-          },
+          headers: data.idToken
+            ? { Authorization: `Bearer ${data.idToken}` }
+            : {},
         }
       );
 
@@ -47,9 +47,15 @@ export default function Login() {
       setUser(userData);
       console.log("User logged in successfully!", data);
       navigation("/app/dashboard");
-    } catch (err) {
-      console.error("Login error:", err);
-      setError("Invalid email or password. Please try again.");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        console.error("Login error:", err);
+        if ((err as any).response) {
+          console.error("Backend response:", (err as any).response);
+        }
+      } else {
+        console.error("Unexpected error:", err);
+      }
     }
   };
 
@@ -60,7 +66,7 @@ export default function Login() {
           <form className="flex flex-col" onSubmit={handleSubmit}>
             <div className="intro">
               <h1 className="introh1 text-4xl text-sky-950 pb-5 mb-8 pb-8">
-                Tehno Transport Admin Login.
+                Tehno Transport Admin Login!
               </h1>
               <h5 className="text-sm text-gray-600 pb-5">
                 This portal is for Tehno Transport staff only. Unauthorized
