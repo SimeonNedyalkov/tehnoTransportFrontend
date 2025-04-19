@@ -2,6 +2,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../tools/UserContext";
+import { useTranslation } from "react-i18next";
 
 function classNames(...classes: any[]) {
   return classes.filter(Boolean).join(" ");
@@ -17,6 +18,7 @@ export default function Navigation() {
   const navigation = useNavigate();
   const USERURL = "http://localhost:3000/user/getUser";
   const LOGOUTURL = "http://localhost:3000/user/logout";
+  const { t } = useTranslation();
   const handleLogout = async () => {
     try {
       const response = await fetch(LOGOUTURL, {
@@ -34,24 +36,14 @@ export default function Navigation() {
       console.error("Logout failed:", error);
     }
   };
-  // useEffect(() => {
-  //   const getUser = async () => {
-  //     const loggedUser = await fetch(USERURL, {
-  //       method: "GET",
-  //       credentials: "include",
-  //     });
-  //     const userData = await loggedUser.json();
-  //     setUser(userData);
-  //   };
-  //   getUser();
-  // }, []);
+
   console.log(user);
   return (
     <Menu as="div" className="relative ml-3">
       <div>
         <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
           <span className="absolute -inset-1.5" />
-          <span className="sr-only">Open user menu</span>
+          <span className="sr-only">{t("openUserMenu")}</span>
           <img
             alt="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
             src={
@@ -71,7 +63,7 @@ export default function Navigation() {
             to="/app/userProfile"
             className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
           >
-            Your Profile
+            {t("yourProfile")}
           </Link>
         </MenuItem>
         <MenuItem>
@@ -79,7 +71,7 @@ export default function Navigation() {
             to="/app/userSettings"
             className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
           >
-            Settings
+            {t("settings")}
           </Link>
         </MenuItem>
         <MenuItem>
@@ -88,7 +80,7 @@ export default function Navigation() {
             className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
             onClick={handleLogout}
           >
-            Sign out
+            {t("signOut")}
           </a>
         </MenuItem>
       </MenuItems>

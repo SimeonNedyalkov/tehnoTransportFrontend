@@ -12,6 +12,7 @@ import ForgotPassword from "./user/ForgotPassword";
 import SmsLogs from "./tehnoApp/SmsLogs";
 import UserProfile from "./tehnoApp/userSettings/UserProfile";
 import useGetCustomer from "./hooks/useGetCustomer";
+import Register from "./user/Register";
 
 function Layout() {
   const { isAuthenticated } = useAuth();
@@ -68,6 +69,7 @@ function App() {
       <Routes>
         {/* user routes*/}
         <Route path="/" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="forgotPassword" element={<ForgotPassword />} />
         {/* app routes  */}
         <Route path="app/*" element={<Layout />} />

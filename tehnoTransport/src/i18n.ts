@@ -94,6 +94,9 @@ i18n
           firstName: "Name",
           phone: "Phone",
           dateOfLastTehnoTest: "Last tehno date",
+          openUserMenu: "Open User Menu",
+          yourProfile: "Your Profile",
+          signOut: "Sign Out",
         },
       },
       bg: {
@@ -183,6 +186,9 @@ i18n
           phone: "Телефон",
 
           dateOfLastTehnoTest: "Последен техн. преглед",
+          openUserMenu: "Отвори Потребителското Меню",
+          yourProfile: "Твоят профил",
+          signOut: "Излез",
         },
       },
     },
