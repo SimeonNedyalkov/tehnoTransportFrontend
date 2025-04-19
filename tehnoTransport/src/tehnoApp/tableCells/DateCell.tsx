@@ -1,11 +1,9 @@
-import { Timestamp } from "firebase/firestore";
 import CellPropsInterface from "../../interfaces/CellPropsInterface";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { forwardRef } from "react";
 import { Center, Box, Icon } from "@chakra-ui/react";
 import CalendarIcon from "../../components/ui/Icons/CalendarIcon";
-import timestampToDateStringConverter from "../../tools/DateOrTimestampConverter";
 
 const DateCustomInput = forwardRef<
   HTMLDivElement,
@@ -26,9 +24,7 @@ const DateCustomInput = forwardRef<
               e.stopPropagation();
               clearDate();
             }}
-          >
-            {/* <Icon as={X} /> */}
-          </Box>
+          ></Box>
         )}
       </>
     ) : (
@@ -44,24 +40,6 @@ export default function DateCell({
   table,
 }: CellPropsInterface) {
   let date = getValue();
-  // if (date && typeof date === "object" && "_seconds" in date) {
-  //   date = new Date(date._seconds * 1000);
-  //   const localDate = new Date(
-  //     date.getTime() - date.getTimezoneOffset() * 60000
-  //   );
-  //   date = localDate.toISOString().split("T")[0];
-  // } else if (date && typeof date === "object" && "seconds" in date) {
-  //   date = new Date(date.seconds * 1000);
-  //   const localDate = new Date(
-  //     date.getTime() - date.getTimezoneOffset() * 60000
-  //   );
-  //   date = localDate.toISOString().split("T")[0];
-  // } else if (date instanceof Timestamp) {
-  //   date = date.toDate();
-  // }
-  // if (typeof date == "object") {
-  //   date = timestampToDateStringConverter(date);
-  // }
   const { updateData } = table.options.meta;
   return (
     <DatePicker

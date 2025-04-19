@@ -1,12 +1,10 @@
 import SmsInterface from "../../../interfaces/SmsInterface";
 import {
-  Box,
   createListCollection,
   HStack,
   useSelectContext,
   VStack,
   Input,
-  Text,
   IconButton,
   Portal,
   Select,

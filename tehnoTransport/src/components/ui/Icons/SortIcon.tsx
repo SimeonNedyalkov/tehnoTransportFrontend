@@ -8,7 +8,7 @@ const SortIcon = React.forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>(
       viewBox="0 0 24 24"
       strokeWidth={1.5}
       stroke="currentColor"
-      ref={ref} // Attach the ref to the svg element
+      ref={ref}
       {...props}
     >
       <path
@@ -20,6 +20,6 @@ const SortIcon = React.forwardRef<SVGSVGElement, React.SVGProps<SVGSVGElement>>(
   )
 );
 
-SortIcon.displayName = "SortIcon"; // Optional: It's a good practice to set a display name for forwardRef components
+SortIcon.displayName = "SortIcon";
 
 export default SortIcon;

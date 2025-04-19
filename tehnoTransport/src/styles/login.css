@@ -64,10 +64,6 @@
   color: #0a7fec;
 }
 
-/* .styledInput:focus-visible {
-  border: 1px solid #0a7fec;
-  border-color: #0a7fec;
-} */
 .styledPassword {
   position: relative;
   top: 0.7rem;

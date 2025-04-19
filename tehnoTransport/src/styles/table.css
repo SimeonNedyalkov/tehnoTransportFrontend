@@ -22,10 +22,10 @@ svg {
   display: flex;
   justify-content: center;
   align-items: center;
-  color: rgba(169, 169, 169, 0.8); /* gray.400 */
+  color: rgba(169, 169, 169, 0.8);
   padding: 0.5rem;
   font-weight: bold;
-  font-size: 0.75rem; /* xs */
+  font-size: 0.75rem;
   text-transform: uppercase;
   text-align: center;
 }
