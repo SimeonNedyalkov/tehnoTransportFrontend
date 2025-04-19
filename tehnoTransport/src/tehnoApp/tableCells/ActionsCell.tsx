@@ -1,5 +1,5 @@
 import { Button, Box } from "@chakra-ui/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CellPropsInterface from "../../interfaces/CellPropsInterface";
 import { Timestamp } from "firebase/firestore";
 import { CiViewTable } from "react-icons/ci";
