@@ -30,13 +30,16 @@ export default function Login() {
       }
 
       const data = await response.json();
-      const userRes = await fetch("http://localhost:3000/user/getUser", {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          Authorization: `Bearer ${data.idToken}`,
-        },
-      });
+      const userRes = await fetch(
+        "https://tehno-transport-b.onrender.com/user/getUser",
+        {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            Authorization: `Bearer ${data.idToken}`,
+          },
+        }
+      );
 
       if (!userRes.ok) throw new Error("Failed to fetch user after login");
 

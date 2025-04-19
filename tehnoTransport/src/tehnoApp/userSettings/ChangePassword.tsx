@@ -55,7 +55,7 @@ export default function ChangePassword() {
     if (newPassword === repeatPassword) {
       if (value >= 3) {
         const response = await fetch(
-          "http://localhost:3000/user/updatePassword",
+          "https://tehno-transport-b.onrender.com/user/updatePassword",
           {
             method: "PATCH",
             body: JSON.stringify({ newPassword }),

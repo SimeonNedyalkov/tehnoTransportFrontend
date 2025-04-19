@@ -6,7 +6,7 @@ function getAuthTokenFromCookies(): string | null {
 }
 
 const updateCustomer = async (id: string, customer: NewCustomer) => {
-  const DBURL = "http://localhost:3000/customers/";
+  const DBURL = "https://tehno-transport-b.onrender.com/customers/";
   const authToken = getAuthTokenFromCookies();
 
   try {
@@ -29,7 +29,7 @@ const updateCustomer = async (id: string, customer: NewCustomer) => {
 };
 
 const createCustomer = async (customer: NewCustomer) => {
-  const DBURL = "http://localhost:3000/customers/";
+  const DBURL = "https://tehno-transport-b.onrender.com/customers/";
   const authToken = getAuthTokenFromCookies();
 
   try {
@@ -51,7 +51,7 @@ const createCustomer = async (customer: NewCustomer) => {
   }
 };
 const deleteCustomer = async (id: string) => {
-  const DBURL = "http://localhost:3000/customers/";
+  const DBURL = "https://tehno-transport-b.onrender.com/customers/";
   const authToken = getAuthTokenFromCookies();
   try {
     const response = await fetch(DBURL + id, {

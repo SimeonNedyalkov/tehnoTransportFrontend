@@ -7,7 +7,7 @@ import refreshAuthToken from "../tools/refreshToken";
 
 export default function useGetCustomer() {
   const [customers, setCustomers] = useState<Customer[]>([]);
-  const DBURL = "http://localhost:3000/customers";
+  const DBURL = "https://tehno-transport-b.onrender.com/customers";
   const navigation = useNavigate();
 
   useEffect(() => {

@@ -49,11 +49,14 @@ export default function UserSettings() {
     if (photoURL) {
       formData.append("photoURL", photoURL);
     }
-    const response = await fetch("http://localhost:3000/user/updateUser", {
-      method: "PATCH",
-      body: formData,
-      credentials: "include",
-    });
+    const response = await fetch(
+      "https://tehno-transport-b.onrender.com/user/updateUser",
+      {
+        method: "PATCH",
+        body: formData,
+        credentials: "include",
+      }
+    );
 
     if (response.ok) {
       alert("Profile updated successfully!");

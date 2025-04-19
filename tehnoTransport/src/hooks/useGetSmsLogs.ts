@@ -5,7 +5,7 @@ import SmsInterface from "../interfaces/SmsInterface";
 
 export default function useGetSmsLogs() {
   const [getSms, setGetSms] = useState<SmsInterface[]>([]);
-  const DBURL = "http://localhost:3000/sms-logs";
+  const DBURL = "https://tehno-transport-b.onrender.com/sms-logs";
   const navigation = useNavigate();
 
   useEffect(() => {

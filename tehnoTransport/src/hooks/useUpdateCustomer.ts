@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 export default function useUpdateCustomer(id: string, customer: Customer) {
   const [oldCustomer, setOldCustomer] = useState({});
-  const DBURL = "http://localhost:3000/customers/";
+  const DBURL = "https://tehno-transport-b.onrender.com/customers/";
   const navigation = useNavigate();
 
   useEffect((): any => {
