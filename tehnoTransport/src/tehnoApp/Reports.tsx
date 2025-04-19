@@ -32,18 +32,13 @@ export default function Reports({ DATA }: ReposrtsProps) {
   const [values, setValues] = useState<Customer[]>([]);
   const [isSuccess, setIsSuccess] = useState(false);
   const [isError, setError] = useState(false);
-  const [refreshKey, setRefreshKey] = useState(0);
   const [open, setOpen] = React.useState(false);
   const [loaded, setLoaded] = useState(false);
   const [isDark, setIsDark] = useState(false);
   const { t } = useTranslation();
 
-  const handleClick = () => {
-    setOpen(true);
-  };
-
   const handleClose = (
-    event: React.SyntheticEvent | Event,
+    _event: React.SyntheticEvent | Event,
     reason?: SnackbarCloseReason
   ) => {
     if (reason === "clickaway") {
@@ -58,7 +53,7 @@ export default function Reports({ DATA }: ReposrtsProps) {
         setIsSuccess(false);
       }, 2000);
     }
-  }, [isSuccess, refreshKey]);
+  }, [isSuccess]);
 
   useEffect(() => {
     const allDueSoon = data.filter(

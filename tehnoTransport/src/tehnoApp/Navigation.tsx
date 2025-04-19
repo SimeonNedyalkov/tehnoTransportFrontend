@@ -3,12 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../tools/UserContext";
 import { useTranslation } from "react-i18next";
 
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(" ");
-}
-
 export default function Navigation() {
-  const { user, loading } = useUser();
+  const { user } = useUser();
   const navigation = useNavigate();
   const LOGOUTURL = "https://tehno-transport-b.onrender.com/user/logout";
   const { t } = useTranslation();

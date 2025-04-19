@@ -16,7 +16,7 @@ type DashboardProps = {
   customers: Customer[];
 };
 export default function Dashboard({ customers }: DashboardProps) {
-  const [refreshData, setRefreshData] = useState(false);
+  const [_refreshData, setRefreshData] = useState(false);
   const { t } = useTranslation();
   const [customersState, setCustomersState] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);

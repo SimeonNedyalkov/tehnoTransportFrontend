@@ -18,17 +18,12 @@ import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import { useTheme } from "@mui/material/styles";
 
-export default function ActionsCell({
-  getValue,
-  row,
-  column,
-  table,
-}: CellPropsInterface) {
-  const [customer, setCustomer] = useState<any>({});
+export default function ActionsCell({ row, table }: CellPropsInterface) {
+  const [_customer, setCustomer] = useState<any>({});
   const [isModalOpen, setIsModalOpen] = useState(false);
   const theme = useTheme();
   const { t } = useTranslation();
-  const [oldCustomer, setOldCustomer] = useState<Customer>({
+  const [oldCustomer, _setOldCustomer] = useState<Customer>({
     id: "",
     brand: "Unknown Brand",
     createdAt: undefined,
@@ -79,7 +74,7 @@ export default function ActionsCell({
       Object.keys(updatedCustomer).forEach((key) => {
         if (key === "dateOfLastTehnoTest") {
           table.options.meta.updateData(
-            row.index,
+            rowIndex,
             key,
             updatedCustomer["dateOfLastTehnoTest"]
           );
@@ -135,7 +130,7 @@ export default function ActionsCell({
         .split("T")[0];
       setCustomer(updatedCustomer);
       Object.keys(updatedCustomer).forEach((key) => {
-        table.options.meta.updateData(row.index, key, updatedCustomer[key]);
+        table.options.meta.updateData(rowIndex, key, updatedCustomer[key]);
       });
       return updatedCustomer;
     } catch (error) {
@@ -148,7 +143,7 @@ export default function ActionsCell({
     try {
       const deletedCustomer = await API.deleteCustomer(customer.id);
       setCustomer(deletedCustomer);
-      table.options.meta.removeRow(row.index);
+      table.options.meta.removeRow(rowIndex);
       setIsModalOpen(false);
       return deletedCustomer;
     } catch (error) {

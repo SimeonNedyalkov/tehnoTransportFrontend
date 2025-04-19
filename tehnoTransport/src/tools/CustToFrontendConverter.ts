@@ -8,7 +8,6 @@ const CustToFrontendFormater = (customer: Customer) => {
     regNumber,
     firstName,
     phone,
-    dateOfLastTehnoTest,
     dateOfNextTehnoTest,
     isSmsSent,
   } = customer;

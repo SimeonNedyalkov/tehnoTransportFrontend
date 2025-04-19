@@ -24,12 +24,7 @@ import Filters from "./tableCells/Filters";
 import FilterPopover from "./tableCells/FilterPopover";
 import SortIcon from "../components/ui/Icons/SortIcon";
 import NewCustomer from "../interfaces/NewCustomerInterface";
-import API from "../crud/API";
-import { useNavigate } from "react-router-dom";
 import ActionsCell from "./tableCells/ActionsCell";
-import { Timestamp } from "firebase/firestore";
-import daysRemainingAndStatusCalc from "../tools/daysRemainingAndStatusCalc";
-import timestampToDateStringConverter from "../tools/DateOrTimestampConverter";
 import { useTranslation } from "react-i18next";
 type CustomersProps = {
   DATA: Customer[];
@@ -90,7 +85,6 @@ export default function Table({ DATA }: CustomersProps) {
     pageIndex: 0,
     pageSize: 10,
   });
-  const navigation = useNavigate();
   useEffect(() => {
     setData(DATA);
   }, [DATA]);
@@ -158,55 +152,55 @@ export default function Table({ DATA }: CustomersProps) {
     });
   };
 
-  const updateAll = async () => {
-    const updatedData = [
-      ...table.getRowModel().flatRows.map((row) => row.original),
-    ];
-    for (const customer of updatedData) {
-      try {
-        if (customer.id) {
-          await API.updateCustomer(customer.id, customer);
-        } else {
-          const { id, ...newCustomerWithoutID } = customer;
-          console.log(customer);
-          const newCustomer = await API.createCustomer(newCustomerWithoutID);
-          console.log(
-            `NewCustomer date:${Object.entries(
-              newCustomer.dateOfNextTehnoTest
-            )}`
-          );
-          const testDate = new Date(
-            newCustomer.dateOfNextTehnoTest._seconds * 1000
-          );
-          console.log(`Test date : ${testDate}`);
-          const timestamp = Timestamp.fromDate(testDate);
-          console.log(`Date to timestamp ${timestamp}`);
-          newCustomer.daysRemaining =
-            daysRemainingAndStatusCalc.calculateDaysRemaining(timestamp);
-          newCustomer.status = daysRemainingAndStatusCalc.getStatus(
-            newCustomer.daysRemaining
-          );
-          newCustomer.dateOfLastTehnoTest = timestampToDateStringConverter(
-            newCustomer.dateOfLastTehnoTest
-          )
-            .toISOString()
-            .split("T")[0];
-          setData((prev) => {
-            const indexOfAddedRow = prev.findIndex(
-              (c) =>
-                c.firstName === customer.firstName && c.phone === customer.phone
-            );
-            prev.splice(indexOfAddedRow, 1);
-            const updatedData = [...prev, newCustomer];
+  // const updateAll = async () => {
+  //   const updatedData = [
+  //     ...table.getRowModel().flatRows.map((row) => row.original),
+  //   ];
+  //   for (const customer of updatedData) {
+  //     try {
+  //       if (customer.id) {
+  //         await API.updateCustomer(customer.id, customer);
+  //       } else {
+  //         const { id, ...newCustomerWithoutID } = customer;
+  //         console.log(customer);
+  //         const newCustomer = await API.createCustomer(newCustomerWithoutID);
+  //         console.log(
+  //           `NewCustomer date:${Object.entries(
+  //             newCustomer.dateOfNextTehnoTest
+  //           )}`
+  //         );
+  //         const testDate = new Date(
+  //           newCustomer.dateOfNextTehnoTest._seconds * 1000
+  //         );
+  //         console.log(`Test date : ${testDate}`);
+  //         const timestamp = Timestamp.fromDate(testDate);
+  //         console.log(`Date to timestamp ${timestamp}`);
+  //         newCustomer.daysRemaining =
+  //           daysRemainingAndStatusCalc.calculateDaysRemaining(timestamp);
+  //         newCustomer.status = daysRemainingAndStatusCalc.getStatus(
+  //           newCustomer.daysRemaining
+  //         );
+  //         newCustomer.dateOfLastTehnoTest = timestampToDateStringConverter(
+  //           newCustomer.dateOfLastTehnoTest
+  //         )
+  //           .toISOString()
+  //           .split("T")[0];
+  //         setData((prev) => {
+  //           const indexOfAddedRow = prev.findIndex(
+  //             (c) =>
+  //               c.firstName === customer.firstName && c.phone === customer.phone
+  //           );
+  //           prev.splice(indexOfAddedRow, 1);
+  //           const updatedData = [...prev, newCustomer];
 
-            return updatedData;
-          });
-        }
-      } catch (error) {
-        console.error("Error saving customer:", error);
-      }
-    }
-  };
+  //           return updatedData;
+  //         });
+  //       }
+  //     } catch (error) {
+  //       console.error("Error saving customer:", error);
+  //     }
+  //   }
+  // };
 
   return (
     <Box>

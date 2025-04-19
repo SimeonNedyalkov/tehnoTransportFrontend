@@ -8,7 +8,7 @@ export default function Filters({ columnFilters, setColumnFilters }: any) {
   const selectedFilter = columnFilters[columnFilters.length - 1]?.id || "brand";
   const taskName =
     columnFilters.find((f: any) => f.id === selectedFilter)?.value || "";
-  const [searchValue, setSearchValue] = useState(taskName);
+  const [searchValue, _setSearchValue] = useState(taskName);
   const { t } = useTranslation();
 
   useEffect(() => {

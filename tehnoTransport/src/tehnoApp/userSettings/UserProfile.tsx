@@ -12,7 +12,7 @@ import { useUser } from "../../tools/UserContext";
 import { useNavigate } from "react-router-dom";
 
 export default function UserProfile() {
-  const { user, loading } = useUser();
+  const { user } = useUser();
   const navigation = useNavigate();
   const LOGOUTURL = "https://tehno-transport-b.onrender.com/user/logout";
   const handleLogout = async () => {

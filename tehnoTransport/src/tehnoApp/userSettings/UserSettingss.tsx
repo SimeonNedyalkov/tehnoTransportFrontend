@@ -22,7 +22,7 @@ import ChangePassword from "./ChangePassword";
 import { useTranslation } from "react-i18next";
 
 export default function UserSettings() {
-  const { user, loading } = useUser();
+  const { user } = useUser();
   const [email, setEmail] = useState(user?.email || "");
   const [displayName, setDisplayName] = useState(user?.displayName || "");
   const [photoURL, setPhotoURL] = useState<File | null>(null);

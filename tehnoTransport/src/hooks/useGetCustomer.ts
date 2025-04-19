@@ -57,7 +57,7 @@ export default function useGetCustomer() {
             nextTehnoDate.getTime() - nextTehnoDate.getTimezoneOffset() * 60000
           );
 
-          const timestampLast = Timestamp.fromDate(localDateLast);
+          // const timestampLast = Timestamp.fromDate(localDateLast);
           const timestampNext = Timestamp.fromDate(localDateNext);
 
           const daysRemaining =

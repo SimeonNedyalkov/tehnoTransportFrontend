@@ -85,10 +85,7 @@ function KeyItem({
   );
 }
 
-export default function FilterPopover({
-  columnFilters,
-  setColumnFilters,
-}: any) {
+export default function FilterPopover({ setColumnFilters }: any) {
   const [open, setOpen] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
   const { t } = useTranslation();

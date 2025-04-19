@@ -27,7 +27,7 @@ export default function SmsLogs() {
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 5;
   const { t } = useTranslation();
-  const { user, loading } = useUser();
+  const { user } = useUser();
 
   useEffect(() => {
     if (DATA.length !== 0) {
