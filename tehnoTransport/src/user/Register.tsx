@@ -83,7 +83,7 @@ export default function Login() {
               />
             </div>
             <div className="mb-3 flex flex-col">
-              <label className="flex justify-start styledPassword">
+              <label className="flex justify-start styledRePassword">
                 Repeat Password
               </label>
               <input
@@ -100,7 +100,7 @@ export default function Login() {
                 <Link to="/">Already have an account?</Link>
               </Field>
               <p className="forgot-password text-right">
-                Forgot <Link to="forgotPassword">password?</Link>
+                Forgot <Link to="/forgotPassword">password?</Link>
               </p>
             </div>
             <div className="divider">
