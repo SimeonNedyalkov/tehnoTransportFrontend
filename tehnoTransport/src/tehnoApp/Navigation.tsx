@@ -2,6 +2,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../tools/UserContext";
 import { useTranslation } from "react-i18next";
+import oldPerson from "../assets/photo-1472099645785-5658abf4ff4e.avif";
 
 export default function Navigation() {
   const { user } = useUser();
@@ -35,10 +36,7 @@ export default function Navigation() {
           <span className="sr-only">{t("openUserMenu")}</span>
           <img
             alt="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            src={
-              user?.photoURL ||
-              "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            }
+            src={user?.photoURL || oldPerson}
             className="size-8 rounded-full"
           />
         </MenuButton>
