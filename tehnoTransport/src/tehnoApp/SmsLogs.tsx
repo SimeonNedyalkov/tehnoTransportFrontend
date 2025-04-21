@@ -25,7 +25,7 @@ export default function SmsLogs() {
   const [filteredSmses, setFilteredSmses] = useState<SmsInterface[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const pageSize = 5;
+  const pageSize = 6;
   const { t } = useTranslation();
   const { user } = useUser();
 
