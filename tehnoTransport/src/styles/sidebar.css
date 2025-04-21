@@ -54,7 +54,6 @@
 @media screen and (max-width: 768px) {
   .app-container {
     padding: 0;
-    width: 10vw;
   }
 
   .sidebar {
@@ -79,10 +78,10 @@
     height: 18px;
   }
 
-  .toggle-btn {
-    bottom: 0.2rem;
+  /* .toggle-btn {
+    bottom: 0rem;
     left: 0.25rem;
-  }
+  } */
 }
 
 @media screen and (max-width: 480px) {
