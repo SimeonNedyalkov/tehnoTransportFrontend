@@ -45,3 +45,17 @@
   height: 10px;
   border-radius: 8px;
 }
+@media screen and (max-width: 768px) {
+  .dashboard {
+    padding: 2rem 1rem;
+  }
+
+  .progress-bars {
+    width: 100%;
+  }
+
+  .adminIcon {
+    top: 0.5rem;
+    right: 0.5rem;
+  }
+}

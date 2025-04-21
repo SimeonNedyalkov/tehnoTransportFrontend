@@ -72,7 +72,7 @@ export default function Dashboard({ customers }: DashboardProps) {
   }
 
   const chartData = [
-    { name: t("statusDueSoon"), value: statusCounts.dueSoon, color: "#E53E3E" }, // Red
+    { name: t("statusDueSoon"), value: statusCounts.dueSoon, color: "#E53E3E" },
     {
       name: t("statusUpcoming"),
       value: statusCounts.upcoming,
@@ -89,40 +89,80 @@ export default function Dashboard({ customers }: DashboardProps) {
 
   return (
     <VStack wordSpacing={6} w="100%" marginTop="10">
-      <StatGroup w="80%" justifyContent="space-between">
-        <Stat.Root>
-          <StatLabel>{t("dueSoon")}</StatLabel>
-          <Stat.ValueText color="red.500">
+      <StatGroup
+        w={{ base: "100%", md: "80%" }}
+        flexDirection={{ base: "column", md: "row" }}
+        gap={4}
+        justifyContent={{ base: "center", md: "space-between" }}
+        alignItems="center"
+      >
+        <Stat.Root textAlign="center">
+          <StatLabel fontSize={{ base: "sm", md: "md" }}>
+            {t("dueSoon")}
+          </StatLabel>
+          <Text
+            fontWeight="bold"
+            fontSize={{ base: "lg", md: "2xl" }}
+            color="red.500"
+          >
             {statusCounts.dueSoon}
-          </Stat.ValueText>
+          </Text>
         </Stat.Root>
-        <Stat.Root>
-          <Stat.Label>{t("upcoming")}</Stat.Label>
-          <Stat.ValueText color="blue.500">
+
+        <Stat.Root textAlign="center">
+          <StatLabel fontSize={{ base: "sm", md: "md" }}>
+            {t("upcoming")}
+          </StatLabel>
+          <Text
+            fontWeight="bold"
+            fontSize={{ base: "lg", md: "2xl" }}
+            color="blue.500"
+          >
             {statusCounts.upcoming}
-          </Stat.ValueText>
+          </Text>
         </Stat.Root>
-        <Stat.Root>
-          <StatLabel>{t("valid")}</StatLabel>
-          <Stat.ValueText color="green.500">
+
+        <Stat.Root textAlign="center">
+          <StatLabel fontSize={{ base: "sm", md: "md" }}>
+            {t("valid")}
+          </StatLabel>
+          <Text
+            fontWeight="bold"
+            fontSize={{ base: "lg", md: "2xl" }}
+            color="green.500"
+          >
             {statusCounts.valid}
-          </Stat.ValueText>
+          </Text>
         </Stat.Root>
-        <Stat.Root>
-          <StatLabel>{t("overdue")}</StatLabel>
-          <Stat.ValueText color="#8B4513">
+
+        <Stat.Root textAlign="center">
+          <StatLabel fontSize={{ base: "sm", md: "md" }}>
+            {t("overdue")}
+          </StatLabel>
+          <Text
+            fontWeight="bold"
+            fontSize={{ base: "lg", md: "2xl" }}
+            color="#8B4513"
+          >
             {statusCounts.overdue}
-          </Stat.ValueText>
+          </Text>
         </Stat.Root>
-        <Stat.Root>
-          <StatLabel>{t("expired")}</StatLabel>
-          <Stat.ValueText color="#161112">
+
+        <Stat.Root textAlign="center">
+          <StatLabel fontSize={{ base: "sm", md: "md" }}>
+            {t("expired")}
+          </StatLabel>
+          <Text
+            fontWeight="bold"
+            fontSize={{ base: "lg", md: "2xl" }}
+            color="#161112"
+          >
             {statusCounts.expired}
-          </Stat.ValueText>
+          </Text>
         </Stat.Root>
       </StatGroup>
 
-      <Box w="50%" h="300px">
+      <Box w={{ base: "90%", md: "50%" }} h="300px" mt={6}>
         <ResponsiveContainer>
           <PieChart>
             <Pie data={chartData} dataKey="value" outerRadius={100} label>
@@ -135,11 +175,16 @@ export default function Dashboard({ customers }: DashboardProps) {
         </ResponsiveContainer>
       </Box>
 
-      <Box w="80%">
+      <Box w={{ base: "95%", md: "80%" }} overflowX="auto">
         <Text fontSize="xl" fontWeight="bold" mb={4}>
           {t("dashboardText")}
         </Text>
-        <HStack justifyContent="space-between" w="100%" fontWeight="bold">
+        <HStack
+          justifyContent="space-between"
+          w="100%"
+          fontWeight="bold"
+          display={{ base: "none", md: "flex" }}
+        >
           <Text flex={2}>{t("dName")}</Text>
           <Text flex={1}>{t("dStatus")}</Text>
           <Text flex={1} textAlign="right">
@@ -161,22 +206,30 @@ export default function Dashboard({ customers }: DashboardProps) {
               w="100%"
               p={2}
               borderBottom="1px solid lightgray"
+              flexDirection={{ base: "column", md: "row" }}
+              alignItems={{ base: "flex-start", md: "center" }}
             >
               <Text
                 flex={2}
                 whiteSpace="nowrap"
                 overflow="hidden"
                 textOverflow="ellipsis"
+                fontSize={{ base: "sm", md: "md" }}
               >
                 {customer.firstName}
               </Text>
               <Text
                 flex={1}
                 color={customer.status === "Due Soon" ? "red.500" : "blue.500"}
+                fontSize={{ base: "sm", md: "md" }}
               >
                 {t(`status${customer.status?.replace(" ", "") ?? "Unknown"}`)}
               </Text>
-              <Text flex={1} textAlign="right">
+              <Text
+                flex={1}
+                textAlign={{ base: "left", md: "right" }}
+                fontSize={{ base: "sm", md: "md" }}
+              >
                 {String(customer.dateOfLastTehnoTest)}
               </Text>
             </HStack>
