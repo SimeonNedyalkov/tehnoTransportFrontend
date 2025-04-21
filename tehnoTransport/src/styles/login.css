@@ -98,6 +98,7 @@
 .rememberMeForgotPassword {
   margin-top: 1rem;
   padding-top: 1rem;
+  color: #0d998d;
 }
 .styledRePassword {
   position: relative;
@@ -108,4 +109,30 @@
   padding-left: 0.5rem;
   padding-right: 0.5rem;
   color: #0a7fec;
+}
+@media screen and (max-width: 480px) {
+  .introh1 {
+    font-size: 1.5rem;
+  }
+
+  .formWrapper {
+    padding: 1.5rem;
+  }
+
+  .styledEmail,
+  .styledPassword,
+  .styledRePassword {
+    left: 0.5rem;
+    font-size: 0.8rem;
+  }
+
+  .styledInput {
+    padding: 10px 14px;
+    font-size: 0.95rem;
+  }
+
+  .loginBtn {
+    height: 2.75rem;
+    font-size: 1rem;
+  }
 }
