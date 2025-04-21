@@ -89,7 +89,7 @@ export default function SmsLogs() {
                 smses={smses}
                 onFiltered={(filtered) => {
                   setFilteredSmses(filtered);
-                  setCurrentPage(1);
+                  setCurrentPage(1); // Reset to page 1 on filter change
                 }}
               />
             </Box>
@@ -99,6 +99,7 @@ export default function SmsLogs() {
               pt="2"
               justify="center"
               alignItems="center"
+              key={currentPage} // Add key to force reflow on page change
             >
               {paginatedSmses.map((sms, index) => (
                 <Card.Root width="320px" variant="elevated" key={index}>
