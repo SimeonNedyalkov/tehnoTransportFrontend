@@ -49,15 +49,17 @@ export default function Navigation() {
         <MenuItem>
           <Link
             to="/app/userProfile"
-            className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none
+      dark:text-white dark:hover:bg-gray-800"
           >
             {t("yourProfile")}
           </Link>
         </MenuItem>
         <MenuItem>
           <Link
-            to="/app/userSettings"
-            className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+            to="/app/userProfile"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none
+      dark:text-white dark:hover:bg-gray-800"
           >
             {t("settings")}
           </Link>
@@ -65,7 +67,8 @@ export default function Navigation() {
         <MenuItem>
           <a
             href="#"
-            className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
+            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none
+      dark:text-white dark:hover:bg-gray-800"
             onClick={handleLogout}
           >
             {t("signOut")}
