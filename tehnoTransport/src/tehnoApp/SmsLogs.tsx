@@ -70,118 +70,120 @@ export default function SmsLogs() {
           <CarLoader />
         </Flex>
       ) : (
-        <Stack gap="4" direction="row" wrap="wrap" mt="10">
-          <VStack>
-            <Box
-              display="flex"
-              justifyContent="center"
-              width="100%"
-              minWidth="500px"
-              maxWidth="500px"
-              p={4}
-              borderRadius="lg"
-              boxShadow="sm"
-              border="1px solid"
-              borderColor="gray.200"
-              bg="white"
-            >
-              <CustomFilter
-                smses={smses}
-                onFiltered={(filtered) => {
-                  setFilteredSmses(filtered);
-                  setCurrentPage(1);
-                }}
-              />
-            </Box>
-            <Flex
-              wrap="wrap"
-              gap={4}
-              pt="2"
-              justify="center"
-              alignItems="center"
-            >
-              {paginatedSmses.map((sms, index) => (
-                <Card.Root width="320px" variant="elevated" key={index}>
-                  <Card.Body gap="2">
-                    <Flex justify="space-between" align="center">
-                      <HStack mt="4" justifyContent="space-between">
-                        <Avatar.Root size="lg" shape="rounded">
-                          <Avatar.Image
-                            src={
-                              user.displayName === sms.senderName
-                                ? user.photoURL
-                                : "https://picsum.photos/200/300"
-                            }
-                          />
-                          <Avatar.Fallback
-                            name={sms.senderName || "Unknown Sender"}
-                          />
-                        </Avatar.Root>
-                        <Card.Title mb="2">
-                          {sms.senderName || "Unknown Sender"}
-                        </Card.Title>
+        <Flex justifyContent="center" alignItems="center">
+          <Stack gap="4" direction="row" wrap="wrap" mt="10">
+            <VStack>
+              <Box
+                display="flex"
+                justifyContent="center"
+                width="100%"
+                minWidth="500px"
+                maxWidth="500px"
+                p={4}
+                borderRadius="lg"
+                boxShadow="sm"
+                border="1px solid"
+                borderColor="gray.200"
+                bg="white"
+              >
+                <CustomFilter
+                  smses={smses}
+                  onFiltered={(filtered) => {
+                    setFilteredSmses(filtered);
+                    setCurrentPage(1);
+                  }}
+                />
+              </Box>
+              <Flex
+                wrap="wrap"
+                gap={4}
+                pt="2"
+                justify="center"
+                alignItems="center"
+              >
+                {paginatedSmses.map((sms, index) => (
+                  <Card.Root width="320px" variant="elevated" key={index}>
+                    <Card.Body gap="2">
+                      <Flex justify="space-between" align="center">
+                        <HStack mt="4" justifyContent="space-between">
+                          <Avatar.Root size="lg" shape="rounded">
+                            <Avatar.Image
+                              src={
+                                user.displayName === sms.senderName
+                                  ? user.photoURL
+                                  : "https://picsum.photos/200/300"
+                              }
+                            />
+                            <Avatar.Fallback
+                              name={sms.senderName || "Unknown Sender"}
+                            />
+                          </Avatar.Root>
+                          <Card.Title mb="2">
+                            {sms.senderName || "Unknown Sender"}
+                          </Card.Title>
+                        </HStack>
+                      </Flex>
+                      <HStack justifyContent="space-between">
+                        <Text color="fg.muted" textStyle="sm">
+                          @
+                          {String(
+                            timestampToDateStringConverter(sms.sentAt)
+                              .toISOString()
+                              .split("T")[0]
+                          )}
+                        </Text>
+                        <Text
+                          color={
+                            sms.response === "success" ? "green.600" : "red.600"
+                          }
+                          textStyle="sm"
+                        >
+                          {sms.response}
+                        </Text>
                       </HStack>
-                    </Flex>
-                    <HStack justifyContent="space-between">
-                      <Text color="fg.muted" textStyle="sm">
-                        @
-                        {String(
-                          timestampToDateStringConverter(sms.sentAt)
-                            .toISOString()
-                            .split("T")[0]
-                        )}
-                      </Text>
-                      <Text
-                        color={
-                          sms.response === "success" ? "green.600" : "red.600"
-                        }
-                        textStyle="sm"
-                      >
-                        {sms.response}
-                      </Text>
-                    </HStack>
-                    <Card.Description>
-                      {sms.message.length > 50
-                        ? sms.message.substring(0, 120) + "..."
-                        : sms.message}
-                    </Card.Description>
-                  </Card.Body>
-                  <Card.Footer justifyContent="flex-end">
-                    <HStack mt="4">
-                      <Badge>
-                        {t("sender")}
-                        <br />
-                        {sms.senderName}
-                      </Badge>
-                      <Badge>
-                        {t("receiver")} <br />
-                        {sms.receiverName}
-                      </Badge>
-                    </HStack>
-                  </Card.Footer>
-                </Card.Root>
-              ))}
-            </Flex>
+                      <Card.Description>
+                        {sms.message.length > 50
+                          ? sms.message.substring(0, 120) + "..."
+                          : sms.message}
+                      </Card.Description>
+                    </Card.Body>
+                    <Card.Footer justifyContent="flex-end">
+                      <HStack mt="4">
+                        <Badge>
+                          {t("sender")}
+                          <br />
+                          {sms.senderName}
+                        </Badge>
+                        <Badge>
+                          {t("receiver")} <br />
+                          {sms.receiverName}
+                        </Badge>
+                      </HStack>
+                    </Card.Footer>
+                  </Card.Root>
+                ))}
+              </Flex>
 
-            <HStack mt={4}>
-              <Button
-                onClick={() => handlePageChange("prev")}
-                disabled={currentPage === 1}
-              >
-                {t("Previous")}
-              </Button>
-              <Text>
-                {t("Page")} {currentPage} {t("of")} {totalPages}
-              </Text>
-              <Button
-                onClick={() => handlePageChange("next")}
-                disabled={currentPage === totalPages}
-              >
-                {t("Next")}
-              </Button>
-            </HStack>
-          </VStack>
-        </Stack>
+              <HStack mt={4}>
+                <Button
+                  onClick={() => handlePageChange("prev")}
+                  disabled={currentPage === 1}
+                >
+                  {t("Previous")}
+                </Button>
+                <Text>
+                  {t("Page")} {currentPage} {t("of")} {totalPages}
+                </Text>
+                <Button
+                  onClick={() => handlePageChange("next")}
+                  disabled={currentPage === totalPages}
+                >
+                  {t("Next")}
+                </Button>
+              </HStack>
+            </VStack>
+          </Stack>
+        </Flex>
       )}
     </>
   );
