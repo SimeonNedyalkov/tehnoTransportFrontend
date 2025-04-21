@@ -35,7 +35,7 @@ export default function Navigation() {
           <span className="absolute -inset-1.5" />
           <span className="sr-only">{t("openUserMenu")}</span>
           <img
-            alt="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+            alt="User"
             src={user?.photoURL || oldPerson}
             className="size-8 rounded-full"
           />
