@@ -93,7 +93,13 @@ export default function SmsLogs() {
                 }}
               />
             </Box>
-            <Flex wrap="wrap" gap={4} pt="2">
+            <Flex
+              wrap="wrap"
+              gap={4}
+              pt="2"
+              justify="center"
+              alignItems="center"
+            >
               {paginatedSmses.map((sms, index) => (
                 <Card.Root width="320px" variant="elevated" key={index}>
                   <Card.Body gap="2">
