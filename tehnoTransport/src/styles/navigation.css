@@ -1,0 +1,8 @@
+@media screen and (max-width: 768px) {
+  .navBarPicture {
+    position: absolute;
+    top: 0;
+    left: 0;
+    padding-bottom: 1rem;
+  }
+}

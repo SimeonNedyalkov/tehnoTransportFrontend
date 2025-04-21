@@ -29,7 +29,7 @@ export default function Navigation() {
 
   console.log(user);
   return (
-    <Menu as="div" className="relative ml-3">
+    <Menu as="div" className="fixed top-4 right-4 z-50">
       <div>
         <MenuButton className="relative flex rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
           <span className="absolute -inset-1.5" />
