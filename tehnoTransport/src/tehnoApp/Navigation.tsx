@@ -3,12 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../tools/UserContext";
 import { useTranslation } from "react-i18next";
 import oldPerson from "../assets/photo-1472099645785-5658abf4ff4e.avif";
+import { useEffect, useState } from "react";
 
 export default function Navigation() {
   const { user } = useUser();
   const navigation = useNavigate();
   const LOGOUTURL = "https://tehno-transport-b.onrender.com/user/logout";
   const { t } = useTranslation();
+  const [isDark, setIsDark] = useState(false);
   const handleLogout = async () => {
     try {
       const response = await fetch(LOGOUTURL, {
@@ -26,7 +28,9 @@ export default function Navigation() {
       console.error("Logout failed:", error);
     }
   };
-
+  useEffect(() => {
+    setIsDark(document.body.classList.contains("dark"));
+  }, []);
   console.log(user);
   return (
     <Menu as="div" className="fixed top-4 right-4 z-50">
@@ -43,23 +47,24 @@ export default function Navigation() {
       </div>
       <MenuItems
         transition
-        className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden
-    dark:bg-gray-900 dark:text-white dark:ring-white/10"
+        className={
+          isDark
+            ? "absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+            : "absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-black py-1 ring-1 shadow-lg ring-black/5 transition focus:outline-hidden data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+        }
       >
         <MenuItem>
           <Link
             to="/app/userProfile"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none
-      dark:text-white dark:hover:bg-gray-800"
+            className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
           >
             {t("yourProfile")}
           </Link>
         </MenuItem>
         <MenuItem>
           <Link
-            to="/app/userProfile"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none
-      dark:text-white dark:hover:bg-gray-800"
+            to="/app/userSettings"
+            className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
           >
             {t("settings")}
           </Link>
@@ -67,8 +72,7 @@ export default function Navigation() {
         <MenuItem>
           <a
             href="#"
-            className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 focus:outline-none
-      dark:text-white dark:hover:bg-gray-800"
+            className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:outline-hidden"
             onClick={handleLogout}
           >
             {t("signOut")}
