@@ -106,9 +106,9 @@ export default function Sidebar() {
           style={buttonRotation}
         >
           {isOpen ? (
-            <ArrowBigLeft color={isDark ? "white" : "black"} />
+            <ArrowBigLeft color="#8C8C8C" />
           ) : (
-            <ArrowBigRight color={isDark ? "white" : "black"} />
+            <ArrowBigRight color="#8C8C8C" />
           )}
         </animated.button>
       </animated.div>
