@@ -105,7 +105,6 @@ export default function Reports({ DATA }: ReposrtsProps) {
 
   const handleSendToApp = async () => {
     const checked = values.filter((x) => x.checked === true);
-    console.log(checked);
     try {
       if (checked.length !== 0) {
         checked.map(async (c) => {

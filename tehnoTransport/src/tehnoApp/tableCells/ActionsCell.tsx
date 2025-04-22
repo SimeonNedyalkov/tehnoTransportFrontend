@@ -105,7 +105,6 @@ export default function ActionsCell({ row, table }: CellPropsInterface) {
       } else {
         updatedCustomer = await API.updateCustomer(customer.id, customer);
       }
-      console.log(customer);
       updatedCustomer = await API.updateCustomer(customer.id, customer);
       const testDate = new Date(
         updatedCustomer.dateOfNextTehnoTest._seconds * 1000

@@ -22,7 +22,6 @@ export default function Filters({ columnFilters, setColumnFilters }: any) {
   const onFilterChange = (id: any, value: any) => {
     setColumnFilters((prev: any) => {
       const existingFilter = prev.find((f: any) => f.id === id);
-      console.log(existingFilter);
 
       if (existingFilter?.value === value) return prev;
       return prev

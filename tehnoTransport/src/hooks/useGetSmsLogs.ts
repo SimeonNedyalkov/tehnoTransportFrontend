@@ -27,7 +27,6 @@ export default function useGetSmsLogs() {
                   method: "GET",
                   credentials: "include",
                 });
-                console.log(response);
               }
             } else {
               const data = await refreshedData.json();

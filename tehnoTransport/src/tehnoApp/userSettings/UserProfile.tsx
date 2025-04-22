@@ -32,7 +32,6 @@ export default function UserProfile() {
       console.error("Logout failed:", error);
     }
   };
-  console.log(user);
   return (
     <Flex
       justifyContent="center"

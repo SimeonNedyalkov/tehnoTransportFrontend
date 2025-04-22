@@ -29,7 +29,6 @@ export default function useGetCustomer() {
                   method: "GET",
                   credentials: "include",
                 });
-                console.log(response);
               }
             } else {
               const data = await refreshedData.json();

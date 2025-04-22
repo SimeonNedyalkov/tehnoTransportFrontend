@@ -31,7 +31,6 @@ export default function Navigation() {
   useEffect(() => {
     setIsDark(document.body.classList.contains("dark"));
   }, []);
-  console.log(user);
   return (
     <Menu as="div" className="fixed top-4 right-4 z-50">
       <div>

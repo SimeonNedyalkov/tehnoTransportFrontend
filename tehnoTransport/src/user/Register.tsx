@@ -31,8 +31,7 @@ export default function Login() {
         throw new Error("Invalid email or password");
       }
 
-      const data = await response.json();
-      console.log(data);
+      await response.json();
 
       navigation("/");
     } catch (err) {
