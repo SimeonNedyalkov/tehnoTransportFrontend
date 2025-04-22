@@ -16,16 +16,13 @@ export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(true);
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const [isDark, setIsDark] = useState(false);
+
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
   useEffect(() => {
     const handleResize = () => setWindowWidth(window.innerWidth);
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
-  useEffect(() => {
-    setIsDark(document.body.classList.contains("dark"));
   }, []);
 
   const menuItems = [
