@@ -105,8 +105,12 @@ export default function Dashboard({ customers }: DashboardProps) {
         alignItems="center"
       >
         <Stat.Root textAlign="center">
-          <StatLabel fontSize={{ base: "sm", md: "md" }}>
-            {t("dueSoon")}
+          <StatLabel
+            fontSize={{ base: "sm", md: "md" }}
+            textAlign="center"
+            display="block"
+          >
+            <Text>{t("dueSoon")}</Text>
           </StatLabel>
           <Text
             fontWeight="bold"
@@ -118,7 +122,11 @@ export default function Dashboard({ customers }: DashboardProps) {
         </Stat.Root>
 
         <Stat.Root textAlign="center">
-          <StatLabel fontSize={{ base: "sm", md: "md" }}>
+          <StatLabel
+            fontSize={{ base: "sm", md: "md" }}
+            textAlign="center"
+            display="block"
+          >
             {t("upcoming")}
           </StatLabel>
           <Text
@@ -131,7 +139,11 @@ export default function Dashboard({ customers }: DashboardProps) {
         </Stat.Root>
 
         <Stat.Root textAlign="center">
-          <StatLabel fontSize={{ base: "sm", md: "md" }}>
+          <StatLabel
+            fontSize={{ base: "sm", md: "md" }}
+            textAlign="center"
+            display="block"
+          >
             {t("valid")}
           </StatLabel>
           <Text
@@ -144,7 +156,11 @@ export default function Dashboard({ customers }: DashboardProps) {
         </Stat.Root>
 
         <Stat.Root textAlign="center">
-          <StatLabel fontSize={{ base: "sm", md: "md" }}>
+          <StatLabel
+            fontSize={{ base: "sm", md: "md" }}
+            textAlign="center"
+            display="block"
+          >
             {t("overdue")}
           </StatLabel>
           <Text
@@ -157,7 +173,11 @@ export default function Dashboard({ customers }: DashboardProps) {
         </Stat.Root>
 
         <Stat.Root textAlign="center">
-          <StatLabel fontSize={{ base: "sm", md: "md" }}>
+          <StatLabel
+            fontSize={{ base: "sm", md: "md" }}
+            textAlign="center"
+            display="block"
+          >
             {t("expired")}
           </StatLabel>
           <Text
