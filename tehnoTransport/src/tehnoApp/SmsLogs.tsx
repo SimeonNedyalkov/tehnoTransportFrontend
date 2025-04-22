@@ -84,7 +84,6 @@ export default function SmsLogs() {
                 boxShadow="sm"
                 border="1px solid"
                 borderColor="gray.200"
-                bg="white"
               >
                 <CustomFilter
                   smses={smses}

@@ -21,6 +21,10 @@ export default function Dashboard({ customers }: DashboardProps) {
   const [customersState, setCustomersState] = useState<Customer[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isDark, setIsDark] = useState(false);
+  useEffect(() => {
+    setIsDark(document.body.classList.contains("dark"));
+  }, []);
   const [statusCounts, setStatusCounts] = useState({
     upcoming: 0,
     dueSoon: 0,
@@ -84,7 +88,11 @@ export default function Dashboard({ customers }: DashboardProps) {
       color: "#48BB78",
     },
     { name: t("statusOverdue"), value: statusCounts.overdue, color: "#8B4513" },
-    { name: t("statusExpired"), value: statusCounts.expired, color: "#161112" },
+    {
+      name: t("statusExpired"),
+      value: statusCounts.expired,
+      color: !isDark ? "#161112" : "#708090",
+    },
   ];
 
   return (
@@ -155,7 +163,7 @@ export default function Dashboard({ customers }: DashboardProps) {
           <Text
             fontWeight="bold"
             fontSize={{ base: "lg", md: "2xl" }}
-            color="#161112"
+            color={!isDark ? "#161112" : "#708090"}
           >
             {statusCounts.expired}
           </Text>
