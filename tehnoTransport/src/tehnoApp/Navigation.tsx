@@ -3,14 +3,13 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../tools/UserContext";
 import { useTranslation } from "react-i18next";
 import oldPerson from "../assets/photo-1472099645785-5658abf4ff4e.avif";
-import { useEffect, useState } from "react";
 
 export default function Navigation() {
   const { user } = useUser();
   const navigation = useNavigate();
   const LOGOUTURL = "https://tehno-transport-b.onrender.com/user/logout";
   const { t } = useTranslation();
-  const [isDark, setIsDark] = useState(false);
+
   const handleLogout = async () => {
     try {
       const response = await fetch(LOGOUTURL, {
@@ -28,9 +27,7 @@ export default function Navigation() {
       console.error("Logout failed:", error);
     }
   };
-  useEffect(() => {
-    setIsDark(document.body.classList.contains("dark"));
-  }, []);
+
   return (
     <Menu as="div" className="fixed top-4 right-4 z-50">
       <div>
